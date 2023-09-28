@@ -1,9 +1,8 @@
 //
 //  ContentView.swift
-//  Peter2
 //
-//  Created by Leonhard Tilly on 21.09.23.
-// Stehengeblieben Lecture 2 1:19:00
+//  Created by Leonhard Tilly on 28.09.23.
+// Stehengeblieben Lecture 2 Fertig
 //
 
 import SwiftUI
@@ -15,7 +14,6 @@ struct ContentView: View {
     let vegetableArray = ["🍆","🥑","🫛","🥦","🥬","🥒","🌶️","🫑","🌽","🥕","🫒","🧄","🧅","🥔","🍠","🫚"]
     @State var emojiCount = 14
     @State var themeTitle = ""
-    
     
     var body: some View {
         VStack{
@@ -36,10 +34,6 @@ struct ContentView: View {
                 Spacer()
                 vegetable
                 
-                
-                
-
- 
             }.font(.largeTitle)
             .padding(.horizontal)
         }
