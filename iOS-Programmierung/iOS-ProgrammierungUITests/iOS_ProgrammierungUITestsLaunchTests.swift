@@ -1,13 +1,13 @@
 //
-//  Peter2UITestsLaunchTests.swift
-//  Peter2UITests
+//  iOS_ProgrammierungUITestsLaunchTests.swift
+//  iOS-ProgrammierungUITests
 //
-//  Created by Leonhard Tilly on 21.09.23.
+//  Created by Leonhard Tilly on 28.09.23.
 //
 
 import XCTest
 
-final class Peter2UITestsLaunchTests: XCTestCase {
+final class iOS_ProgrammierungUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -1,14 +1,14 @@
 //
-//  Peter2Tests.swift
-//  Peter2Tests
+//  iOS_ProgrammierungTests.swift
+//  iOS-ProgrammierungTests
 //
-//  Created by Leonhard Tilly on 21.09.23.
+//  Created by Leonhard Tilly on 28.09.23.
 //
 
 import XCTest
-@testable import Peter2
+@testable import iOS_Programmierung
 
-final class Peter2Tests: XCTestCase {
+final class iOS_ProgrammierungTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
