@@ -43,11 +43,11 @@ struct ContentView: View {
     
     //Randomizer
     func generateRandomNumber() -> Int {
-        let lowerBound = 9  // Die untere Grenze (einschließlich 9)
-        let upperBound = 17 // Die obere Grenze (ausschließlich 17)
+        //let lowerBound = 9  // Die untere Grenze (einschließlich 9)
+        //let upperBound = 17 // Die obere Grenze (ausschließlich 17)
         
-        let randomNumber = Int(arc4random_uniform(UInt32(upperBound - lowerBound))) + lowerBound
-        return randomNumber
+        //let randomNumber = Int(arc4random_uniform(UInt32(upperBound - lowerBound))) + lowerBound
+        return Int.random(in: 9...17)
     }
     
     
@@ -73,7 +73,7 @@ struct ContentView: View {
     var fruit: some View {
         Button(action: {
             themeTitle = "Fruits"
-            emojis = animalArray
+            emojis = fruitArray
             emojis.shuffle()
             emojiCount = generateRandomNumber()
             }, label: {
@@ -100,7 +100,7 @@ struct ContentView: View {
         })
     }
     
-    
+    /*
     var remove: some View {
         Button {
             if emojiCount > 1 {
@@ -119,7 +119,7 @@ struct ContentView: View {
         } label: {
             Image(systemName: "plus.square")
         }
-    }
+    }*/
 }
 
 struct CardView: View {

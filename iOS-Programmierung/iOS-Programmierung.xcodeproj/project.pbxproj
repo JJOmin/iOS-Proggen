@@ -14,6 +14,8 @@
 		196707702AC5A26D00BC5D54 /* iOS_ProgrammierungTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967076F2AC5A26D00BC5D54 /* iOS_ProgrammierungTests.swift */; };
 		1967077A2AC5A26D00BC5D54 /* iOS_ProgrammierungUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196707792AC5A26D00BC5D54 /* iOS_ProgrammierungUITests.swift */; };
 		1967077C2AC5A26D00BC5D54 /* iOS_ProgrammierungUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967077B2AC5A26D00BC5D54 /* iOS_ProgrammierungUITestsLaunchTests.swift */; };
+		19985D3C2ACEE1BD009802A1 /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19985D3B2ACEE1BD009802A1 /* MemoryGame.swift */; };
+		19985D3E2ACEE3C9009802A1 /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19985D3D2ACEE3C9009802A1 /* EmojiMemoryGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		196707752AC5A26D00BC5D54 /* iOS-ProgrammierungUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-ProgrammierungUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196707792AC5A26D00BC5D54 /* iOS_ProgrammierungUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ProgrammierungUITests.swift; sourceTree = "<group>"; };
 		1967077B2AC5A26D00BC5D54 /* iOS_ProgrammierungUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_ProgrammierungUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		19985D3B2ACEE1BD009802A1 /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
+		19985D3D2ACEE3C9009802A1 /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 		1967075D2AC5A26C00BC5D54 /* iOS-Programmierung */ = {
 			isa = PBXGroup;
 			children = (
+				19985D3B2ACEE1BD009802A1 /* MemoryGame.swift */,
+				19985D3D2ACEE3C9009802A1 /* EmojiMemoryGame.swift */,
 				1967075E2AC5A26C00BC5D54 /* iOS_ProgrammierungApp.swift */,
 				196707602AC5A26C00BC5D54 /* ContentView.swift */,
 				196707622AC5A26D00BC5D54 /* Assets.xcassets */,
@@ -257,8 +263,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19985D3C2ACEE1BD009802A1 /* MemoryGame.swift in Sources */,
 				196707612AC5A26C00BC5D54 /* ContentView.swift in Sources */,
 				1967075F2AC5A26C00BC5D54 /* iOS_ProgrammierungApp.swift in Sources */,
+				19985D3E2ACEE3C9009802A1 /* EmojiMemoryGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
