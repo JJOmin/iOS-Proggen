@@ -2,181 +2,49 @@
 //  ContentView.swift
 //
 //  Created by Leonhard Tilly on 28.09.23.
-// Stehengeblieben Lecture 2 Fertig
+//Lecture 4 19:00
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    @State var emojis = ["⚽️","🏀","🏈","😀","🥳","😜","🤓","🫣","😭","😰","😶","🫥","😬","😱"]
-    let animalArray = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮","🐷","🐵","🙈","🙉","🙊","🐒","🦆","🐣","🦅","🐴","🐗","🐺"]
-    let fruitArray = ["🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"]
-    let vegetableArray = ["🍆","🥑","🫛","🥦","🥬","🥒","🌶️","🫑","🌽","🥕","🫒","🧄","🧅","🥔","🍠","🫚"]
-    @State var emojiCount = 14
+    var viewModel: EmojiMemoryGame
+
     @State var themeTitle = ""
     
     var body: some View {
-        VStack{
-            Text("Memory! - " + themeTitle).font(.largeTitle)
-            ScrollView{
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
-                        CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
-                    }
+
+        Text("Memory! - " + themeTitle).font(.largeTitle)
+        ScrollView{
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                ForEach(viewModel.cards) { card in
+                    CardView(card: card)
+                        .aspectRatio(2/3, contentMode: .fit)
                 }
             }
-            .foregroundColor(.green)
-            Spacer()
-            HStack{
-                animal
-                Spacer()
-                fruit
-                Spacer()
-                vegetable
-                
-            }.font(.largeTitle)
-            .padding(.horizontal)
         }
+        .foregroundColor(.green).font(.largeTitle)
         .padding(.horizontal)
-        
     }
-    
-    //Randomizer
-    func generateRandomNumber() -> Int {
-        //let lowerBound = 9  // Die untere Grenze (einschließlich 9)
-        //let upperBound = 17 // Die obere Grenze (ausschließlich 17)
-        
-        //let randomNumber = Int(arc4random_uniform(UInt32(upperBound - lowerBound))) + lowerBound
-        return Int.random(in: 9...17)
-    }
-    
-    
-    
-    //Buttons
-    
-    var animal: some View {
-        Button(action: {
-            themeTitle = "Animals"
-            emojis = animalArray
-            emojis.shuffle()
-            emojiCount = generateRandomNumber()
-            
-            }, label: {
-                VStack{
-                    Image (systemName: "pawprint")
-                    Text("Animals")
-                        .font(.body)
-                }
-        })
-    }
-    
-    var fruit: some View {
-        Button(action: {
-            themeTitle = "Fruits"
-            emojis = fruitArray
-            emojis.shuffle()
-            emojiCount = generateRandomNumber()
-            }, label: {
-                VStack{
-                    Image (systemName: "apple.logo")
-                    Text("Fruits")
-                        .font(.body)
-                }
-        })
-    }
-    
-    var vegetable: some View {
-        Button(action: {
-            themeTitle = "Vegetables"
-            emojis = vegetableArray
-            emojis.shuffle()
-            emojiCount = generateRandomNumber()
-            }, label: {
-                VStack{
-                    Image (systemName: "carrot")
-                    Text("Vegies")
-                        .font(.body)
-                }
-        })
-    }
-    
-    /*
-    var remove: some View {
-        Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
-        } label: {
-                Image(systemName: "minus.square")
-        }
-    }
-    
-    var add: some View {
-        Button{
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            Image(systemName: "plus.square")
-        }
-    }*/
 }
 
 struct CardView: View {
-    var content: String
-    @State var isFaceUp: Bool = true
+    let card: MemoryGame<String>.Card
     
     var body: some View {
         ZStack{
             let shape = RoundedRectangle(cornerRadius: 25.0)
-            if isFaceUp{
+            if card.isFaceUp{
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 3)
-                Text(content)
+                Text(card.content)
                     .font(.largeTitle)
             } else{
                 shape.fill()
             }
         }
-        .onTapGesture {
-            self.isFaceUp = !isFaceUp
-        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -201,10 +69,11 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game)
             .preferredColorScheme(.dark)
             .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-        ContentView()
+        ContentView(viewModel: game)
             .preferredColorScheme(.light)
             .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
