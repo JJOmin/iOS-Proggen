@@ -10,36 +10,77 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
 
-    @State var themeTitle = "Fruity Memory Game"
+    //@State var themeTitle = "Fruity Memory Game"
     
     var body: some View {
-
-        Text(themeTitle).font(.largeTitle)
-        ScrollView{
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(viewModel.cards) { card in
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
-                }
+        VStack{
+            Text(viewModel.getThemeName())
+                .font(.largeTitle)
+            HStack{
+                Text("Score:")
+                Text(String(viewModel.getScore()))
+            }
+            ScrollView{
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                    
+                    ForEach(viewModel.cards) { card in
+                        CardView(card: card, color: viewModel.getGroundColor())
+                            .aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
+                            .padding(1)
+                    }
+                }.foregroundColor(viewModel.getCardColor).font(.largeTitle)
+                   
+            }
+            Spacer()
+            
+            HStack{
+                buttonForSomething
+                Spacer()
+                shuffle
             }
         }
-        .foregroundColor(.purple).font(.largeTitle)
         .padding(.horizontal)
+    }
+    
+    var buttonForSomething :some View{
+        Button(action: {
+            viewModel.createNewMemoryGame()}
+               , label: {
+            VStack{
+                Image(systemName: "gamecontroller").font(.largeTitle)
+                Text("New Game")
+            }
+        })
+    }
+    
+    
+    var shuffle :some View{
+        Button(action: {
+            viewModel.shuffle()}
+               , label: {
+            VStack{
+                Image(systemName: "shuffle.circle").font(.largeTitle)
+                Text("shuffle")}})
     }
 }
 
+
 struct CardView: View {
-    let card: MemoryGame<String>.Card
-    
+    var card: MemoryGame<String>.Card
+    let color: Color
     var body: some View {
+        
         ZStack{
             let shape = RoundedRectangle(cornerRadius: 25.0)
             if card.isFaceUp{
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3)
+                
+                shape.fill()
+                shape.foregroundColor(color)
+                RoundedRectangle(cornerRadius: 22.0)
+                    .strokeBorder(lineWidth: 3.0)
                 Text(card.content)
                     .font(.largeTitle)
             }else if card.isMatched {

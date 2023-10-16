@@ -32,6 +32,7 @@ class EmojiMemoryGame: ObservableObject {
         return model.cards
     }
     
+    
     func createNewMemoryGame() {
             let currentTheme = Theme<String>(theme: themes.randomElement()!)
             let uniqueContent = currentTheme.returnCardsForGame()
@@ -42,6 +43,10 @@ class EmojiMemoryGame: ObservableObject {
             currentThemeForModel = currentTheme
             
         }
+    
+    
+    
+    
     //Mischen Function
     func shuffle() {
         model.shuffle()
@@ -65,15 +70,44 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     private var themes = [
-            Theme<String>(cardSet: ["🧛🏼‍♀️","☠️","🧟‍♂️","⚰️","🔮","👻","🎃","👽","🦹‍♀️","🦇","🌘","🕷"],
-                          numberOfPairs: 12,
-                          themeColor: "orange",
-                          themeName: "Halloween",
-                          groundColor: "black"),
-            
-            Theme<String>(cardSet: ["🍉","🍐","🍓","🍊","🍋","🍌","🥭","🍒","🍈","🫐","🍇","🍏"],
+            Theme<String>(cardSet: ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"],
                           numberOfPairs: 6,
-                          themeColor: "red",
-                          themeName: "Obst",
+                          themeColor: "pink",
+                          themeName: "Fruits",
                           groundColor: "green")]
+    
+    
+    //methode zum konvertieren von String Farben in Color Type
+    func getColor(colorString : String) -> Color {
+        let colorMapping: [String: Color] = [
+            "red": .red,
+            "orange": .orange,
+            "blue": .blue,
+            "green": .green,
+            "gray": .gray,
+            "purple": .purple,
+            "pink": .pink,
+            "yellow": .yellow,
+            "black": .black,
+        ]
+        //wenn farbe vorhanden, dann return als Color Type ansonsten red
+        return colorMapping[colorString] ?? .red
+    }
+    
+    //Methoden fr die Farben
+    func getCardColor() -> Color{
+        getColor(colorString: currentThemeForModel.themeColor)
+    }
+    
+    func getGroundColor() -> Color{
+        getColor(colorString: currentThemeForModel.groundColor)
+    }
+    
+    func getThemeNamme()-> String{
+        return currentThemeForModel.themeName
+    }
+    
+    func getScore()-> Int{
+        return model.getScore()
+    }
 }
