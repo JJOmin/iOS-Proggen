@@ -12,16 +12,15 @@ func makeCardContent(index: Int) -> String{
 }
 
 class EmojiMemoryGame: ObservableObject {
-    static let emojis = ["🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"]
+    static let emojis = ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"]
     
     static func createMemoryGame() ->MemoryGame<String>{
-            return MemoryGame<String>(numberOfPairsOfCards: 4) {pairIndex in
+            return MemoryGame<String>(numberOfPairsOfCards: 16) {pairIndex in
                 emojis[pairIndex]
         }
     
     }
     
-
     @Published private var model: MemoryGame<String> = createMemoryGame()
     var cards: Array<MemoryGame<String>.Card>{
         model.cards

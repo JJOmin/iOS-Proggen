@@ -10,11 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
 
-    //@State var themeTitle = "Testing MVVM"
+    @State var themeTitle = "Fruity Memory Game"
     
     var body: some View {
 
-        //Text("Memory! - " + themeTitle).font(.largeTitle)
+        Text(themeTitle).font(.largeTitle)
         ScrollView{
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                 ForEach(viewModel.cards) { card in
@@ -22,12 +22,11 @@ struct ContentView: View {
                         .aspectRatio(2/3, contentMode: .fit)
                         .onTapGesture {
                             viewModel.choose(card)
-                            
                         }
                 }
             }
         }
-        .foregroundColor(.green).font(.largeTitle)
+        .foregroundColor(.purple).font(.largeTitle)
         .padding(.horizontal)
     }
 }
