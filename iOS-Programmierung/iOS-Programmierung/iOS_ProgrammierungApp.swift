@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct iOS_ProgrammierungApp: App {
-    let game = EmojiMemoryGame()
+    let game = EmojiMemoryGame(model: <#MemoryGame<String>#>, currentThemeForModel: <#Theme<String>#>)
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: game)

@@ -56,5 +56,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var content: CardContent
         var id: Int
     }
+    //mischenfunction
+    mutating func shuffle() {
+        cards.shuffle()
+    }
 }
 
