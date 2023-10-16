@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var viewModel : EmojiMemoryGame
 
     //@State var themeTitle = "Fruity Memory Game"
     
@@ -16,6 +16,7 @@ struct ContentView: View {
         VStack{
             Text(viewModel.getThemeName())
                 .font(.largeTitle)
+            
             HStack{
                 Text("Score:")
                 Text(String(viewModel.getScore()))
@@ -31,7 +32,7 @@ struct ContentView: View {
                             }
                             .padding(1)
                     }
-                }.foregroundColor(viewModel.getCardColor).font(.largeTitle)
+                }.foregroundColor(viewModel.getCardColor()).font(.largeTitle)
                    
             }
             Spacer()
@@ -50,7 +51,7 @@ struct ContentView: View {
             viewModel.createNewMemoryGame()}
                , label: {
             VStack{
-                Image(systemName: "gamecontroller").font(.largeTitle)
+                Image(systemName: "plus.square.fill").font(.largeTitle)
                 Text("New Game")
             }
         })
@@ -62,7 +63,7 @@ struct ContentView: View {
             viewModel.shuffle()}
                , label: {
             VStack{
-                Image(systemName: "shuffle.circle").font(.largeTitle)
+                Image(systemName: "shuffle.circle.fill").font(.largeTitle)
                 Text("shuffle")}})
     }
 }
@@ -74,7 +75,7 @@ struct CardView: View {
     var body: some View {
         
         ZStack{
-            let shape = RoundedRectangle(cornerRadius: 25.0)
+            let shape :RoundedRectangle = RoundedRectangle(cornerRadius: 25.0)
             if card.isFaceUp{
                 
                 shape.fill()
@@ -91,16 +92,6 @@ struct CardView: View {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

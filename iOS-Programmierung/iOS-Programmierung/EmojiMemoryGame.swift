@@ -1,7 +1,6 @@
 //
 //  EmojiMemoryGame.swift
 //  iOS-Programmierung
-//Stehen geblieben bei annas code zur aaufgabe (shuffle)
 //  Created by Leonhard Tilly on 05.10.23.
 //
 
@@ -10,12 +9,9 @@ import SwiftUI
 class EmojiMemoryGame: ObservableObject {
     
     //Variablen
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model: MemoryGame<String>
     private var currentThemeForModel: Theme<String>
     static let emojis = ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"]
-    
-    
-    //methoden
     
     //initialisierungsmethode, zum erstellen eines 1. Games
     init() {
@@ -39,12 +35,10 @@ class EmojiMemoryGame: ObservableObject {
             model = MemoryGame<String>(numberOfPairsOfCards: currentTheme.returnCardsForGame().count) { pairIndex in
                 uniqueContent[pairIndex]
             }
-            self.shuffle()  // mischen working on
+            self.shuffle()
             currentThemeForModel = currentTheme
             
         }
-    
-    
     
     
     //Mischen Function
@@ -52,34 +46,56 @@ class EmojiMemoryGame: ObservableObject {
         model.shuffle()
     }
 
-
-    
-    
-    static func createMemoryGame() ->MemoryGame<String>{
-            return MemoryGame<String>(numberOfPairsOfCards: 16) {pairIndex in
-                emojis[pairIndex]
-        }
-    
-    }
     
     
     //MARK: -Intent(s)
     
     func choose(_ card: MemoryGame<String>.Card) {
-        model.choose(card)
+        model.choose(card: card)
     }
     
     private var themes = [
             Theme<String>(cardSet: ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"],
-                          numberOfPairs: 6,
+                          numberOfPairs: 16,
                           themeColor: "pink",
                           themeName: "Fruits",
-                          groundColor: "green")]
+                          groundColor: "green"),
+            
+            Theme<String>(cardSet: ["🐙","🪼","🦐","🦞","🦀","🐡","🐠","🐟","🐬","🐳","🐋","🦈","🦭"],
+                          numberOfPairs: 13,
+                          themeColor: "blue",
+                          themeName: "Sea ​​Creatures",
+                          groundColor: "indigo"),
+    
+            Theme<String>(cardSet: ["🌵","🎄","🌲","🌳","🌴","🪵","🌱","🌿","☘️","🍀","🎍","🪴","🎋","🍃","🍂","🍁","🍄","🌾","🪸"],
+                          numberOfPairs: 19,
+                          themeColor: "green",
+                          themeName: "Plants",
+                          groundColor: "mint"),
+            
+            Theme<String>(cardSet: ["⛷️","🏂","🪂","🏋️‍♀️","🤼‍♀️","🤸","🤺","🏌️","🏇","🧘‍♀️","🏄"],
+                          numberOfPairs: 11,
+                          themeColor: "yellow",
+                          themeName: "Activeties",
+                          groundColor: "gray"),
+            
+            Theme<String>(cardSet: ["🪇","🥁","🪘","🎷","🎺","🪗","🎸","🪕","🎻","🪈"],
+                          numberOfPairs: 5,
+                          themeColor: "orange",
+                          themeName: "Instruments",
+                          groundColor: "black"),
+            
+            Theme<String>(cardSet: ["🚗","🚕","🚙","🚌","🚎","🏎️","🚓","🚑","🚒","🚐","🛻","🚚","🚛","🚜"],
+                          numberOfPairs: 14,
+                          themeColor: "gray",
+                          themeName: "Cars",
+                          groundColor: "white"),]
     
     
     //methode zum konvertieren von String Farben in Color Type
     func getColor(colorString : String) -> Color {
         let colorMapping: [String: Color] = [
+            "white": .white,
             "red": .red,
             "orange": .orange,
             "blue": .blue,
@@ -89,6 +105,8 @@ class EmojiMemoryGame: ObservableObject {
             "pink": .pink,
             "yellow": .yellow,
             "black": .black,
+            "indigo": .indigo,
+            "mint": .mint
         ]
         //wenn farbe vorhanden, dann return als Color Type ansonsten red
         return colorMapping[colorString] ?? .red
@@ -103,7 +121,7 @@ class EmojiMemoryGame: ObservableObject {
         getColor(colorString: currentThemeForModel.groundColor)
     }
     
-    func getThemeNamme()-> String{
+    func getThemeName()-> String{
         return currentThemeForModel.themeName
     }
     
