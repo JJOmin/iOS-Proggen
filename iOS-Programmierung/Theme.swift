@@ -3,45 +3,52 @@
 //  iOS-Programmierung
 //
 //  Created by Leonhard Tilly on 16.10.23.
+// und Hilfestellung von Anna Rieckmann
 //
 
 import Foundation
 
+// Definition der Struktur "Theme" mit generischem Typ "Cards"
 struct Theme <Cards> {
-    let themeName: String
-    let cardSet: [Cards]
-    let themeColor: String
-    let groundColor: String
-    var numberOfPairs: Int
+    // Eigenschaften der Struktur
+    let themeName: String // Der Name des Themas
+    let cardSet: [Cards] // Ein Array von Kartensymbolen
+    let themeColor: String // Die Hauptfarbe des Themas
+    let backgroundColor: String // Die Hintergrundfarbe des Themas
+    var numberOfPairs: Int // Die Anzahl der Kartensymbol-Paare im Spiel
     
+    // Methode, um eine zufällige Auswahl von Karten für das Spiel zurückzugeben
     func returnCardsForGame() -> [Cards] {
-        let shuffledCards = cardSet.shuffled()
-        var RandomCardsForGame: Array<Cards> = []
-        if numberOfPairs <= cardSet.count{
+        let shuffledCards = cardSet.shuffled() // Karten mischen
+        var randomCardsForGame: Array<Cards> = [] // Array für die zufälligen Karten
+        
+        // Anzahl der ausgewählten Karten auf "numberOfPairs" begrenzen
+        if numberOfPairs <= cardSet.count {
             for pairIndex in 0..<numberOfPairs {
-                RandomCardsForGame.append(shuffledCards[pairIndex])
+                randomCardsForGame.append(shuffledCards[pairIndex]) // Zufällige Karten auswählen
             }
-        }else{
-            RandomCardsForGame = shuffledCards
+        } else {
+            randomCardsForGame = shuffledCards // Wenn mehr Karten benötigt werden als vorhanden sind, alle zurückgeben
         }
-        return RandomCardsForGame
+        
+        return randomCardsForGame // Zufällige Karten zurückgeben
     }
     
-    init (theme: Theme<Cards>) {
+    // Initialisierermethode, um ein Theme-Objekt von einem vorhandenen Theme zu erstellen
+    init(theme: Theme<Cards>) {
         self.numberOfPairs = theme.numberOfPairs
         self.cardSet = theme.cardSet
         self.themeColor = theme.themeColor
         self.themeName = theme.themeName
-        self.groundColor = theme.groundColor
+        self.backgroundColor = theme.backgroundColor
     }
     
-    init(cardSet: [Cards], numberOfPairs: Int, themeColor: String, themeName: String, groundColor: String) {
-        
+    // Initialisierermethode, um ein neues Theme-Objekt zu erstellen
+    init(cardSet: [Cards], numberOfPairs: Int, themeColor: String, themeName: String, backgroundColor: String) {
         self.numberOfPairs = numberOfPairs
         self.cardSet = cardSet
         self.themeColor = themeColor
         self.themeName = themeName
-        self.groundColor = groundColor
-        
+        self.backgroundColor = backgroundColor
     }
 }
