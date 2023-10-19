@@ -34,15 +34,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[potentialMatchIndex].isMatched = true
                     score += 2
                     changedScore = "+2"
-                } else if cards[chosenIndex].alreadySeenCount > 1 && cards[potentialMatchIndex].alreadySeenCount > 1{
-                    score -= 2
-                    changedScore = "-2"
-                }
-                else {
+                } else {
                     // Karten stimmen nicht überein
                      if cards[chosenIndex].alreadySeenCount > 1 || cards[potentialMatchIndex].alreadySeenCount > 1 {
                         // Wenn eine der Karten bereits mehrmals wurde, Punkte um 2 reduzieren
                          //print("Ausgabe",cards[chosenIndex].alreadySeenCount,cards[potentialMatchIndex].alreadySeenCount)
+                        score -= 2
+                        changedScore = "-2"
+                    } else {
+                        // Wenn beide Karten zum ersten Mal gesehen wurdenund nicht übereinstimmen
                         score -= 1
                         changedScore = "-1"
                     }
@@ -58,6 +58,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             }
             // Ausgewählte Karte umdrehen und aktuellen Zustand ausgeben
             cards[chosenIndex].isFaceUp.toggle()
+            print("\(cards)")
         }
     }
     

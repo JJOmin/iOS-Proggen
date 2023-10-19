@@ -80,6 +80,7 @@
 		196707522AC5A26C00BC5D54 = {
 			isa = PBXGroup;
 			children = (
+				197AE6E62ADD2F17000E1909 /* Theme.swift */,
 				1967075D2AC5A26C00BC5D54 /* iOS-Programmierung */,
 				1967076E2AC5A26D00BC5D54 /* iOS-ProgrammierungTests */,
 				196707782AC5A26D00BC5D54 /* iOS-ProgrammierungUITests */,
@@ -100,7 +101,6 @@
 		1967075D2AC5A26C00BC5D54 /* iOS-Programmierung */ = {
 			isa = PBXGroup;
 			children = (
-				197AE6E62ADD2F17000E1909 /* Theme.swift */,
 				19985D3B2ACEE1BD009802A1 /* MemoryGame.swift */,
 				19985D3D2ACEE3C9009802A1 /* EmojiMemoryGame.swift */,
 				1967075E2AC5A26C00BC5D54 /* iOS_ProgrammierungApp.swift */,
@@ -363,7 +363,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

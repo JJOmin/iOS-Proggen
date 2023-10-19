@@ -11,6 +11,7 @@ class EmojiMemoryGame: ObservableObject {
     //Variablen
     @Published private var model: MemoryGame<String>
     private var currentThemeForModel: Theme<String>
+    var themen = Themen<String>()
     
     @Published var scoreChange: Int? //Optional für Animation
     
@@ -20,10 +21,10 @@ class EmojiMemoryGame: ObservableObject {
     
     //initialisierungsmethode, zum erstellen eines 1. Games
     init() {
-        let currentTheme = Theme<String>(theme: themes.randomElement()!)
-        let uniqueContentFromTheme = currentTheme.returnCardsForGame()
+        let currentTheme = Theme<String>(theme: themen.themes.randomElement()!)
+        let uniqueContentFromTheme = themen.returnCardsForGame(theme: currentTheme)
         
-        model = MemoryGame(numberOfPairsOfCards: currentTheme.returnCardsForGame().count) {
+        model = MemoryGame(numberOfPairsOfCards: themen.returnCardsForGame(theme: currentTheme).count) {
             indexOfPair in uniqueContentFromTheme[indexOfPair]
         }
         currentThemeForModel = currentTheme
@@ -35,9 +36,9 @@ class EmojiMemoryGame: ObservableObject {
     
     
     func createNewMemoryGame() {
-            let currentTheme = Theme<String>(theme: themes.randomElement()!)
-            let uniqueContent = currentTheme.returnCardsForGame()
-            model = MemoryGame<String>(numberOfPairsOfCards: currentTheme.returnCardsForGame().count) { pairIndex in
+        let currentTheme = Theme<String>(theme: themen.themes.randomElement()!)
+            let uniqueContent = themen.returnCardsForGame(theme: currentTheme)
+            model = MemoryGame<String>(numberOfPairsOfCards: themen.returnCardsForGame(theme: currentTheme).count) { pairIndex in
                 uniqueContent[pairIndex]
             }
             self.shuffle()
@@ -60,75 +61,18 @@ class EmojiMemoryGame: ObservableObject {
     
     func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card: card)
-        print("ChooseCard Ausgeführt")
+        //print("ChooseCard Ausgeführt")
     }
     
     
-    private var themes = [
-            Theme<String>(cardSet: ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅"],
-                          numberOfPairs: 16, //16
-                          themeColor: "pink",
-                          themeName: "Fruits",
-                          backgroundColor: "green"),
-            
-            Theme<String>(cardSet: ["🐙","🪼","🦐","🦞","🦀","🐡","🐠","🐟","🐬","🐳","🐋","🦈","🦭"],
-                          numberOfPairs: 13, //13
-                          themeColor: "blue",
-                          themeName: "Sea ​​Creatures",
-                          backgroundColor: "indigo"),
+   
     
-            Theme<String>(cardSet: ["🌵","🎄","🌲","🌳","🌴","🪵","🌱","🌿","☘️","🍀","🎍","🪴","🎋","🍃","🍂","🍁","🍄","🌾","🪸"],
-                          numberOfPairs: 19, //19
-                          themeColor: "green",
-                          themeName: "Plants",
-                          backgroundColor: "mint"),
-            
-            Theme<String>(cardSet: ["⛷️","🏂","🪂","🏋️‍♀️","🤼‍♀️","🤸","🤺","🏌️","🏇","🧘‍♀️","🏄"],
-                          numberOfPairs: 11, //11
-                          themeColor: "yellow",
-                          themeName: "Activeties",
-                          backgroundColor: "gray"),
-            
-            Theme<String>(cardSet: ["🪇","🥁","🪘","🎷","🎺","🪗","🎸","🪕","🎻","🪈"],
-                          numberOfPairs: 5,
-                          themeColor: "orange",
-                          themeName: "Instruments",
-                          backgroundColor: "black"),
-            
-            Theme<String>(cardSet: ["🚗","🚕","🚙","🚌","🚎","🏎️","🚓","🚑","🚒","🚐","🛻","🚚","🚛","🚜"],
-                          numberOfPairs: 14, //14
-                          themeColor: "gray",
-                          themeName: "Cars",
-                          backgroundColor: "white"),]
-    
-    
-    //methode zum konvertieren von String Farben in Color Type
-    func getColor(colorString : String) -> Color {
-        let colorMapping: [String: Color] = [
-            "white": .white,
-            "red": .red,
-            "orange": .orange,
-            "blue": .blue,
-            "green": .green,
-            "gray": .gray,
-            "purple": .purple,
-            "pink": .pink,
-            "yellow": .yellow,
-            "black": .black,
-            "indigo": .indigo,
-            "mint": .mint
-        ]
-        //wenn farbe vorhanden, dann return als Color Type ansonsten red
-        return colorMapping[colorString] ?? .red
-    }
-    
-    //Methoden fr die Farben
     func getCardColor() -> Color{
-        getColor(colorString: currentThemeForModel.themeColor)
+        themen.getColor(colorString: currentThemeForModel.themeColor)
     }
     
     func getGroundColor() -> Color{
-        getColor(colorString: currentThemeForModel.backgroundColor)
+        themen.getColor(colorString: currentThemeForModel.backgroundColor)
     }
     
     func getThemeName()-> String{
