@@ -1,18 +1,60 @@
 //
 //  AspectVGrid.swift
-//  MemoryGameGuidedLecture
+//  Set
 //
-//  Created by Leonhard Tilly on 20.10.23.
+//  Created by Leonhard Tilly
 //
 
+import Foundation
 import SwiftUI
 
-struct AspectVGrid: View {
+struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiable {
+    var items: [Item]
+    var aspectRatio: CGFloat
+    var content: (Item) -> ItemView
+    
+init (items: [Item], aspectRatio: CGFloat, @ViewBuilder content: @escaping (Item) -> ItemView) {
+self.items = items
+self.aspectRatio = aspectRatio
+self.content = content
+}
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader{ geometry in
+            VStack{
+                let width: CGFloat = widthThatFits(itemCount: items.count, in: geometry.size, itemAspectRatio: aspectRatio)
+                LazyVGrid(columns: [adaptiveGridItem(width: width)],spacing: 0) {
+                    ForEach(items) { item in
+                        content (item) .aspectRatio(aspectRatio, contentMode: .fit)
+                        
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+        }
+    }
+    private func adaptiveGridItem(width : CGFloat)-> GridItem{
+        var gridItem = GridItem(.adaptive(minimum: width))
+        gridItem.spacing = 0
+        return gridItem
+    }
+    
+    private func widthThatFits(itemCount: Int, in size: CGSize, itemAspectRatio: CGFloat) -> CGFloat {
+        var columnCount = 1
+        var rowCount = itemCount
+        repeat {
+            let itemWidth = size.width / CGFloat(columnCount)
+            let itemHeight = itemWidth / itemAspectRatio
+            if CGFloat (rowCount) * itemHeight < size.height {
+                break
+            }
+            columnCount += 1
+            rowCount = (itemCount + (columnCount - 1)) / columnCount
+        } while columnCount < itemCount
+        if columnCount > itemCount {
+            columnCount = itemCount
+        }
+        return floor(size.width / CGFloat (columnCount) )
     }
 }
 
-#Preview {
-    AspectVGrid()
-}
