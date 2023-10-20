@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct MemoryGameGuidedLectureApp: App {
+struct SetGame: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

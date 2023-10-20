@@ -11,10 +11,7 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             VStack {
-                Image(systemName: "plus.rectangle")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("First Words").padding(20)
+                
             }
             .padding(1)
             }
@@ -24,24 +21,15 @@ struct ContentView: View {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Settings for Preview
-struct ContentView_Previews: PreviewProvider{
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = SetGame()
+        ContentView(viewModel: game)
+            .preferredColorScheme(.dark)
+            .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+        ContentView(viewModel: game)
+            .preferredColorScheme(.light)
+            .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
