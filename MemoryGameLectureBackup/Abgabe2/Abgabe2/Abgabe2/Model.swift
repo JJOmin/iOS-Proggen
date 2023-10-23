@@ -46,7 +46,7 @@ struct Model<CardContent> where CardContent: Equatable{ //"where CardContent: Eq
             
         cards[chosenIndex].isFaceUp.toggle()
         }
-        //print("\(cards)")
+        print("\(cards)")
     }
     
     
