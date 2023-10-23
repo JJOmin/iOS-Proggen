@@ -10,8 +10,6 @@
 import SwiftUI
 
 
-
-
 class ViewModel: ObservableObject{  //Observable Objekt
     //Propertys
     static let emojiArray = ["🚗","🚕","🚙","🚓","🏎️","🚍"] //Static = Global constant

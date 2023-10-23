@@ -12,25 +12,47 @@ struct ContentView: View {
     @ObservedObject var accViewModel: ViewModel //Zugriff
     
     var body: some View {
-
-            ScrollView{
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(accViewModel.cards) { card in
-                        CardView(card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                accViewModel.choose(card)
-                            }
-                    }
-                }
-            }.foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+        
+        ScrollView{
+            LazyVGrid(columns: [GridItem(.adaptive (minimum: 65))], content: {
+                
+                ForEach(accViewModel.cards, content: {card in CardView(card: card,color: accViewModel.getPrimaryColor()).aspectRatio(2/3, contentMode: .fit)
+                        .onTapGesture {
+                            accViewModel.choose(card)
+                        }
+                        .padding(1) // der Abstand zwischen den Cards
+                })
+            }).foregroundColor(accViewModel.getPrimaryColor())
+        }
+        Spacer()
+        // Button
+        HStack{
+            newGameButton
+            
+        }
     }
+    var newGameButton :some View {
+        Button(action: {
+            accViewModel.createMemoryGame()}
+               , label: {
+            VStack{
+                Image(systemName: "plus.rectangle.fill").font(.largeTitle)
+                Text("New Game")}})
+    }
+    
+    
+
 }
 
 
 
+    
+    
+
+
 struct CardView: View{
     let card: Model<String>.Card //Zugriff auf eine Card aus Model & passing only card
+    let color: Color
     
     var body: some View {
         ZStack{
