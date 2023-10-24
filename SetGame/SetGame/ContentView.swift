@@ -37,24 +37,22 @@ struct CardView: View{
         ZStack{
             let shape = RoundedRectangle(cornerRadius: 20)
             shape.fill()
-            VStack{
-                ForEach(0..<amount, id: \.self) { index in Pill(primaryColor: primaryColor, opacity: opacity, width: width, height: height, amount: amount)
-                }
+            //Pill(primaryColor: primaryColor, opacity: opacity, width: width, height: height, amount: amount)
                 
-            }
+            
             
             
             //Pill(primaryColor: primaryColor, opacity: opacity, width: width, height: height, amount: amount)
             
-            //Triangle()
-              //  .frame(width: width, height: height)
-                //.opacity(opacity)
-                //.foregroundColor(primaryColor)
+            Triangle()
+                .frame(width: width, height: height)
+                .opacity(opacity)
+                .foregroundColor(primaryColor)
             
-           // Triangle()
-           // .stroke(lineWidth: 0.9)
-             //   .frame(width: width, height: height)
-             //   .foregroundColor(primaryColor)
+            Triangle()
+                .stroke(lineWidth: 0.9)
+                .frame(width: width, height: height)
+                .foregroundColor(primaryColor)
             //createTriangle(primaryColor: .green, secondaryColor: .blue, opacity: 1, width: 40, height: 40)
             
             

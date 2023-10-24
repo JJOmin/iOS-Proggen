@@ -50,6 +50,7 @@
 		191EDADC2AE6B00300B0BDCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		191EDADE2AE6B02300B0BDCA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		191EDAE02AE6D88A00B0BDCA /* CustomShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapes.swift; sourceTree = "<group>"; };
+		191EDAE62AE6FB1600B0BDCA /* ToDoList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDoList.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 				191EDAB02AE6A85200B0BDCA /* SetGameApp.swift */,
 				191EDAB22AE6A85200B0BDCA /* ContentView.swift */,
 				191EDAE02AE6D88A00B0BDCA /* CustomShapes.swift */,
+				191EDAE62AE6FB1600B0BDCA /* ToDoList.h */,
 				191EDADE2AE6B02300B0BDCA /* ViewModel.swift */,
 				191EDAB42AE6A85300B0BDCA /* Assets.xcassets */,
 				191EDAB62AE6A85300B0BDCA /* Preview Content */,
