@@ -7,6 +7,40 @@
 
 import SwiftUI
 
+
+struct ContentView: View {
+    @ObservedObject var viewModel: ViewModel
+
+    var body: some View {
+        ScrollView{
+            LazyVGrid(columns: [GridItem(.adaptive (minimum: 80))], content: {
+                //for numberOfCards in viewModel.model.id{}
+                ForEach(viewModel.getCards()) { card in
+                    CardView(card: card)
+                        .aspectRatio(2/3, contentMode: .fill)
+                }
+            }).padding(1)
+        }
+    }
+}
+
+struct CardView: View {
+    let card: Model<String, String, Double, Int>.Card
+
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 15)
+                .fill()
+                .foregroundColor(.white) // Hintergrundfarbe der Karte
+
+            // Hier kannst du den Inhalt der Karte basierend auf den Werten in card anzeigen
+            Text("\(card.content.shape)")
+                .foregroundColor(.black) // Textfarbe
+        }
+    }
+}
+
+/*
 struct ContentView: View {
     @ObservedObject var ViewModel: ViewModel //Zugriff
     
@@ -14,11 +48,11 @@ struct ContentView: View {
         ScrollView{
             LazyVGrid(columns: [GridItem(.adaptive (minimum: 80))], content: {
                 //ForEach durch alle Elemente die wir erzeugen wollen
-                
+                /*
                 ForEach(0..<ViewModel.getNumberOfCards(), id: \.self) { index in
                     CardView(primaryColor: .green, secondaryColor: .blue, opacity: 1, width: 50, height: 50, amount: 2)
                         .aspectRatio(2/3, contentMode: .fit)
-                    }
+                    }*/
             }).padding()
         }
     }
@@ -61,13 +95,13 @@ struct CardView: View{
     }
 }
 
-
+*/
 //Do not touch, unless you know why
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View{
     let  game = ViewModel()
-    ContentView(ViewModel: game).preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-    ContentView(ViewModel: game).preferredColorScheme(.light)
+    ContentView(viewModel: game).preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+    ContentView(viewModel: game).preferredColorScheme(.light)
     }
 }
 

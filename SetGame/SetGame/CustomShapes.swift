@@ -8,10 +8,6 @@
 
 import SwiftUI
 
-
-
-
-
 //Erstmal drin gelassen, da Tutorial
 
 struct CreateDiamond: Shape{ //Create the Triangle
@@ -21,7 +17,6 @@ struct CreateDiamond: Shape{ //Create the Triangle
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY)) //done
             path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY)) //
             path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
-
         }
     }
 }
@@ -103,12 +98,32 @@ struct Symbol <Cards> {
 }
 
       
-
+/*
 class Symbols<Cards>{
     var symbols = [["CreatePill", "CreateRectangle", "CreateDiamond"],
                    ["green", "blue", "pink"],
                    [0.0, 0.5, 1.0],
                    [1,2,3]]
+    var startingNumberOfCards = 12
+    var totalNumberOfCards = 81
+    
+    /*func generateCardContents() -> [[any Hashable]] {
+        var createCardContent: [[any Hashable]] = []
+        
+        for symbol1 in symbols[0] {
+            for symbol2 in symbols[1] {
+                for symbol3 in symbols[2] {
+                    for symbol4 in symbols[3] {
+                        let cardContent = [symbol1, symbol2, symbol3, symbol4]
+                        createCardContent.append(cardContent)
+                    }
+                }
+            }
+        }
+        
+        return createCardContent
+    }
+    */
     
     //methode zum konvertieren von String Farben in Color Type
     func getColor(colorString : String) -> Color {
@@ -145,6 +160,16 @@ class Symbols<Cards>{
     func getSymbolAmounts() -> Array<Any>{
         return symbols[3]
     }
+    
+    func getTotalNumberOfCards() -> Int{
+        return totalNumberOfCards
+    }
+    
+    func getStartingNumberOfCards() -> Int{
+        return startingNumberOfCards
+    }
+
 }
+ */
 
 

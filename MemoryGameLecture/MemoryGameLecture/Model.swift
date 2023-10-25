@@ -50,12 +50,10 @@ struct Model<CardContent> where CardContent: Equatable{ //"where CardContent: Eq
     }
     
     struct Card: Identifiable {
-        
         //Outside Name "Model.Card"
         var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent // Dont Care Type (have to be anounced in struct)
-        
         var id: Int
     }
 }
