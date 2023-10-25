@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 struct Model<CardContent>{
     
     //Var
@@ -14,7 +15,7 @@ struct Model<CardContent>{
     
     //private(set)
     init (){
-        numberOfCards = 5 //5 Karten die wir haben wollen
+        numberOfCards = 81 //5 Karten die wir haben wollen
         score = 0
     }
     
@@ -27,13 +28,13 @@ struct Model<CardContent>{
     
     struct Card: Identifiable {
         //Outside Name "Model.Card"
-        var primaryColor: String //Farbe
-        var isMatched: Bool //Var die beinhaltet ob matched oder nicht
-        var symbolShape: String //Form
+        var symbolName: String //Form
+        var primaryColor: Color //Farbe
+        var symbolOpacity: Double //Füllung (nichts, schraffiert, komplett)
         var symbolAmount: Int //Anzahl der Objekte
-        var symbolFill: String //Füllung (nichts, schraffiert, komplett)
+        
+        var isMatched: Bool //Var die beinhaltet ob matched oder nicht
         var isSelected: Bool = false
-        var content: CardContent // Dont Care Type (have to be anounced in struct)
         var id: Int //zuordnung
     }
     

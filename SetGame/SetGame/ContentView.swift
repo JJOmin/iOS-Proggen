@@ -12,9 +12,10 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView{
-            LazyVGrid(columns: [GridItem(.adaptive (minimum: 65))], content: {
+            LazyVGrid(columns: [GridItem(.adaptive (minimum: 80))], content: {
                 //ForEach durch alle Elemente die wir erzeugen wollen
-                ForEach(0..<ViewModel.getNumberOfCards(), id: \.self) { index in 
+                
+                ForEach(0..<ViewModel.getNumberOfCards(), id: \.self) { index in
                     CardView(primaryColor: .green, secondaryColor: .blue, opacity: 1, width: 50, height: 50, amount: 2)
                         .aspectRatio(2/3, contentMode: .fit)
                     }
@@ -37,7 +38,7 @@ struct CardView: View{
         ZStack{
             let shape = RoundedRectangle(cornerRadius: 15)
             shape.fill()
-            //Pill(primaryColor: primaryColor, opacity: opacity, width: width, height: height, amount: amount)
+            //CreatePill(primaryColor: primaryColor, opacity: opacity, width: width, height: height, amount: amount)
             //createRectangle(primaryColor: .red, opacity: 0.5, width: 20, height: 20, amount: 3)
             
             
