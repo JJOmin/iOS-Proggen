@@ -14,7 +14,7 @@ struct Model<CardShapeName, CardShapeColor, CardShapeOpacity, CardShapeAmount> /
     var cards: Array<Card>
     private(set) var startingNumberOfCards: Int
     private(set) var totalNumberOfCards: Int
-    private let createCardSymbol: (Int) -> Card.CardContent
+    private let createCardSymbol: [String: [Card.CardContent]]
     private(set) var arrayOfPlayingCards: [Card]
     
     var score = 0
@@ -27,7 +27,7 @@ struct Model<CardShapeName, CardShapeColor, CardShapeOpacity, CardShapeAmount> /
     //private(set) var numberOfCards: Int //var for the numberOfCards
     
     //private(set)
-    init(startingNumberOfCards: Int, totalNumberOfCards: Int, createCardContent: @escaping (Int) -> Card.CardContent){
+    init(startingNumberOfCards: Int, totalNumberOfCards: Int, createCardContent: [String: [Card.CardContent]]){
         self.startingNumberOfCards = startingNumberOfCards //Number of cards to show after Creating a new Game
         self.totalNumberOfCards = totalNumberOfCards
         self.createCardSymbol = createCardContent
@@ -91,7 +91,7 @@ struct Model<CardShapeName, CardShapeColor, CardShapeOpacity, CardShapeAmount> /
         //var primaryColor: Color //Farbe
         //var symbolOpacity: Double //Füllung (nichts, schraffiert, komplett)
         //var symbolAmount: Int //Anzahl der Objekte
-        var content: CardContent
+        var content: CardContent[]
         var isMatched: Bool = false//Var die beinhaltet ob matched oder nicht
         var isSelected: Bool = false
         var id: Int //zuordnung
@@ -116,7 +116,7 @@ struct Model<CardShapeName, CardShapeColor, CardShapeOpacity, CardShapeAmount> /
         self.cards = []
         self.numberOfMatchedCards = 0
         for x in 0..<self.totalNumberOfCards{
-            let content = createCardSymbol(x) //erstellt Card Symbol
+            let content = createCardSymbol["\(x)"] //erstellt Card Symbol
             let newCard = Card(content: content, id: x) //erstellt neue Card mit id und Inhalt
             self.cards.append(newCard)
         }

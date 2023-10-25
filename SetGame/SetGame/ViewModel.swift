@@ -7,20 +7,19 @@ class ViewModel: ObservableObject {
     //private var symbols: Symbols<String>
     //@Published var cards: [Model<String, String, Double, Int>.Card] = [] // Initialize the cards array here
     typealias Card = Model<String, String, Double, Int>.Card
-    @Published var cards: [Model<String, String, Double, Int>.Card] = []
+    @Published var cards:  [String: [Model<String, String, Double, Int>.Card]] = [:]
     var database = Database() //Zugriff auf die Database
     var id = 0
     
     
     init(){
-        model = Model(startingNumberOfCards: database.startingNumberOfCards, totalNumberOfCards: database.totalNumberOfCards, createCardContent: generateCardContent())
-        
+        model = Model(startingNumberOfCards: 12, totalNumberOfCards: 81, createCardContent: generateCardContent())
         
         getCardContent()
     }
     
     
-    func generateCardContent() -> [Model<String, String, Double, Int>.Card] {
+    func generateCardContent() -> [String: [Model<String, String, Double, Int>.Card.CardContent]] {
         for shapeName in database.shapes{
                 for shapeColor in database.colors{
                     for shapeOpacity in database.opacitys{
@@ -28,12 +27,15 @@ class ViewModel: ObservableObject {
                             id += 1
                             let cardContent = Card.CardContent(shape: shapeName, color: shapeColor, opacity: shapeOpacity, amountOfShapes: shapeAmount)
                             let card = Card(content: cardContent, id: id)
-                            cards.append(card) // Füge die Karte zum cards-Array hinzu
+                            cards["\(id)"] = [card] // Füge die Karte zum cards-Array hinzu
                             
                         }
                     }
                 }
-        };return cards//; print("\(model.id)")
+        }; for x in 0..<cards.count {
+            //print("Alter: \(cards[x]) Jahre.")
+            return ["\(x)":cards[x]]
+        }//return cards[[]]//; print("\(model.id)")
         }
     
     func getCardContent(){
