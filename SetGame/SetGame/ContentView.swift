@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
+    //static let database: Database()
 
     var body: some View {
         ScrollView{
