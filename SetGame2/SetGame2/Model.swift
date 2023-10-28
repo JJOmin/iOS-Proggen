@@ -31,9 +31,14 @@ struct Model<CardContent> where CardContent: Hashable {
     }
     
     
-    
-    
-    func choose (_ card: Card) {
+    mutating func choose (_ card: Card) {
+        //print(cards[0])
+        let chosenIndex = card.id
+        cards[chosenIndex-1].isSelected.toggle()
+        //print(cards[chosenIndex-1].isSelected)
+        //card.isSelected.toggle()
+        //print(card.id-1)
+        
         //Update der numberOfCardsInGame basierend auf den matches im game
         //numberOfCardsInGame = cards.cound
         //print(cards.count)

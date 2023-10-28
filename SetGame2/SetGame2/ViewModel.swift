@@ -9,7 +9,7 @@
 import SwiftUI
 
 
-class ViewModel{
+class ViewModel: ObservableObject{
     
     //-----------------Statics as Initalizer:-----------------
     static func createSetGame() -> Model<ViewModel.CardContent> {
@@ -54,7 +54,7 @@ class ViewModel{
     
     
     //-----------------Used on every Instance:-----------------
-    private var model: Model<CardContent> = createSetGame()
+    @Published private var model: Model<CardContent> = createSetGame()
     
     var cards: Array<Model<CardContent>.Card>{
         return model.cards
@@ -88,13 +88,23 @@ class ViewModel{
         return model.score
     }
     
+    //--------------------------------------------------------
+    
+    
+    
+    
+    //-----------------MARK: - Intent(s):-----------------
+    func choose(_ card: Model<CardContent>.Card){
+        model.choose(card)
+    }
+    
     //On ICe
     /*
     var numberOfCardsInGame: Int {
         return model.numberOfCardsInGame
     }
     */
-    //--------------------------------------------------------
+    
 }
 
 

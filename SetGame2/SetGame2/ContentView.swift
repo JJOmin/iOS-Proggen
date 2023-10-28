@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct ContentView: View {
-    let viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         VStack{
@@ -20,6 +20,9 @@ struct ContentView: View {
                         CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fill)
                             .foregroundColor(Color(card.content.shapeColor))
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
                     }
                 }
                 .padding(1)
