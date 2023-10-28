@@ -16,6 +16,10 @@ struct CardView: View {
             RoundedRectangle(cornerRadius: 15)
                 .fill()
                 .foregroundColor(.white) // Hintergrundfarbe der Karte
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .strokeBorder(.black, lineWidth: 4)
+                )
             
             if card.content.shapeName == "Rectangle"{
                 Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30, height: 30, amount: card.content.shapeAmount)
@@ -23,15 +27,15 @@ struct CardView: View {
                 Pill(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 50, height: 50, amount: card.content.shapeAmount)
                 
             }else if card.content.shapeName == "Diamond"{
+                //Diamond2(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 25, height: 25, amount: card.content.shapeAmount)
+                
                 Diamond().frame(width: 40, height: 40)
                     .foregroundColor(card.content.shapeColor)
                     .opacity(card.content.shapeOpacity)
-                    
-                
-            }
-            else {
-                Text("\(card.content.shapeName)").foregroundColor(card.content.shapeColor) // Textfarbe
-                
+                    .overlay(
+                        Diamond()
+                            .stroke(card.content.shapeColor, lineWidth: 2)
+                    )
             }
         }
     }

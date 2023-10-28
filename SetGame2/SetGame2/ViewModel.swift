@@ -84,6 +84,10 @@ class ViewModel{
         return colorMapping[colorString] ?? .red
     }
     
+    var getScore: Int {
+        return model.score
+    }
+    
     //On ICe
     /*
     var numberOfCardsInGame: Int {

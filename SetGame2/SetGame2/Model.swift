@@ -6,12 +6,14 @@ struct Model<CardContent> where CardContent: Hashable {
     var selectedCardIndices: Array<Int>
     private(set) var numberOfCardsInGame: Int
     private(set) var numberOfCardsShown: Int
+    private(set) var score: Int
     
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
         selectedCardIndices = []
         numberOfCardsInGame = totalNumberOfCards
         numberOfCardsShown = numCardsShown
+        score = 0
         
         
         for i in 0..<totalNumberOfCards {

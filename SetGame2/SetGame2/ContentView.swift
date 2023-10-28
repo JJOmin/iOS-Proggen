@@ -10,16 +10,20 @@ struct ContentView: View {
     let viewModel: ViewModel
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
-                ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
-                    let card = viewModel.cards[index]
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fill)
-                        .foregroundColor(Color(card.content.shapeColor))
+        VStack{
+            Text("Game of Set").font(.title)
+            Text("Score: \(viewModel.getScore)")
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
+                    ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
+                        let card = viewModel.cards[index]
+                        CardView(card: card)
+                            .aspectRatio(2/3, contentMode: .fill)
+                            .foregroundColor(Color(card.content.shapeColor))
+                    }
                 }
+                .padding(1)
             }
-            .padding(1)
         }
     }
 }

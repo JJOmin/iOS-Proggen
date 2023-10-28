@@ -17,8 +17,34 @@ struct Diamond: Shape{ //Create the Triangle
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY)) //done
             path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY)) //
             path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
         }
     }
+}
+
+struct Diamond2: View{
+    let primaryColor: Color
+    let opacity: Double
+    let width: CGFloat
+    let height: CGFloat
+    let amount: Int
+    var body: some View {
+        VStack(spacing: 10) { // Adjust spacing according to your needs
+            ForEach(0..<amount, id: \.self) { index in
+                RoundedRectangle(cornerRadius: 1)
+                    .frame(width: width, height: height)
+                    .foregroundColor(primaryColor)
+                    .opacity(opacity)
+                    .rotationEffect(.degrees(45))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 1)
+                            .stroke(primaryColor, lineWidth: 2)
+                            .rotationEffect(.degrees(45))
+                    )
+            }
+        }
+    }
+    
 }
 
 struct Pill: View {
