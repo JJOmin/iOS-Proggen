@@ -13,7 +13,7 @@ class ViewModel{
     
     //-----------------Statics as Initalizer:-----------------
     static func createSetGame() -> Model<ViewModel.CardContent> {
-        Model<ViewModel.CardContent>(totalNumberOfCards: 81) { index in
+        Model<ViewModel.CardContent>(totalNumberOfCards: 81, numCardsShown: 12) { index in
             let properties = shapePropertyArray[index]
             return CardContent(shapeName: properties[0] as! String,
                                shapeColor: properties[1] as! String,
@@ -55,6 +55,16 @@ class ViewModel{
     var cards: Array<Model<CardContent>.Card>{
         return model.cards
     }
+
+    var numberOfCardsShown: Int {
+        return model.numberOfCardsShown
+    }
+    //On ICe
+    /*
+    var numberOfCardsInGame: Int {
+        return model.numberOfCardsInGame
+    }
+    */
     //--------------------------------------------------------
 }
 
