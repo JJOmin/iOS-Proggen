@@ -9,6 +9,7 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var numberOfCardsShown: Int
     private(set) var score: Int
     private(set) var reactingString: String
+    private(set) var numberOfPossiblePairs: Int
     
     var database = Database() //Zugriff auf die Database
     
@@ -19,6 +20,7 @@ struct Model<CardContent> where CardContent: Equatable {
         numberOfCardsShown = numCardsShown
         score = 0
         reactingString = " "
+        numberOfPossiblePairs = 0
         
         
         for i in 0..<totalNumberOfCards {
@@ -26,6 +28,8 @@ struct Model<CardContent> where CardContent: Equatable {
             let card = Card(id: i+1, content: content)
             cards.append(card)
         }
+        
+        
     }
     
     struct Card: Identifiable, Equatable {

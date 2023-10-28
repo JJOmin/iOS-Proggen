@@ -85,6 +85,11 @@ class ViewModel: ObservableObject{
     var getScore: Int {
         return model.score
     }
+    
+    var getPossiblePairs: Int {
+        return model.numberOfPossiblePairs
+        
+    }
 
     //--------------------------------------------------------
     
@@ -99,6 +104,8 @@ class ViewModel: ObservableObject{
     var reactingString: String{
         return model.reactingString
     }
+    
+
     
     //On ICe
     /*

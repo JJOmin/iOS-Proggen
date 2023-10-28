@@ -14,7 +14,7 @@ struct ContentView: View {
             Text("Game of Set").font(.title)
             HStack{
                 Text("Score: \(viewModel.getScore)")
-                Text("Test")
+                //Text("PossiblePairs: \(viewModel.getPossiblePairs)")
             }
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
