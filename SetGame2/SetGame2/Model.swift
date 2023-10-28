@@ -51,11 +51,10 @@ struct Model<CardContent> where CardContent: Equatable {
         print(card.content)
         //Code for finding matches and removing Cards from cards array
         if selectedCardIndices.count == 3 {
-            
             let selectedCard1 = cards[selectedCardIndices[0]]
             let selectedCard2 = cards[selectedCardIndices[1]]
             let selectedCard3 = cards[selectedCardIndices[2]]
-            
+                
             if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
                 
                 func isValidSet(card1: ViewModel.CardContent, card2: ViewModel.CardContent, card3: ViewModel.CardContent) -> Bool{
@@ -70,51 +69,27 @@ struct Model<CardContent> where CardContent: Equatable {
                                                                                                                                     
                     return colorIsvalid && amountIsvalid && shapeNameIsvalid && opacityIsvalid
                 }
-                print(isValidSet(card1: card1, card2: card2, card3: card3))
                 
-                
-                
-                
-                
-                /*
-                
-                if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor), (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity), (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName), (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
-                    print("Amount Different")
-                } 
-                //2. Fall ShapeName different
-                else if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor),
-                          (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity),
-                          (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName),
-                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
-                    print("Shape Name Different")
-                    }
-                //3. Fall Opacity different
-                else if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor),
-                          (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity),
-                          (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName),
-                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
-                    print("Opacity Different")
-                } 
-                //4. Fall Color different
-                else if (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor),
-                          (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity),
-                          (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName),
-                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
-                    print("Color Different")
+                if isValidSet(card1: card1, card2: card2, card3: card3){
+                    //Remove from cards array
+                    reactingString = "3 Selected & It's a Set"
+                    
+                    
+                    
+                } else {
+                    reactingString = "3 Selected & thats not a Set"
+                    
                 }
-                //5. Fall All different
-                else if (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor),
-                          (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity),
-                          (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName),
-                          (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
-                    print("Color Different")
+                for i in 0..<selectedCardIndices.count{
+                    cards[selectedCardIndices[i]].isSelected = false
                 }
-                 */
-                
-
-                
-                
+                selectedCardIndices = []
+    
             }
+        } else if selectedCardIndices.count == 2{
+            reactingString = "2 Selected"
+        } else if selectedCardIndices.count == 1{
+            reactingString = "1 Selected"
         }
     }
 }

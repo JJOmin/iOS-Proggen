@@ -39,7 +39,7 @@ class ViewModel: ObservableObject{
             for name in ["Pill", "Diamond", "Rectangle"] {
                 for color in ["blue", "green", "pink"] {
                     for amount in [1, 2, 3] {
-                        for opacity in [0.0, 0.5, 1.0] {
+                        for opacity in [0.0, 0.3, 1.0] {
                             cardInstance.append([name, getColor(colorString: color), amount, opacity] as [Any])
                         }
                     }
