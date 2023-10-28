@@ -16,6 +16,8 @@
 		19A48A322AEBD25C0059B3D9 /* SetGame2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A48A312AEBD25C0059B3D9 /* SetGame2UITestsLaunchTests.swift */; };
 		19A48A3F2AEBD2AD0059B3D9 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A48A3E2AEBD2AD0059B3D9 /* Model.swift */; };
 		19A48A412AEBD2C30059B3D9 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A48A402AEBD2C30059B3D9 /* ViewModel.swift */; };
+		19B1F9F32AED5E89003F03C9 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1F9F22AED5E89003F03C9 /* CardView.swift */; };
+		19B1F9F52AED5F20003F03C9 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1F9F42AED5F20003F03C9 /* Shapes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		19A48A312AEBD25C0059B3D9 /* SetGame2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame2UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		19A48A3E2AEBD2AD0059B3D9 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		19A48A402AEBD2C30059B3D9 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		19B1F9F22AED5E89003F03C9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		19B1F9F42AED5F20003F03C9 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +104,10 @@
 			children = (
 				19A48A142AEBD25B0059B3D9 /* SetGame2App.swift */,
 				19A48A162AEBD25B0059B3D9 /* ContentView.swift */,
+				19B1F9F22AED5E89003F03C9 /* CardView.swift */,
 				19A48A3E2AEBD2AD0059B3D9 /* Model.swift */,
 				19A48A402AEBD2C30059B3D9 /* ViewModel.swift */,
+				19B1F9F42AED5F20003F03C9 /* Shapes.swift */,
 				19A48A182AEBD25C0059B3D9 /* Assets.xcassets */,
 				19A48A1A2AEBD25C0059B3D9 /* Preview Content */,
 			);
@@ -267,6 +273,8 @@
 				19A48A172AEBD25B0059B3D9 /* ContentView.swift in Sources */,
 				19A48A412AEBD2C30059B3D9 /* ViewModel.swift in Sources */,
 				19A48A152AEBD25B0059B3D9 /* SetGame2App.swift in Sources */,
+				19B1F9F32AED5E89003F03C9 /* CardView.swift in Sources */,
+				19B1F9F52AED5F20003F03C9 /* Shapes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

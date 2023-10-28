@@ -16,7 +16,7 @@ class ViewModel{
         Model<ViewModel.CardContent>(totalNumberOfCards: 81, numCardsShown: 12) { index in
             let properties = shapePropertyArray[index]
             return CardContent(shapeName: properties[0] as! String,
-                               shapeColor: properties[1] as! String,
+                               shapeColor: properties[1] as! Color,
                                shapeAmount: properties[2] as! Int,
                                shapeOpacity: properties[3] as! Double)
         }
@@ -24,9 +24,11 @@ class ViewModel{
     
     struct CardContent: Hashable {
         let shapeName: String
-        let shapeColor: String
+        let shapeColor: Color
         let shapeAmount: Int
         let shapeOpacity: Double
+        //let shapeHight: Int
+        //let shapeWidth: Int
     }
     
     //Setting the array into a let
@@ -40,11 +42,13 @@ class ViewModel{
                 for color in ["blue", "green", "pink"] {
                     for amount in [1, 2, 3] {
                         for opacity in [0.0, 0.5, 1.0] {
-                            cardInstance.append([name, color, amount, opacity] as [Any])
+                            cardInstance.append([name, getColor(colorString: color), amount, opacity] as [Any])
                         }
                     }
                 }
-            };return cardInstance
+            };
+        cardInstance.shuffle()
+        return cardInstance
     }
     //--------------------------------------------------------
     
@@ -59,6 +63,27 @@ class ViewModel{
     var numberOfCardsShown: Int {
         return model.numberOfCardsShown
     }
+    
+    
+    static func getColor(colorString : String) -> Color {
+        let colorMapping: [String: Color] = [
+            "white": .white,
+            "red": .red,
+            "orange": .orange,
+            "blue": .blue,
+            "green": .green,
+            "gray": .gray,
+            "purple": .purple,
+            "pink": .pink,
+            "yellow": .yellow,
+            "black": .black,
+            "indigo": .indigo,
+            "mint": .mint
+        ]
+        //wenn farbe vorhanden, dann return als Color Type ansonsten red
+        return colorMapping[colorString] ?? .red
+    }
+    
     //On ICe
     /*
     var numberOfCardsInGame: Int {

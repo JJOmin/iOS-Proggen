@@ -14,11 +14,9 @@ struct ContentView: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
                 ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
                     let card = viewModel.cards[index]
-                    //print(card.id,card.content.shapeName, card.content.shapeColor, card.content.shapeAmount, card.content.shapeOpacity)
                     CardView(card: card)
                         .aspectRatio(2/3, contentMode: .fill)
                         .foregroundColor(Color(card.content.shapeColor))
-                    
                 }
             }
             .padding(1)
@@ -26,22 +24,22 @@ struct ContentView: View {
     }
 }
 
-struct CardView: View {
-    let card: Model<ViewModel.CardContent>.Card
 
-    var body: some View {
-        
-        ZStack {
-            RoundedRectangle(cornerRadius: 15)
-                .fill()
-                .foregroundColor(.white)
-        }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ViewModel und Model Definitionen bleiben unverändert
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View{
         let set = ViewModel()

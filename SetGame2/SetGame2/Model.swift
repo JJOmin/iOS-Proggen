@@ -29,6 +29,8 @@ struct Model<CardContent> where CardContent: Hashable {
     }
     
     
+    
+    
     func choose (_ card: Card) {
         //Update der numberOfCardsInGame basierend auf den matches im game
         //numberOfCardsInGame = cards.cound
