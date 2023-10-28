@@ -9,7 +9,7 @@ import SwiftUI
 
 //Erstmal drin gelassen, da Tutorial
 
-struct Diamond: Shape{ //Create the Triangle
+struct DiamondShape: Shape{ //Create the Triangle
     
     func path(in rect: CGRect) -> Path {
         Path { path in
@@ -21,6 +21,32 @@ struct Diamond: Shape{ //Create the Triangle
         }
     }
 }
+
+struct Diamond: View{
+    let primaryColor: Color
+    let opacity: Double
+    let width: CGFloat
+    let height: CGFloat
+    let amount: Int
+    var body: some View {
+        VStack(spacing: 10) { // Adjust spacing according to your needs
+            ForEach(0..<amount, id: \.self) { index in
+                DiamondShape()
+                    .frame(width: width, height: height)
+                    .foregroundColor(primaryColor)
+                    .opacity(opacity)
+                    .overlay(
+                        DiamondShape()
+                            .stroke(primaryColor, lineWidth: 2)
+                    )
+            }
+        }
+    }
+}
+
+
+
+
 
 struct Diamond2: View{
     let primaryColor: Color

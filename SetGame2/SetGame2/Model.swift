@@ -48,7 +48,7 @@ struct Model<CardContent> where CardContent: Equatable {
             cards[chosenIndex].isSelected = true
             selectedCardIndices.append(chosenIndex)
         }
-        
+        print(card.content)
         //Code for finding matches and removing Cards from cards array
         if selectedCardIndices.count == 3 {
             
@@ -57,7 +57,27 @@ struct Model<CardContent> where CardContent: Equatable {
             let selectedCard3 = cards[selectedCardIndices[2]]
             
             if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
-                //1. Fall Amount different
+                
+                func isValidSet(card1: ViewModel.CardContent, card2: ViewModel.CardContent, card3: ViewModel.CardContent) -> Bool{
+                    //Color different
+                    let colorIsvalid = (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor) || (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor)
+                    //Amount
+                    let amountIsvalid = (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount) || (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount)
+                    //ShapeName
+                    let shapeNameIsvalid = (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName) || (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName)
+                    //Opacity
+                    let opacityIsvalid = (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity) || (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity)
+                                                                                                                                    
+                    return colorIsvalid && amountIsvalid && shapeNameIsvalid && opacityIsvalid
+                }
+                print(isValidSet(card1: card1, card2: card2, card3: card3))
+                
+                
+                
+                
+                
+                /*
+                
                 if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor), (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity), (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName), (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
                     print("Amount Different")
                 } 
@@ -89,10 +109,8 @@ struct Model<CardContent> where CardContent: Equatable {
                           (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
                     print("Color Different")
                 }
+                 */
                 
-                
-                
-                //Refactoring
 
                 
                 
