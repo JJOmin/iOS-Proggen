@@ -1,19 +1,22 @@
-// Online Swift compiler to run Swift program online
-// Print "Hello, World!" message
 import Foundation
 
 // Model
-struct Model<CardContent> where CardContent: Hashable{
-    var cards: Array<Card>
+struct Model<CardContent> where CardContent: Hashable {
+    private(set) var cards: Array<Card>
     var selectedCardIndices: Array<Int>
+    private(set) var numberOfCardsInGame: Int
+    private(set) var numberOfCardsShown: Int
     
-    init(totalNumberOfCards: Int, createCardContent: (Int) -> CardContent) {
+    init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
         selectedCardIndices = []
+        numberOfCardsInGame = totalNumberOfCards
+        numberOfCardsShown = numCardsShown
+        
         
         for i in 0..<totalNumberOfCards {
             let content: CardContent = createCardContent(i)
-            let card = Card(id: i, content: content)
+            let card = Card(id: i+1, content: content)
             cards.append(card)
         }
     }
@@ -24,9 +27,12 @@ struct Model<CardContent> where CardContent: Hashable{
         var isMatched = false
         var content: CardContent
     }
-
+    
     
     func choose (_ card: Card) {
+        //Update der numberOfCardsInGame basierend auf den matches im game
+        //numberOfCardsInGame = cards.cound
+        //print(cards.count)
         /*
         1. Fall: Color:same & Opacity: same & Shape: same but amount: different
         2. Fall: Color:same & Opacity: same & Shape: differen but            amount: same
