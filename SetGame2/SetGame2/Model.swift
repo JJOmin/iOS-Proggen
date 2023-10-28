@@ -7,6 +7,7 @@ struct Model<CardContent> where CardContent: Hashable {
     private(set) var numberOfCardsInGame: Int
     private(set) var numberOfCardsShown: Int
     private(set) var score: Int
+    private(set) var reactingString: String
     
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
@@ -14,6 +15,7 @@ struct Model<CardContent> where CardContent: Hashable {
         numberOfCardsInGame = totalNumberOfCards
         numberOfCardsShown = numCardsShown
         score = 0
+        reactingString = " "
         
         
         for i in 0..<totalNumberOfCards {

@@ -13,14 +13,23 @@ struct CardView: View {
     var body: some View {
         
         ZStack {
-            RoundedRectangle(cornerRadius: 15)
-                .fill()
-                .foregroundColor(.white) // Hintergrundfarbe der Karte
-                .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .strokeBorder(.black, lineWidth: 4)
-                )
+            let cardShape = RoundedRectangle(cornerRadius: 15).fill()
             
+            if card.isSelected {
+                cardShape
+                    .foregroundColor(.black)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .strokeBorder(.orange, lineWidth: 4))
+            } else{
+                cardShape
+                    .foregroundColor(.white) // Hintergrundfarbe der Karte
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .strokeBorder(.black, lineWidth: 4))
+            }
+            
+            //-----------------Abfrage für Shapes:-----------------
             if card.content.shapeName == "Rectangle"{
                 Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30, height: 30, amount: card.content.shapeAmount)
             } else if card.content.shapeName == "Pill"{
@@ -37,6 +46,7 @@ struct CardView: View {
                             .stroke(card.content.shapeColor, lineWidth: 2)
                     )
             }
+            //--------------------------------------------------------
         }
     }
 }

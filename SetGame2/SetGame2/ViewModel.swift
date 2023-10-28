@@ -87,7 +87,7 @@ class ViewModel: ObservableObject{
     var getScore: Int {
         return model.score
     }
-    
+
     //--------------------------------------------------------
     
     
@@ -96,6 +96,10 @@ class ViewModel: ObservableObject{
     //-----------------MARK: - Intent(s):-----------------
     func choose(_ card: Model<CardContent>.Card){
         model.choose(card)
+    }
+    
+    var reactingString: String{
+        return model.reactingString
     }
     
     //On ICe

@@ -13,6 +13,7 @@ struct ContentView: View {
         VStack{
             Text("Game of Set").font(.title)
             Text("Score: \(viewModel.getScore)")
+            Text("\(viewModel.reactingString)")
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
                     ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
