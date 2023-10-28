@@ -12,9 +12,9 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
-                for i in 0..<viewModel.numberOfCardsInGame{
-                    let card = viewModel.cards[i]
-                    print(card.id,card.content.shapeName, card.content.shapeColor, card.content.shapeAmount, card.content.shapeOpacity)
+                for i in 0..<viewModel.numberOfCardsShown {
+                   let card = viewModel.cards[i]
+                   print(card.id,card.content.shapeName, card.content.shapeColor, card.content.shapeAmount, card.content.shapeOpacity)
                     
                     /*
                     CardView(card: card)
