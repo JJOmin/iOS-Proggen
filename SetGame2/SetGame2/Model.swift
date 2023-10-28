@@ -1,7 +1,7 @@
 import Foundation
 
 // Model
-struct Model<CardContent> where CardContent: Hashable {
+struct Model<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     var selectedCardIndices: Array<Int>
     private(set) var numberOfCardsInGame: Int
@@ -61,10 +61,10 @@ struct Model<CardContent> where CardContent: Hashable {
               5. Fall: Color: different & Opacity: different & Shape:              different & amount: different
               Else not matched */
             //if cards[selectedCardIndices[0]].content
-            for i in selectedCardIndices{
-                print(cards)
-                cards[i].isSelected = false
-            }
+            
+            //print(cards[1].content.shapeName)
+                //cards[i].isSelected = false
+            
         }
         
         

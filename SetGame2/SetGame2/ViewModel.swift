@@ -22,7 +22,7 @@ class ViewModel: ObservableObject{
         }
     }
     
-    struct CardContent: Hashable {
+    struct CardContent: Equatable {
         let shapeName: String
         let shapeColor: Color
         let shapeAmount: Int
