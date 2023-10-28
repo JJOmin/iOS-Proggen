@@ -77,6 +77,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 if isValidSet(card1: card1, card2: card2, card3: card3){
                     //Remove from cards array
                     reactingString = "3 Selected & It's a Set"
+                    score += 1
                     
                     
                     
