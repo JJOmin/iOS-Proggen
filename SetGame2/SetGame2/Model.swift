@@ -9,6 +9,8 @@ struct Model<CardContent> where CardContent: Hashable {
     private(set) var score: Int
     private(set) var reactingString: String
     
+    var database = Database() //Zugriff auf die Database
+    
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
         selectedCardIndices = []
@@ -34,9 +36,41 @@ struct Model<CardContent> where CardContent: Hashable {
     
     
     mutating func choose (_ card: Card) {
-        //print(cards[0])
-        let chosenIndex = card.id
-        cards[chosenIndex-1].isSelected.toggle()
+        let chosenIndex = card.id - 1
+        
+        //Code for de/selecting cards
+        if selectedCardIndices.count < 3 && cards[chosenIndex].isSelected == true{
+            cards[chosenIndex].isSelected = false
+            let helper = selectedCardIndices
+            selectedCardIndices = helper.filter{$0 != chosenIndex}
+        } else if selectedCardIndices.count < 3 && cards[chosenIndex].isSelected == false{
+            cards[chosenIndex].isSelected = true
+            selectedCardIndices.append(chosenIndex)
+        }
+        
+        //Code for finding matches and removing Cards from cards array
+        if selectedCardIndices.count == 3 {
+            //reactingString = "Vergleiche"
+            
+            
+            /*
+              //1. Fall: Color:same & Opacity: same & Shape: same but amount: different
+              2. Fall: Color:same & Opacity: same & Shape: differen but            amount: same
+              3. Fall: Color:same & Opacity: different & Shape: same but           amount: same
+              4. Fall: Color: different & Opacity: same & Shape: same but          amount: same
+              5. Fall: Color: different & Opacity: different & Shape:              different & amount: different
+              Else not matched */
+            //if cards[selectedCardIndices[0]].content
+            for i in selectedCardIndices{
+                print(cards)
+                cards[i].isSelected = false
+            }
+        }
+        
+        
+        
+        
+        //if cards[chosenIndex-1].isSelected
         //print(cards[chosenIndex-1].isSelected)
         //card.isSelected.toggle()
         //print(card.id-1)
@@ -44,14 +78,8 @@ struct Model<CardContent> where CardContent: Hashable {
         //Update der numberOfCardsInGame basierend auf den matches im game
         //numberOfCardsInGame = cards.cound
         //print(cards.count)
-        /*
-        1. Fall: Color:same & Opacity: same & Shape: same but amount: different
-        2. Fall: Color:same & Opacity: same & Shape: differen but            amount: same
-        3. Fall: Color:same & Opacity: different & Shape: same but           amount: same
-        4. Fall: Color: different & Opacity: same & Shape: same but          amount: same
-        5. Fall: Color: different & Opacity: different & Shape:              different & amount: different
-        Else not matched
         
+        /*
         Logic to Compare Three Cards:
             -Only compare if 3 Cards Selected //if there are three         Values in var selectedCardsIndicies
                 -Only Compare Cards.Content
