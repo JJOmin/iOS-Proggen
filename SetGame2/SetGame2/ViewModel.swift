@@ -27,8 +27,6 @@ class ViewModel: ObservableObject{
         let shapeColor: Color
         let shapeAmount: Int
         let shapeOpacity: Double
-        //let shapeHight: Int
-        //let shapeWidth: Int
     }
     
     //Setting the array into a let

@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // Model
 struct Model<CardContent> where CardContent: Equatable {
@@ -50,39 +51,53 @@ struct Model<CardContent> where CardContent: Equatable {
         
         //Code for finding matches and removing Cards from cards array
         if selectedCardIndices.count == 3 {
-            //reactingString = "Vergleiche"
             
+            let selectedCard1 = cards[selectedCardIndices[0]]
+            let selectedCard2 = cards[selectedCardIndices[1]]
+            let selectedCard3 = cards[selectedCardIndices[2]]
             
-            /*
-              //1. Fall: Color:same & Opacity: same & Shape: same but amount: different
-              2. Fall: Color:same & Opacity: same & Shape: differen but            amount: same
-              3. Fall: Color:same & Opacity: different & Shape: same but           amount: same
-              4. Fall: Color: different & Opacity: same & Shape: same but          amount: same
-              5. Fall: Color: different & Opacity: different & Shape:              different & amount: different
-              Else not matched */
-            //if cards[selectedCardIndices[0]].content
-            
-            //print(cards[1].content.shapeName)
-                //cards[i].isSelected = false
-            
+            if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
+                //1. Fall Amount different
+                if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor), (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity), (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName), (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
+                    print("Amount Different")
+                } 
+                //2. Fall ShapeName different
+                else if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor),
+                          (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity),
+                          (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName),
+                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
+                    print("Shape Name Different")
+                    }
+                //3. Fall Opacity different
+                else if (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor),
+                          (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity),
+                          (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName),
+                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
+                    print("Opacity Different")
+                } 
+                //4. Fall Color different
+                else if (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor),
+                          (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity),
+                          (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName),
+                          (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount){
+                    print("Color Different")
+                }
+                //5. Fall All different
+                else if (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor),
+                          (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity),
+                          (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName),
+                          (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount){
+                    print("Color Different")
+                }
+                
+                
+                
+                //Refactoring
+
+                
+                
+            }
         }
-        
-        
-        
-        
-        //if cards[chosenIndex-1].isSelected
-        //print(cards[chosenIndex-1].isSelected)
-        //card.isSelected.toggle()
-        //print(card.id-1)
-        
-        //Update der numberOfCardsInGame basierend auf den matches im game
-        //numberOfCardsInGame = cards.cound
-        //print(cards.count)
-        
-        /*
-        Logic to Compare Three Cards:
-            -Only compare if 3 Cards Selected //if there are three         Values in var selectedCardsIndicies
-                -Only Compare Cards.Content
-        */
     }
 }
+
