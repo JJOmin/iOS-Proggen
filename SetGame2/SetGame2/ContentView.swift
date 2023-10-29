@@ -14,6 +14,7 @@ struct ContentView: View {
             Text("Game of Set").font(.title)
             HStack{
                 Text("Score: \(viewModel.getScore)")
+                
                 //Text("PossiblePairs: \(viewModel.getPossiblePairs)")
             }
             ScrollView {
@@ -29,6 +30,37 @@ struct ContentView: View {
                     }
                 }
                 .padding(1)
+            }
+            
+            HStack(spacing: 45) {
+                Button(action: {
+                    //viewModel.createNewSetGame()
+                    
+                }) {
+                    VStack {
+                        Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle)
+                        Text("Helping Hand")
+                    }
+                }
+                
+                Button(action: {
+                    //viewModel.createNewSetGame()
+                }) {
+                    VStack {
+                        Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
+                        Text("+3 Cards")
+                    }
+                }
+                Button(action: {
+                    viewModel.createNewSetGame()
+                }) {
+                    VStack {
+                        Image(systemName: "plus.rectangle.fill").font(.largeTitle)
+                        Text("New Game")
+                    }
+                }
+                
+                
             }
         }
     }

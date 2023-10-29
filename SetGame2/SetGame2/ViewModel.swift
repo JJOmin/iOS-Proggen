@@ -30,7 +30,7 @@ class ViewModel: ObservableObject{
     }
     
     //Setting the array into a let
-    static let shapePropertyArray: [[Any]] = fillArrays()
+    static var shapePropertyArray: [[Any]] = fillArrays()
 
     //Function to create a Array of Propertys for the Shapes as CardContent
         //Eventuelle auslagerung der Basispropertys
@@ -50,7 +50,14 @@ class ViewModel: ObservableObject{
     }
     //--------------------------------------------------------
     
+    func createNewSetGame() {
+        ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
+        model = ViewModel.createSetGame()
+    }
     
+    
+    
+
     //-----------------Used on every Instance:-----------------
     @Published private var model: Model<CardContent> = createSetGame()
     
@@ -104,16 +111,6 @@ class ViewModel: ObservableObject{
     var reactingString: String{
         return model.reactingString
     }
-    
-
-    
-    //On ICe
-    /*
-    var numberOfCardsInGame: Int {
-        return model.numberOfCardsInGame
-    }
-    */
-    
 }
 
 
