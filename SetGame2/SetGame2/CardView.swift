@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardView: View {
     let card: Model<ViewModel.CardContent>.Card
+    let scalingFactor: Double
 
     var body: some View {
         
@@ -31,12 +32,12 @@ struct CardView: View {
             
             //-----------------Abfrage für Shapes:-----------------
             if card.content.shapeName == "Rectangle"{
-                Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30, height: 30, amount: card.content.shapeAmount)
+                Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
             } else if card.content.shapeName == "Pill"{
-                Pill(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 50, height: 50, amount: card.content.shapeAmount)
+                Pill(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 50*scalingFactor, height: 50*scalingFactor, amount: card.content.shapeAmount)
                 
             }else if card.content.shapeName == "Diamond"{
-                Diamond(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30, height: 30, amount: card.content.shapeAmount)
+                Diamond(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
             }
             //--------------------------------------------------------
         }

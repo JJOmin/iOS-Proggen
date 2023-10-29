@@ -111,6 +111,39 @@ class ViewModel: ObservableObject{
     var reactingString: String{
         return model.reactingString
     }
+    
+    func addCardsShown(){
+        model.addCardsShown()
+    }
+    
+    var getPopupString: String{
+        model.getPopupString
+    }
+    var gridSize: CGFloat{
+        model.gridSize
+    }
+    var scalingFactor: Double{
+        model.scalingFactor
+    }
+    
+    func gridSizeCalculator() -> CGFloat{
+        if model.numberOfCardsShown > 15 {
+            model.gridSize = CGFloat(70)
+            model.scalingFactor = 3/4
+            print("Test")
+        } else if model.numberOfCardsShown > 24 {
+            model.gridSize = CGFloat(40)
+            model.scalingFactor = 1/4
+            print("Test")
+        } else {
+            model.gridSize = CGFloat(94)
+            model.scalingFactor = 4/4
+        }
+        return model.gridSize
+    }
+    
+    
+    
 }
 
 

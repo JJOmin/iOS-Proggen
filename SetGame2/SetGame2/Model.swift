@@ -6,10 +6,13 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     var selectedCardIndices: Array<Int>
     private(set) var numberOfCardsInGame: Int
-    private(set) var numberOfCardsShown: Int
+    var numberOfCardsShown: Int
     private(set) var score: Int
     private(set) var reactingString: String
     private(set) var numberOfPossiblePairs: Int
+    private(set) var getPopupString: String
+    var gridSize: CGFloat
+    var scalingFactor: Double
     
     var database = Database() //Zugriff auf die Database
     
@@ -21,6 +24,9 @@ struct Model<CardContent> where CardContent: Equatable {
         score = 0
         reactingString = " "
         numberOfPossiblePairs = 0
+        getPopupString = ""
+        gridSize = 94
+        scalingFactor = 1
         
         
         for i in 0..<totalNumberOfCards {
@@ -28,8 +34,6 @@ struct Model<CardContent> where CardContent: Equatable {
             let card = Card(id: i+1, content: content)
             cards.append(card)
         }
-        
-        
     }
     
     struct Card: Identifiable, Equatable {
@@ -39,12 +43,19 @@ struct Model<CardContent> where CardContent: Equatable {
         var content: CardContent
     }
     
+    mutating func addCardsShown(){
+        if numberOfCardsShown < 78{
+            numberOfCardsShown += 3
+        } else {
+            getPopupString = "All Cards are Shown"
+        }
+    }
+    
+    
+    
     
     mutating func choose (_ card: Card) {
         let chosenIndex = card.id - 1
-        
-        
-        
         //Code for de/selecting cards
         if selectedCardIndices.count < 3 && cards[chosenIndex].isSelected == true{
             cards[chosenIndex].isSelected = false
@@ -78,7 +89,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 
                 if isValidSet(card1: card1, card2: card2, card3: card3){
                     //Remove from cards array
-                    reactingString = "3 Selected & It's a Set"
+                    getPopupString = "3 Selected & It's a Set"
                     score += 1
                     
                     for i in 0..<3{
@@ -90,14 +101,11 @@ struct Model<CardContent> where CardContent: Equatable {
                         cards[selectedCardIndices[i]].isSelected = false
                     }
                     
-                    
-                    
                     //Remove the three cards from Cards:
                     
                     cards.removeAll { $0.id == selectedCardIndices[0] }
                     cards.removeAll { $0.id == selectedCardIndices[1] }
                     cards.removeAll { $0.id == selectedCardIndices[2] }
-                    //print(cards.count, cards[selectedCardIndices[0]])
                     for i in 0..<3{
                         print(cards[selectedCardIndices[i]])
                     }

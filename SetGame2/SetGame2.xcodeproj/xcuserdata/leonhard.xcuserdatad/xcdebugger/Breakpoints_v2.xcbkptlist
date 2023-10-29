@@ -14,8 +14,8 @@
             filePath = "SetGame2/Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "isValidSet(card1:card2:card3:)"
             landmarkType = "9">
          </BreakpointContent>

@@ -53,7 +53,7 @@
 		19A48A402AEBD2C30059B3D9 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		19B1F9F22AED5E89003F03C9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		19B1F9F42AED5F20003F03C9 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
-		19B1F9F62AED7B12003F03C9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Database.swift; path = SetGame2/Database.swift; sourceTree = "<group>"; };
+		19B1F9F62AED7B12003F03C9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,6 @@
 		19A48A082AEBD25B0059B3D9 = {
 			isa = PBXGroup;
 			children = (
-				19B1F9F62AED7B12003F03C9 /* Database.swift */,
 				19A48A132AEBD25B0059B3D9 /* SetGame2 */,
 				19A48A242AEBD25C0059B3D9 /* SetGame2Tests */,
 				19A48A2E2AEBD25C0059B3D9 /* SetGame2UITests */,
@@ -105,6 +104,7 @@
 		19A48A132AEBD25B0059B3D9 /* SetGame2 */ = {
 			isa = PBXGroup;
 			children = (
+				19B1F9F62AED7B12003F03C9 /* Database.swift */,
 				19A48A142AEBD25B0059B3D9 /* SetGame2App.swift */,
 				19A48A162AEBD25B0059B3D9 /* ContentView.swift */,
 				19B1F9F22AED5E89003F03C9 /* CardView.swift */,
