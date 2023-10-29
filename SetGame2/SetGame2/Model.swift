@@ -68,19 +68,20 @@ struct Model<CardContent> where CardContent: Equatable {
                 selectedCardIndices = helper.filter{$0 != index}
             }
             
-            startMatching -= 1
-            print(startMatching)
             
         } else if selectedCardIndices.count < 3 && card.isSelected == false{
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
                 selectedCardIndices.append(index)
             }
-            startMatching += 1
-            print(startMatching)
             
         } else if selectedCardIndices.count == 3 {
-            
+            findingMatches()
+            if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                cards[index].isSelected = true
+                selectedCardIndices.append(index)
+            }
+            /*
             for i in selectedCardIndices {
                 if let index = cards.firstIndex(where: { $0.id == i }) {
                     cards[index].isSelected = false
@@ -90,7 +91,7 @@ struct Model<CardContent> where CardContent: Equatable {
             print(selectedCardIndices)
             //findingMatches
             
-            /*
+            
             
             
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
@@ -104,7 +105,7 @@ struct Model<CardContent> where CardContent: Equatable {
     }
     
     
-    mutating func findingMatches() -> Bool{
+    mutating func findingMatches(){
         
         
         //DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -130,17 +131,16 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards.removeAll { $0.id == selectedCardIndices[1] }
                 cards.removeAll { $0.id == selectedCardIndices[2] }
                 selectedCardIndices = []
-                matched = true
+                
                 
             } else {
                 reactingString = "3 Selected & thats not a Set"
-                for i in 0..<selectedCardIndices.count{
+                for i in 0..<3{
                     cards[selectedCardIndices[i]].isSelected = false
                 };selectedCardIndices = []
-                matched = false
+                
             }
-        }; startMatching = 0
-        return matched
+        }
     }
     
     
