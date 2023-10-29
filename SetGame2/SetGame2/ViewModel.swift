@@ -37,7 +37,7 @@ class ViewModel: ObservableObject{
     static func fillArrays() -> [[Any]] {
             var cardInstance: [[Any]] = []
             for name in ["Pill", "Diamond", "Rectangle"] {
-                for color in ["blue", "green", "pink"] {
+                for color in ["blue", "green", "black"] {
                     for amount in [1, 2, 3] {
                         for opacity in [0.0, 0.3, 1.0] {
                             cardInstance.append([name, getColor(colorString: color), amount, opacity] as [Any])
@@ -79,7 +79,7 @@ class ViewModel: ObservableObject{
             "mint": .mint
         ]
         //wenn farbe vorhanden, dann return als Color Type ansonsten red
-        return colorMapping[colorString] ?? .red
+        return colorMapping[colorString] ?? .black
     }
     
     var getScore: Int {

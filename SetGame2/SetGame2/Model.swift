@@ -43,6 +43,8 @@ struct Model<CardContent> where CardContent: Equatable {
     mutating func choose (_ card: Card) {
         let chosenIndex = card.id - 1
         
+        
+        
         //Code for de/selecting cards
         if selectedCardIndices.count < 3 && cards[chosenIndex].isSelected == true{
             cards[chosenIndex].isSelected = false
@@ -52,7 +54,7 @@ struct Model<CardContent> where CardContent: Equatable {
             cards[chosenIndex].isSelected = true
             selectedCardIndices.append(chosenIndex)
         }
-        print(card.content)
+        //print(card.content)
         //Code for finding matches and removing Cards from cards array
         if selectedCardIndices.count == 3 {
             let selectedCard1 = cards[selectedCardIndices[0]]
@@ -79,22 +81,45 @@ struct Model<CardContent> where CardContent: Equatable {
                     reactingString = "3 Selected & It's a Set"
                     score += 1
                     
+                    for i in 0..<3{
+                        print(cards[selectedCardIndices[i]])
+                    }
+                    //print(cards.count, cards[selectedCardIndices[0]])
                     
+                    for i in 0..<selectedCardIndices.count{
+                        cards[selectedCardIndices[i]].isSelected = false
+                    }
+                    
+                    
+                    
+                    //Remove the three cards from Cards:
+                    
+                    cards.removeAll { $0.id == selectedCardIndices[0] }
+                    cards.removeAll { $0.id == selectedCardIndices[1] }
+                    cards.removeAll { $0.id == selectedCardIndices[2] }
+                    //print(cards.count, cards[selectedCardIndices[0]])
+                    for i in 0..<3{
+                        print(cards[selectedCardIndices[i]])
+                    }
+                    
+                    selectedCardIndices = []
                     
                 } else {
                     reactingString = "3 Selected & thats not a Set"
+                    for i in 0..<selectedCardIndices.count{
+                        cards[selectedCardIndices[i]].isSelected = false
+                    }
+                    selectedCardIndices = []
                     
                 }
-                for i in 0..<selectedCardIndices.count{
-                    cards[selectedCardIndices[i]].isSelected = false
-                }
-                selectedCardIndices = []
+                
     
             }
         } else if selectedCardIndices.count == 2{
             reactingString = "2 Selected"
         } else if selectedCardIndices.count == 1{
             reactingString = "1 Selected"
+            //print(cards[selectedCardIndices[0]])
         }
     }
 }

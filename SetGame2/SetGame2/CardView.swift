@@ -17,7 +17,7 @@ struct CardView: View {
             
             if card.isSelected {
                 cardShape
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15)
                             .strokeBorder(.orange, lineWidth: 4))
