@@ -21,8 +21,14 @@ struct CardView: View {
                     .foregroundColor(.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15*scalingFactor+3)
-                            .strokeBorder(.orange, lineWidth: 4))
-            } else{
+                            .strokeBorder(.orange, lineWidth: 6))
+            } else if card.isMatched {
+                cardShape
+                    .foregroundColor(.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
+                            .strokeBorder(.indigo, lineWidth: 8))
+            }else{
                 cardShape
                     .foregroundColor(.white) // Hintergrundfarbe der Karte
                     .overlay(

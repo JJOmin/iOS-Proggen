@@ -4,7 +4,7 @@ import SwiftUI
 // Model
 struct Model<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
-    var selectedCardIndices: Array<Int>
+    var selectedCardIds: Array<Int>
     private(set) var numberOfCardsInGame: Int
     var numberOfCardsShown: Int
     private(set) var score: Int
@@ -20,7 +20,7 @@ struct Model<CardContent> where CardContent: Equatable {
     
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
-        selectedCardIndices = []
+        selectedCardIds = []
         numberOfCardsInGame = totalNumberOfCards
         numberOfCardsShown = numCardsShown
         score = 0
@@ -47,10 +47,10 @@ struct Model<CardContent> where CardContent: Equatable {
     }
     
     mutating func addCardsShown(){
-        if numberOfCardsShown <= 78{
+        if numberOfCardsShown <= cards.count-3{
             numberOfCardsShown += 3
         } else {
-            getPopupString = "All Cards are Shown"
+            getPopupString = "All Cards are Shown!"
         }
     }
     
@@ -61,27 +61,54 @@ struct Model<CardContent> where CardContent: Equatable {
         //let chosenIndex = card.id - 1
         
         //Code for de/selecting cards
-        if selectedCardIndices.count <= 3 && card.isSelected == true {
+        if selectedCardIds.count <= 3 && card.isSelected == true {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = false
-                let helper = selectedCardIndices
-                selectedCardIndices = helper.filter{$0 != index}
-            }
+                let helper = selectedCardIds
+                selectedCardIds = helper.filter{$0 != card.id}
+            }; startMatching -= 1
             
             
-        } else if selectedCardIndices.count < 3 && card.isSelected == false{
+        } else if selectedCardIds.count < 3 && card.isSelected == false{
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
-                selectedCardIndices.append(index)
-            }
+                selectedCardIds.append(card.id)
+                print(cards[index])
+                print(selectedCardIds)
+                
+            }; startMatching += 1
             
-        } else if selectedCardIndices.count == 3 {
+        } else if selectedCardIds.count == 3 {
+            
+                if matched == false {
+                    for i in selectedCardIds{
+                        if let index = cards.firstIndex(where: { $0.id == i }) {
+                            cards[index].isSelected = false
+                            if let n = selectedCardIds.firstIndex(of: i) {
+                                selectedCardIds.remove(at: n)
+                            }
+                        };print("Hier ist i:")
+                        print(i)
+                }
+            
+            } else {
+                print("Hier bin ich lol")
+                print(selectedCardIds)
+                print(cards[selectedCardIds[0]])
+                print(cards[selectedCardIds[1]])
+                print(cards[selectedCardIds[2]])
+                /*
+                cards.removeAll { $0.id == selectedCardIndices[0] }
+                cards.removeAll { $0.id == selectedCardIndices[1] }
+                cards.removeAll { $0.id == selectedCardIndices[2] }
+                numberOfCardsInGame -= 3
+                selectedCardIndices = []
+                 */
+                
+            }
+        }
+        if startMatching == 3 {
             findingMatches()
-            if let index = cards.firstIndex(where: { $0.id == card.id }) {
-                cards[index].isSelected = true
-                selectedCardIndices.append(index)
-            }
-            
         }
     }
     
@@ -90,17 +117,30 @@ struct Model<CardContent> where CardContent: Equatable {
         
         
         //DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-        let selectedCard1 = cards[selectedCardIndices[0]]
-        let selectedCard2 = cards[selectedCardIndices[1]]
-        let selectedCard3 = cards[selectedCardIndices[2]]
+        let selectedCard1 = cards[selectedCardIds[0]]
+        let selectedCard2 = cards[selectedCardIds[1]]
+        let selectedCard3 = cards[selectedCardIds[2]]
         
         if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
             
             
             if isValidSet(card1: card1, card2: card2, card3: card3){
+                for i in 0..<3{
+                    cards[selectedCardIds[i]].isMatched = true
+                    cards[selectedCardIds[i]].isSelected = false
+                }
+                startMatching = 0
+                matched = true
+                print("Matched")
+                
                 
                 //Remove from cards array
-                getPopupString = "3 Selected & It's a Set"
+                //Falls weniger Karten existieren als angezeigt werden sollen
+                /*
+                if numberOfCardsShown > cards.count-3 {
+                    numberOfCardsShown -= 3
+                }
+                
                 score += 1
                 
                 for i in 0..<selectedCardIndices.count{
@@ -111,14 +151,19 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards.removeAll { $0.id == selectedCardIndices[0] }
                 cards.removeAll { $0.id == selectedCardIndices[1] }
                 cards.removeAll { $0.id == selectedCardIndices[2] }
+                numberOfCardsInGame -= 3
                 selectedCardIndices = []
+                 */
                 
                 
             } else {
-                reactingString = "3 Selected & thats not a Set"
+                matched = false
+                print("not matched")
+                print(selectedCardIds)
+                /*
                 for i in 0..<3{
                     cards[selectedCardIndices[i]].isSelected = false
-                };selectedCardIndices = []
+                };selectedCardIndices = []*/
                 
             }
         }
@@ -141,4 +186,5 @@ struct Model<CardContent> where CardContent: Equatable {
     
     
 }
+
 
