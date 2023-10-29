@@ -15,6 +15,7 @@ struct Model<CardContent> where CardContent: Equatable {
     var scalingFactor: Double
     var startMatching = 0
     var matched: Bool
+    var placeholder: Int
     
     var database = Database() //Zugriff auf die Database
     
@@ -30,6 +31,7 @@ struct Model<CardContent> where CardContent: Equatable {
         gridSize = 94
         scalingFactor = 1
         matched = false
+        placeholder = 0
         
         
         for i in 0..<totalNumberOfCards {
@@ -61,7 +63,7 @@ struct Model<CardContent> where CardContent: Equatable {
         //let chosenIndex = card.id - 1
         
         //Code for de/selecting cards
-        if selectedCardIds.count <= 3 && card.isSelected == true {
+        if selectedCardIds.count <= 3 && card.isSelected == true && placeholder == 0{
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = false
                 let helper = selectedCardIds
@@ -69,27 +71,71 @@ struct Model<CardContent> where CardContent: Equatable {
             }; startMatching -= 1
             
             
-        } else if selectedCardIds.count < 3 && card.isSelected == false{
+        } else if selectedCardIds.count < 3 && card.isSelected == false && placeholder == 0{
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
                 selectedCardIds.append(card.id)
-                print(cards[index])
-                print(selectedCardIds)
+                //print(cards[index])
+                //print(selectedCardIds)
                 
             }; startMatching += 1
             
-        } else if selectedCardIds.count == 3 {
+        } else if selectedCardIds.count == 3 || placeholder == 1 {
             
                 if matched == false {
-                    for i in selectedCardIds{
-                        if let index = cards.firstIndex(where: { $0.id == i }) {
-                            cards[index].isSelected = false
-                            if let n = selectedCardIds.firstIndex(of: i) {
+                    //print("Hello")
+                    placeholder = 1
+                    
+                    //entfernt den selected status der nicht gematchten Karten
+                    for index in 0..<selectedCardIds.count{
+                        if let cardsIndex = cards.firstIndex(where: { $0.id == selectedCardIds[index] }){
+                            cards[cardsIndex].isSelected = false
+                        }
+                    }
+                    
+                    //Removing all indexes from selectedCardIds Array
+                    for i in 0...2 {
+                        //print(selectedCardIds,i,selectedCardIds[0])
+                        selectedCardIds.removeFirst()
+                    }
+                    //print(selectedCardIds,selectedCardIds[0])
+                    
+                    
+                    //Hinzufügen neuer Karte
+                    selectedCardIds.append(card.id)
+                    if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                        cards[index].isSelected = true
+                    }
+                    
+                    
+                    
+                    //Append neues
+                    
+                    //print(selectedCardIds)
+                    
+                        /*
+                        if let index = selectedCardIds.firstIndex(of: selectedCardIds[i]) {
+                            selectedCardIds.remove(at: index)
+                        }*/
+                        //selectedCardIds = helper.filter{$0 != cardIdToRemove}
+                        //print(selectedCardIds[i])
+                        
+                        
+                        /*
+                        if let index = cards.firstIndex(where: { $0.id == cardIdToRemove }) {
+                            print(selectedCardIds[i], index)
+                            
+                            
+                            
+                            
+                            //cards[index].isSelected = false
+                            
+                            if let n = selectedCardIds.firstIndex(of: cardIdToRemove) {
                                 selectedCardIds.remove(at: n)
                             }
-                        };print("Hier ist i:")
-                        print(i)
-                }
+                        }*/
+                    
+                                   
             
             } else {
                 print("Hier bin ich lol")
@@ -158,6 +204,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 
             } else {
                 matched = false
+                startMatching = 0
                 print("not matched")
                 print(selectedCardIds)
                 /*
