@@ -26,8 +26,8 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     LazyVGrid(columns: [
-                        GridItem(.adaptive(minimum: viewModel.gridSizeCalculator()), spacing: 5)
-                        ], spacing: 10) {
+                        GridItem(.adaptive(minimum: viewModel.gridSize), spacing: 2*viewModel.scalingFactor)
+                    ],spacing: 2) {
                         ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
                             let card = viewModel.cards[index]
                             CardView(card: card, scalingFactor: viewModel.scalingFactor)
@@ -35,7 +35,7 @@ struct ContentView: View {
                                 .foregroundColor(Color(card.content.shapeColor))
                                 .onTapGesture {
                                     viewModel.choose(card)
-                                    showToast.toggle()
+                                    
                                 }
                         }
                     }
@@ -55,8 +55,9 @@ struct ContentView: View {
                     
                     Button(action: {
                         viewModel.addCardsShown()
+                        viewModel.gridSizeCalculator()
                         showToast.toggle()
-                        //viewModel.gridSizeCalculator()
+                        
                     }) {
                         VStack {
                             Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)

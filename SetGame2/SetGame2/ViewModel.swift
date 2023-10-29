@@ -70,6 +70,8 @@ class ViewModel: ObservableObject{
     }
     
     
+    
+    //Wäre nett wenn das in das Model oder Database gehen könnte
     static func getColor(colorString : String) -> Color {
         let colorMapping: [String: Color] = [
             "white": .white,
@@ -126,20 +128,24 @@ class ViewModel: ObservableObject{
         model.scalingFactor
     }
     
-    func gridSizeCalculator() -> CGFloat{
-        if model.numberOfCardsShown > 15 {
+    func gridSizeCalculator(){
+        if model.numberOfCardsShown > 15 && numberOfCardsShown < 24{
             model.gridSize = CGFloat(70)
-            model.scalingFactor = 3/4
-            print("Test")
-        } else if model.numberOfCardsShown > 24 {
+            model.scalingFactor = 4/6
+        } else if model.numberOfCardsShown > 24 && model.numberOfCardsShown < 36{
+            model.gridSize = CGFloat(60)
+            model.scalingFactor = 3/6
+        } else if model.numberOfCardsShown > 36 && model.numberOfCardsShown < 48{
+            model.gridSize = CGFloat(50)
+            model.scalingFactor = 2/6
+        } else if model.numberOfCardsShown > 48 && model.numberOfCardsShown < 63{
+            model.gridSize = CGFloat(45)
+            model.scalingFactor = 3/8
+        } else if model.numberOfCardsShown > 63 && model.numberOfCardsShown < 81{
             model.gridSize = CGFloat(40)
-            model.scalingFactor = 1/4
-            print("Test")
-        } else {
-            model.gridSize = CGFloat(94)
-            model.scalingFactor = 4/4
+            model.scalingFactor = 2/8
         }
-        return model.gridSize
+        
     }
     
     

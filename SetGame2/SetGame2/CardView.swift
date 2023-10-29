@@ -14,19 +14,19 @@ struct CardView: View {
     var body: some View {
         
         ZStack {
-            let cardShape = RoundedRectangle(cornerRadius: 15).fill()
+            let cardShape = RoundedRectangle(cornerRadius: 15*scalingFactor+5).fill()
             
             if card.isSelected {
                 cardShape
                     .foregroundColor(.white)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 15)
+                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
                             .strokeBorder(.orange, lineWidth: 4))
             } else{
                 cardShape
                     .foregroundColor(.white) // Hintergrundfarbe der Karte
                     .overlay(
-                        RoundedRectangle(cornerRadius: 15)
+                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
                             .strokeBorder(.black, lineWidth: 4))
             }
             
