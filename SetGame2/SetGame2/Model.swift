@@ -81,27 +81,8 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards[index].isSelected = true
                 selectedCardIndices.append(index)
             }
-            /*
-            for i in selectedCardIndices {
-                if let index = cards.firstIndex(where: { $0.id == i }) {
-                    cards[index].isSelected = false
-                    
-                }
-            }
-            print(selectedCardIndices)
-            //findingMatches
             
-            
-            
-            
-            if let index = cards.firstIndex(where: { $0.id == card.id }) {
-                cards[index].isSelected = true
-                selectedCardIndices.append(index)
-            }
-            */
         }
-        //print(card.content)
-        //Code for finding matches and removing Cards from cards array
     }
     
     
