@@ -14,6 +14,7 @@ struct Model<CardContent> where CardContent: Equatable {
     var gridSize: CGFloat
     var scalingFactor: Double
     var startMatching = 0
+    var matched: Bool
     
     var database = Database() //Zugriff auf die Database
     
@@ -28,6 +29,7 @@ struct Model<CardContent> where CardContent: Equatable {
         getPopupString = ""
         gridSize = 94
         scalingFactor = 1
+        matched = false
         
         
         for i in 0..<totalNumberOfCards {
@@ -77,67 +79,70 @@ struct Model<CardContent> where CardContent: Equatable {
             startMatching += 1
             print(startMatching)
             
-        }
-        
-        if startMatching == 4 {
+        } else if selectedCardIndices.count == 3 {
+            
             for i in selectedCardIndices {
                 if let index = cards.firstIndex(where: { $0.id == i }) {
                     cards[index].isSelected = false
                     
                 }
             }
+            print(selectedCardIndices)
+            //findingMatches
+            
+            /*
+            
+            
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
                 selectedCardIndices.append(index)
             }
-            startMatching = 5
-            
+            */
         }
         //print(card.content)
         //Code for finding matches and removing Cards from cards array
-        if startMatching == 5 {
-            //DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                let selectedCard1 = cards[selectedCardIndices[0]]
-                let selectedCard2 = cards[selectedCardIndices[1]]
-                let selectedCard3 = cards[selectedCardIndices[2]]
-                
-                if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
-                    
-                        if isValidSet(card1: card1, card2: card2, card3: card3){
-                            
-                            //Remove from cards array
-                            getPopupString = "3 Selected & It's a Set"
-                            score += 1
-                            
-                            for i in 0..<selectedCardIndices.count{
-                                cards[selectedCardIndices[i]].isSelected = false
-                            }
-                            
-                            //Remove the three cards from Cards:
-                            cards.removeAll { $0.id == selectedCardIndices[0] }
-                            cards.removeAll { $0.id == selectedCardIndices[1] }
-                            cards.removeAll { $0.id == selectedCardIndices[2] }
-                            selectedCardIndices = []
-                            
-                        } else {
-                            reactingString = "3 Selected & thats not a Set"
-                            for i in 0..<selectedCardIndices.count{
-                                cards[selectedCardIndices[i]].isSelected = false
-                            }
-                            selectedCardIndices = []
-                            
-                        }
-                    
-                    
-                }; startMatching = 0
-            
-        } else if selectedCardIndices.count == 2{
-            reactingString = "2 Selected"
-        } else if selectedCardIndices.count == 1{
-            reactingString = "1 Selected"
-            //print(cards[selectedCardIndices[0]])
-        }
     }
+    
+    
+    mutating func findingMatches() -> Bool{
+        
+        
+        //DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+        let selectedCard1 = cards[selectedCardIndices[0]]
+        let selectedCard2 = cards[selectedCardIndices[1]]
+        let selectedCard3 = cards[selectedCardIndices[2]]
+        
+        if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
+            
+            
+            if isValidSet(card1: card1, card2: card2, card3: card3){
+                
+                //Remove from cards array
+                getPopupString = "3 Selected & It's a Set"
+                score += 1
+                
+                for i in 0..<selectedCardIndices.count{
+                    cards[selectedCardIndices[i]].isSelected = false
+                }
+                
+                //Remove the three cards from Cards:
+                cards.removeAll { $0.id == selectedCardIndices[0] }
+                cards.removeAll { $0.id == selectedCardIndices[1] }
+                cards.removeAll { $0.id == selectedCardIndices[2] }
+                selectedCardIndices = []
+                matched = true
+                
+            } else {
+                reactingString = "3 Selected & thats not a Set"
+                for i in 0..<selectedCardIndices.count{
+                    cards[selectedCardIndices[i]].isSelected = false
+                };selectedCardIndices = []
+                matched = false
+            }
+        }; startMatching = 0
+        return matched
+    }
+    
     
     func isValidSet(card1: ViewModel.CardContent, card2: ViewModel.CardContent, card3: ViewModel.CardContent) -> Bool{
         //Color different
