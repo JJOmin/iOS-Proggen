@@ -12,40 +12,42 @@ struct CardView: View {
     let scalingFactor: Double
 
     var body: some View {
-        
-        ZStack {
-            let cardShape = RoundedRectangle(cornerRadius: 15*scalingFactor+5).fill()
+        GeometryReader(content: {geometry in
             
-            if card.isSelected && !card.isMatched {
-                cardShape
-                    .foregroundColor(.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
-                            .strokeBorder(.orange, lineWidth: 6))
-            } else if card.isMatched && card.isSelected {
-                cardShape
-                    .foregroundColor(.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
-                            .strokeBorder(.indigo, lineWidth: 8))
-            }else{
-                cardShape
-                    .foregroundColor(.white) // Hintergrundfarbe der Karte
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15*scalingFactor+3)
-                            .strokeBorder(.black, lineWidth: 4))
-            }
-            
-            //-----------------Abfrage für Shapes:-----------------
-            if card.content.shapeName == "Rectangle"{
-                Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
-            } else if card.content.shapeName == "Pill"{
-                Pill(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 50*scalingFactor, height: 50*scalingFactor, amount: card.content.shapeAmount)
+            ZStack {
+                let cardShape = RoundedRectangle(cornerRadius: 15*scalingFactor+5).fill()
                 
-            }else if card.content.shapeName == "Diamond"{
-                Diamond(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
+                if card.isSelected && !card.isMatched {
+                    cardShape
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15*scalingFactor+3)
+                                .strokeBorder(.orange, lineWidth: 6))
+                } else if card.isMatched && card.isSelected {
+                    cardShape
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15*scalingFactor+3)
+                                .strokeBorder(.indigo, lineWidth: 8))
+                }else{
+                    cardShape
+                        .foregroundColor(.white) // Hintergrundfarbe der Karte
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15*scalingFactor+3)
+                                .strokeBorder(.black, lineWidth: 4))
+                }
+                
+                //-----------------Abfrage für Shapes:-----------------
+                if card.content.shapeName == "Rectangle"{
+                    Rectangle(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
+                } else if card.content.shapeName == "Pill"{
+                    Pill(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 50*scalingFactor, height: 50*scalingFactor, amount: card.content.shapeAmount)
+                    
+                }else if card.content.shapeName == "Diamond"{
+                    Diamond(primaryColor: card.content.shapeColor, opacity: card.content.shapeOpacity, width: 30*scalingFactor, height: 30*scalingFactor, amount: card.content.shapeAmount)
+                }
+                //--------------------------------------------------------
             }
-            //--------------------------------------------------------
-        }
+        })
     }
 }

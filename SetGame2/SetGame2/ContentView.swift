@@ -18,6 +18,7 @@ struct ContentView: View {
             VStack{
                 Text("Game of Set").font(.title)
                 Text("Cards On Screen: \(viewModel.numberOfCardsShown)")
+                Text("Stehengeblieben Video 5 1:18:02 Wichtige sache in der View")
                 HStack{
                     Text("Score: \(viewModel.getScore)")
                     
