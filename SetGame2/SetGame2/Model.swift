@@ -18,30 +18,10 @@ struct Model<CardContent> where CardContent: Equatable {
     var placeholder: Int
     
     private var selectedCardIds: Array<Int> {
-        var selectedCardIndecies = [Int]()
-        for index in cards.indices{
-            if cards[index].isSelected == true{
-                selectedCardIndecies.append(index)
-            }
-        }
-        
-        if selectedCardIndecies.count == 1{
-            return [selectedCardIndecies[0]]
-        } else if selectedCardIndecies.count == 2{
-            var cardArray = [Int]()
-            cardArray.append(selectedCardIndecies[0])
-            cardArray.append(selectedCardIndecies[1])
-            return cardArray //cardArray
-        } else if selectedCardIndecies.count == 3{
-            var cardArray = [Int]()
-            cardArray.append(selectedCardIndecies[0])
-            cardArray.append(selectedCardIndecies[1])
-            cardArray.append(selectedCardIndecies[2])
-            return cardArray //cardArray
-        } else {
-            let cardArray = [Int]()
-            //print("Achtung zu viel ausgewählt")
-            return cardArray
+        get{
+            return cards.indices.filter({cards[$0].isSelected}).selected}
+        set{
+            return cards.indices.forEach{ cards[$0].isSelected = false}
         }
     }
     
@@ -365,3 +345,25 @@ struct Model<CardContent> where CardContent: Equatable {
 }
 
 
+extension Array{
+    var selected: Array<Int>{
+        if self.count == 1{
+            return [self[0] as! Int]
+        } else if self.count == 2{
+            var cardArray = [Int]()
+            cardArray.append(self[0] as! Int)
+            cardArray.append(self[1] as! Int)
+            return cardArray //cardArray
+        } else if self.count == 3{
+            var cardArray = [Int]()
+            cardArray.append(self[0] as! Int)
+            cardArray.append(self[1] as! Int)
+            cardArray.append(self[2] as! Int)
+            return cardArray //cardArray
+        } else {
+            let cardArray = [Int]()
+            return cardArray
+        }
+        
+    }
+}
