@@ -16,13 +16,13 @@ struct CardView: View {
         ZStack {
             let cardShape = RoundedRectangle(cornerRadius: 15*scalingFactor+5).fill()
             
-            if card.isSelected {
+            if card.isSelected && !card.isMatched {
                 cardShape
                     .foregroundColor(.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15*scalingFactor+3)
                             .strokeBorder(.orange, lineWidth: 6))
-            } else if card.isMatched {
+            } else if card.isMatched && card.isSelected {
                 cardShape
                     .foregroundColor(.white)
                     .overlay(
