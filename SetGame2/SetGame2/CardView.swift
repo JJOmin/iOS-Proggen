@@ -17,18 +17,24 @@ struct CardView: View {
             ZStack {
                 let cardShape = RoundedRectangle(cornerRadius: 15*scalingFactor+5).fill()
                 
-                if card.isSelected && !card.isMatched {
+                if card.isSelected && card.isMatched2 == .notChecked {
                     cardShape
                         .foregroundColor(.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 15*scalingFactor+3)
                                 .strokeBorder(.orange, lineWidth: 6))
-                } else if card.isMatched && card.isSelected {
+                } else if card.isMatched2 == .trueMatch && card.isSelected {
                     cardShape
                         .foregroundColor(.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 15*scalingFactor+3)
                                 .strokeBorder(.indigo, lineWidth: 8))
+                }else if card.isMatched2 == .falseMatch && card.isSelected {
+                    cardShape
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15*scalingFactor+3)
+                                .strokeBorder(.red, lineWidth: 8))
                 }else{
                     cardShape
                         .foregroundColor(.white) // Hintergrundfarbe der Karte

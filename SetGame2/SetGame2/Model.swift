@@ -8,7 +8,7 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var numberOfCardsInGame: Int
     var numberOfCardsShown: Int
     private(set) var score: Int
-    private(set) var reactingString: String
+    //private(set) var reactingString: String
     private(set) var numberOfPossiblePairs: Int
     private(set) var getPopupString: String
     var gridSize: CGFloat
@@ -28,7 +28,8 @@ struct Model<CardContent> where CardContent: Equatable {
     private var matchedCardIds: Array<Int>? {
         var matchedCardIndecies = [Int]()
         for index in cards.indices{
-            if cards[index].isMatched == true {
+            //Wenn gematcht
+            if cards[index].isMatched2 == .trueMatch {
                 matchedCardIndecies.append(index)
             }
         }
@@ -51,6 +52,7 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
+    
     var database = Database() //Zugriff auf die Database
     
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
@@ -59,7 +61,7 @@ struct Model<CardContent> where CardContent: Equatable {
         numberOfCardsInGame = totalNumberOfCards
         numberOfCardsShown = numCardsShown
         score = 0
-        reactingString = " "
+        //reactingString = " "
         numberOfPossiblePairs = 0
         getPopupString = ""
         gridSize = 94
@@ -70,7 +72,7 @@ struct Model<CardContent> where CardContent: Equatable {
         
         for i in 0..<totalNumberOfCards {
             let content: CardContent = createCardContent(i)
-            let card = Card(id: i+1, content: content)
+            let card = Card(id: i+1, content: content, isMatched2: .notChecked)
             cards.append(card)
         }
     }
@@ -80,6 +82,12 @@ struct Model<CardContent> where CardContent: Equatable {
         var isSelected = false
         var isMatched = false
         var content: CardContent
+        var isMatched2: MatchStatus
+        enum MatchStatus {
+            case trueMatch
+            case falseMatch
+            case notChecked
+        }
     }
     
     mutating func addCardsShown(){
@@ -96,21 +104,23 @@ struct Model<CardContent> where CardContent: Equatable {
     mutating func choose (_ card: Card) {
         
         //De/Selecting Cards
-        if card.isSelected == false && card.isMatched == false {
+        if !card.isSelected && (card.isMatched2 == .falseMatch || card.isMatched2 == .notChecked) { //&& card.isMatched == false //nicht ausgewählt und nicht gematcht (notChecked + .falseMatched)
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
+                //cards[index].isMatched2 = .notChecked
+                //
                 //if deselecting ==
                 deselecting += 1
-                print(deselecting)
+                //print(deselecting)
                 //print("Selectet Cards: \(selectedCardIds)")
-                print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
+                //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
             }
-        } else if card.isSelected == true && card.isMatched == false{
+        } else if card.isSelected == true && (card.isMatched2 == .notChecked) {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = false
                 deselecting -= 1
-                print(deselecting)
-                print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
+                //print(deselecting)
+                //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
             }
         }
         
@@ -120,49 +130,64 @@ struct Model<CardContent> where CardContent: Equatable {
             let selectedCard1 = cards[selectedCardIds[0]]
             let selectedCard2 = cards[selectedCardIds[1]]
             let selectedCard3 = cards[selectedCardIds[2]]
+            //print(selectedCard1)
+            //print(selectedCard2)
+            //print(selectedCard3)
             
             if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
                 
                 //wenn es ein set ist, dann setze matched status bei allen carten die matchen
                 if isValidSet(card1: card1, card2: card2, card3: card3){
                     
-                    if cards[selectedCardIds[0]].isMatched == false || cards[selectedCardIds[1]].isMatched == false || cards[selectedCardIds[2]].isMatched == false{
-                        cards[selectedCardIds[0]].isMatched = true
-                        cards[selectedCardIds[1]].isMatched = true
-                        cards[selectedCardIds[2]].isMatched = true
+                    //zum sicherstellen das nicht
+                    if cards[selectedCardIds[0]].isMatched2 == .falseMatch || cards[selectedCardIds[0]].isMatched2 == .notChecked || cards[selectedCardIds[1]].isMatched2 == .falseMatch || cards[selectedCardIds[1]].isMatched2 == .notChecked || cards[selectedCardIds[2]].isMatched2 == .falseMatch || cards[selectedCardIds[2]].isMatched2 == .notChecked {
+                        cards[selectedCardIds[0]].isMatched2 = .trueMatch
+                        cards[selectedCardIds[1]].isMatched2 = .trueMatch
+                        cards[selectedCardIds[2]].isMatched2 = .trueMatch
+                        //print(cards[selectedCardIds[0]])
+                        //print(cards[selectedCardIds[1]])
+                        //print(cards[selectedCardIds[2]])
                         score += 3
                         
                     }
                     
                 } else {
                     //print(selectedCardIds[0]
-                    print("Not a set")
+                    //print("Not a set")
+                    cards[selectedCardIds[0]].isMatched2 = .falseMatch
+                    cards[selectedCardIds[1]].isMatched2 = .falseMatch
+                    cards[selectedCardIds[2]].isMatched2 = .falseMatch
                     //deselecting = 3
                 }
             }
         }
         if deselecting == 4{
             //print("Gucken wir mal ob ich doch noch entfernen kann:\(matchedCardIds) \(selectedCardIds)")
+            //Deselects all cards exept the las one
             for i in cards.indices {
                 if let fourthCardIndex = cards.firstIndex(where: { $0.id == card.id }){
                     if i != fourthCardIndex{
                         cards[i].isSelected = false
+                        if cards[i].isMatched2 != .trueMatch{
+                            cards[i].isMatched2 = .notChecked
+                        }
                     }
                 }
 
             }
             for _ in 0..<3{
                 for (index, element) in cards.enumerated() {
-                    if element.isMatched == true {
+                    if element.isMatched2 == .trueMatch {
                         cards.remove(at: index)
                     }
                 }
             }
             //_ = matchedCardIds
             //_ = selectedCardIds
-            print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
-            if selectedCardIds.count == 1 && matchedCardIds?.count == nil{
+            //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
+            if selectedCardIds.count == 1 && matchedCardIds == nil{
                 deselecting = 1
+                
             }
             
         }
@@ -181,9 +206,29 @@ struct Model<CardContent> where CardContent: Equatable {
         return colorIsvalid && amountIsvalid && shapeNameIsvalid && opacityIsvalid
     }
     
-    
-    
+    //Function that shows (alt least on) solutions for the current Cards on Screen
+    func helpingHand() -> [[Card.ID]] {
+        var validSets: [[Card.ID]] = []
+
+        for i in 0..<numberOfCardsShown {
+            for j in (i+1)..<numberOfCardsShown {
+                for k in (j+1)..<numberOfCardsShown {
+                    let checkingCard1 = cards[i]
+                    let checkingCard2 = cards[j]
+                    let checkingCard3 = cards[k]
+                    if let card1 = checkingCard1.content as? ViewModel.CardContent, let card2 = checkingCard2.content as? ViewModel.CardContent, let card3 = checkingCard3.content as? ViewModel.CardContent{
+                        if isValidSet(card1: card1, card2: card2, card3: card3) {
+                            validSets.append([cards[i].id, cards[j].id, cards[k].id])
+                        }
+                    }
+                }
+            }
+        }
+        return validSets
+    }
 }
+
+
 
 
 extension Array{

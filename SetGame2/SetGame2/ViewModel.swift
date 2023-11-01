@@ -110,9 +110,7 @@ class ViewModel: ObservableObject{
         model.choose(card)
     }
     
-    var reactingString: String{
-        return model.reactingString
-    }
+
     
     func addCardsShown(){
         model.addCardsShown()
