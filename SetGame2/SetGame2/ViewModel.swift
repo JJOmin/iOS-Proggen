@@ -126,6 +126,18 @@ class ViewModel: ObservableObject{
         model.scalingFactor
     }
     
+    var possibleMatches: Int{
+        model.helpingHand().count
+    }
+    
+    var helpingHandState: Bool{
+        model.helpingHandState
+    }
+    
+    func helpingHandToggle(){
+        model.helpingHandState.toggle()
+    }
+    
     func gridSizeCalculator(){
         if model.numberOfCardsShown > 15 && numberOfCardsShown < 24{
             model.gridSize = CGFloat(70)

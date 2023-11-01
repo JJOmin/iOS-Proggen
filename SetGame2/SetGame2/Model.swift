@@ -16,6 +16,7 @@ struct Model<CardContent> where CardContent: Equatable {
     var startMatching = 0
     var deselecting: Int
     var placeholder: Int
+    var helpingHandState: Bool
     
     private var selectedCardIds: Array<Int> {
         get{
@@ -68,6 +69,7 @@ struct Model<CardContent> where CardContent: Equatable {
         scalingFactor = 1
         deselecting = 0
         placeholder = 0
+        helpingHandState = false
         
         
         for i in 0..<totalNumberOfCards {
@@ -107,20 +109,14 @@ struct Model<CardContent> where CardContent: Equatable {
         if !card.isSelected && (card.isMatched2 == .falseMatch || card.isMatched2 == .notChecked) { //&& card.isMatched == false //nicht ausgewählt und nicht gematcht (notChecked + .falseMatched)
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
-                //cards[index].isMatched2 = .notChecked
-                //
-                //if deselecting ==
                 deselecting += 1
-                //print(deselecting)
-                //print("Selectet Cards: \(selectedCardIds)")
-                //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
+                
             }
         } else if card.isSelected == true && (card.isMatched2 == .notChecked) {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = false
                 deselecting -= 1
-                //print(deselecting)
-                //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
+                
             }
         }
         
@@ -182,9 +178,6 @@ struct Model<CardContent> where CardContent: Equatable {
                     }
                 }
             }
-            //_ = matchedCardIds
-            //_ = selectedCardIds
-            //print("Matched Cards:\(String(describing: matchedCardIds)) Selected Cards:\(selectedCardIds)")
             if selectedCardIds.count == 1 && matchedCardIds == nil{
                 deselecting = 1
                 

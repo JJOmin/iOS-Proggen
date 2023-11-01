@@ -18,7 +18,9 @@ struct ContentView: View {
             VStack{
                 Text("Game of Set").font(.title)
                 Text("Cards On Screen: \(viewModel.numberOfCardsShown)")
-                Text("Stehengeblieben Video 5 1:18:02 Wichtige sache in der View")
+                if viewModel.helpingHandState == true{
+                    Text("Possible Matches:\(viewModel.possibleMatches)")
+                }
                 HStack{
                     Text("Score: \(viewModel.getScore)")
                     
@@ -45,8 +47,7 @@ struct ContentView: View {
                 Spacer()
                 HStack(spacing: 45) {
                     Button(action: {
-                        //viewModel.createNewSetGame()
-                        
+                        viewModel.helpingHandToggle()
                     }) {
                         VStack {
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle)
