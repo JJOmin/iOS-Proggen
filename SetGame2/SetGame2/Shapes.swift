@@ -18,6 +18,7 @@ struct DiamondShape: Shape{ //Create the Triangle
             path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY)) //
             path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
             path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
         }
     }
 }
