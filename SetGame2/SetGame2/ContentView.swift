@@ -56,14 +56,22 @@ struct ContentView: View {
                     }
                     
                     Button(action: {
-                        viewModel.addCardsShown()
-                        viewModel.gridSizeCalculator()
-                        showToast.toggle()
+                        if viewModel.numberOfCardsShown < viewModel.cards.count{
+                            viewModel.addCardsShown()
+                            viewModel.gridSizeCalculator()
+                            showToast.toggle()
+                        }
                         
                     }) {
                         VStack {
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
-                            Text("+3 Cards")
+                            if viewModel.numberOfCardsShown < viewModel.cards.count{
+                                Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
+                                Text("+3 Cards")
+                            } else{
+                                Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
+                                Text("+3 Cards")
+                                
+                            }
                         }
                     }
                     Button(action: {

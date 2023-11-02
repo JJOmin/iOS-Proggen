@@ -18,6 +18,7 @@ struct Model<CardContent> where CardContent: Equatable {
     var placeholder: Int
     var helpingHandState: Bool
     
+    
     private var selectedCardIds: Array<Int> {
         get{
             return cards.indices.filter({cards[$0].isSelected}).selected}
@@ -53,9 +54,7 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
-    
     var database = Database() //Zugriff auf die Database
-    
     init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
         cards = []
         //selectedCardIds = []
@@ -171,6 +170,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 }
 
             }
+            
             for _ in 0..<3{
                 for (index, element) in cards.enumerated() {
                     if element.isMatched2 == .trueMatch {
