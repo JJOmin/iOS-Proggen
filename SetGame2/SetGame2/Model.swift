@@ -27,7 +27,7 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
-    private var matchedCardIds: Array<Int>? {
+    var matchedCardIds: Array<Int> {
         var matchedCardIndecies = [Int]()
         for index in cards.indices{
             //Wenn gematcht
@@ -50,7 +50,7 @@ struct Model<CardContent> where CardContent: Equatable {
             cardArray.append(matchedCardIndecies[2])
             return cardArray //cardArray
         } else {
-            return nil
+            return [100]
         }
     }
     
@@ -109,6 +109,8 @@ struct Model<CardContent> where CardContent: Equatable {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
                 deselecting += 1
+                print(helpingHand())
+                
                 
             }
         } else if card.isSelected == true && (card.isMatched2 == .notChecked) {
@@ -171,14 +173,27 @@ struct Model<CardContent> where CardContent: Equatable {
 
             }
             
+            for i in 0..<cards.count {
+                for n in 0..<matchedCardIds.count-1 {
+                    if cards[i].id == matchedCardIds[n]{
+                        cards[matchedCardIds[n]] = cards[cards.count-(n+1)]
+                    }
+                }
+            }
+            // Removing probably broken
+            /*
             for _ in 0..<3{
                 for (index, element) in cards.enumerated() {
                     if element.isMatched2 == .trueMatch {
+                        print(cards[index].isMatched2)
                         cards.remove(at: index)
                     }
                 }
             }
-            if selectedCardIds.count == 1 && matchedCardIds == nil{
+             */
+            
+            
+            if selectedCardIds.count == 1 && matchedCardIds == [100]{
                 deselecting = 1
                 
             }
