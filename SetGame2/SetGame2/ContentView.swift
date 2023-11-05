@@ -17,7 +17,7 @@ struct ContentView: View {
         
         VStack{
             Text("Game of Set").font(.title)
-            Text("Cards On Screen: \(viewModel.numberOfCardsShown)")
+            Text("Cards Left: \(viewModel.cards.count)")
             if viewModel.helpingHandState == true{
                 Text("Possible Matches:\(viewModel.possibleMatches)")
             }

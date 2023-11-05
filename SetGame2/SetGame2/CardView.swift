@@ -18,11 +18,11 @@ struct CardView: View {
             ZStack {
                 //let cardShape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius).fill()
                 
-                if card.isSelected && card.isMatched2 == .notChecked {
-                    createShapeAndContent(borderColor: .orange, backgroundColor: .white, geometry: geometry)
-                } else if card.isMatched2 == .trueMatch && card.isSelected {
+                if card.isSelected && card.isMatched == .notChecked {
+                    createShapeAndContent(borderColor: .orange, backgroundColor: .orange, geometry: geometry)
+                } else if card.isMatched == .trueMatch && card.isSelected {
                     createShapeAndContent(borderColor: .indigo, backgroundColor: .indigo,geometry: geometry)
-                }else if card.isMatched2 == .falseMatch && card.isSelected {
+                }else if card.isMatched == .falseMatch && card.isSelected {
                     createShapeAndContent(borderColor: .gray, backgroundColor: .red,geometry: geometry)
                 }else{
                     createShapeAndContent(borderColor: .gray, backgroundColor: .white,geometry: geometry)
