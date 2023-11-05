@@ -14,97 +14,89 @@ struct ContentView: View {
     
     var body: some View {
         
-        ZStack {
-            VStack{
-                Text("Game of Set").font(.title)
-                Text("Cards On Screen: \(viewModel.numberOfCardsShown)")
-                if viewModel.helpingHandState == true{
-                    Text("Possible Matches:\(viewModel.possibleMatches)")
-                }
-                HStack{
-                    Text("Score: \(viewModel.getScore)")
-                    
-                    //Text("PossiblePairs: \(viewModel.getPossiblePairs)")
-                }
-                Spacer()
-                HStack {
-                    LazyVGrid(columns: [
-                        GridItem(.adaptive(minimum: viewModel.gridSize), spacing: 2*viewModel.scalingFactor)
-                    ],spacing: 2) {
-                        ForEach(0..<viewModel.numberOfCardsShown, id: \.self) { index in
-                            let card = viewModel.cards[index]
-                            CardView(card: card, scalingFactor: viewModel.scalingFactor)
-                                .aspectRatio(2/3, contentMode: .fit)
-                                .foregroundColor(Color(card.content.shapeColor))
-                                .onTapGesture {
-                                    viewModel.choose(card)
-                                    
-                                }
-                        }
-                    }
-                    .padding(1)
-                }
-                Spacer()
-                HStack(spacing: 45) {
-                    Button(action: {
-                        viewModel.helpingHandToggle()
-                    }) {
-                        VStack {
-                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle)
-                            Text("Helping Hand")
-                        }
-                    }
-                    
-                    Button(action: {
-                        if viewModel.numberOfCardsShown < viewModel.cards.count{
-                            viewModel.addCardsShown()
-                            viewModel.gridSizeCalculator()
-                            showToast.toggle()
-                        }
+        
+        VStack{
+            Text("Game of Set").font(.title)
+            Text("Cards On Screen: \(viewModel.numberOfCardsShown)")
+            if viewModel.helpingHandState == true{
+                Text("Possible Matches:\(viewModel.possibleMatches)")
+            }
+            HStack{
+                Text("Score: \(viewModel.getScore)")
+                
+                //Text("PossiblePairs: \(viewModel.getPossiblePairs)")
+            }
+            
+            AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
+                CardView(card: card)
+                    .padding(2)
+                    .foregroundColor(Color(card.content.shapeColor))
+                    .onTapGesture {
+                        viewModel.choose(card)
                         
-                    }) {
-                        VStack {
-                            if viewModel.numberOfCardsShown < viewModel.cards.count{
-                                Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
-                                Text("+3 Cards")
-                            } else{
-                                Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
-                                Text("+3 Cards")
-                                
-                            }
+                    }
+            })
+            Spacer()
+            HStack(spacing: 45) {
+                Button(action: {
+                    viewModel.helpingHandToggle()
+                }) {
+                    VStack {
+                        Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle)
+                        Text("Helping Hand")
+                    }
+                }
+                
+                Button(action: {
+                    if viewModel.numberOfCardsShown < viewModel.cards.count{
+                        viewModel.addCardsShown()
+                        //viewModel.gridSizeCalculator()
+                        showToast.toggle()
+                    }
+                    
+                }) {
+                    VStack {
+                        if viewModel.numberOfCardsShown < viewModel.cards.count{
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
+                            Text("+3 Cards")
+                        } else{
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
+                            Text("+3 Cards")
+                            
                         }
                     }
-                    Button(action: {
-                        viewModel.createNewSetGame()
-                    }) {
-                        VStack {
-                            Image(systemName: "plus.rectangle.fill").font(.largeTitle)
-                            Text("New Game")
-                        }
+                    
+                }
+                Button(action: {
+                    viewModel.createNewSetGame()
+                }) {
+                    VStack {
+                        Image(systemName: "plus.rectangle.fill").font(.largeTitle)
+                        Text("New Game")
                     }
                 }
             }
-            VStack {
-                if showToast && viewModel.getPopupString != ""{
-                    Text("\(viewModel.getPopupString)")
-                        .padding()
-                        .background(Color.orange).opacity(0.95)
-                        .foregroundColor(Color.black)
-                        .cornerRadius(15)
-                        .transition(.opacity)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                withAnimation {
-                                    showToast = false
-                                }
+            
+            
+            if showToast && viewModel.getPopupString != ""{
+                Text("\(viewModel.getPopupString)")
+                    .background(Color.orange).opacity(0.95)
+                    .foregroundColor(Color.black)
+                    .cornerRadius(15)
+                    .transition(.opacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showToast = false
                             }
                         }
-                }
+                    }
+                
             }
         }
         
+        
     }
-    
 }
 
 

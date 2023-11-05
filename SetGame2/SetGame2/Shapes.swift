@@ -29,8 +29,10 @@ struct Diamond: View{
     let width: CGFloat
     let height: CGFloat
     let amount: Int
+    let spacing: CGFloat
+    
     var body: some View {
-        VStack(spacing: 10) { // Adjust spacing according to your needs
+        VStack(spacing: spacing) { // Adjust spacing according to your needs
             ForEach(0..<amount, id: \.self) { index in
                 DiamondShape()
                     .frame(width: width, height: height)
@@ -80,9 +82,10 @@ struct Pill: View {
     let width: CGFloat
     let height: CGFloat
     let amount: Int
+    let spacing: CGFloat
     
     var body: some View {
-        VStack(spacing: 10) { // Adjust spacing according to your needs
+        VStack(spacing: spacing) { // Adjust spacing according to your needs
             ForEach(0..<amount, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 180)
                     .frame(width: width, height: height/3)
@@ -103,9 +106,11 @@ struct Rectangle: View {
     let width: CGFloat
     let height: CGFloat
     let amount: Int
+    let spacing: CGFloat
+    
     
     var body: some View {
-        VStack(spacing: 10) { // Adjust spacing according to your needs
+        VStack(spacing: spacing) { // Adjust spacing according to your needs
             ForEach(0..<amount, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 1)
                     .frame(width: width, height: height)

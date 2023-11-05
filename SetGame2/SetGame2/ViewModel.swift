@@ -37,7 +37,7 @@ class ViewModel: ObservableObject{
     static func fillArrays() -> [[Any]] {
             var cardInstance: [[Any]] = []
             for name in ["Pill", "Diamond", "Rectangle"] {
-                for color in ["blue", "green", "black"] {
+                for color in ["blue", "yellow", "black"] {
                     for amount in [1, 2, 3] {
                         for opacity in [0.0, 0.3, 1.0] {
                             cardInstance.append([name, getColor(colorString: color), amount, opacity] as [Any])
@@ -63,6 +63,10 @@ class ViewModel: ObservableObject{
     
     var cards: Array<Model<CardContent>.Card>{
         return model.cards
+    }
+    
+    var onScreenCards: Array<Model<CardContent>.Card>{
+        return model.onScreenCards
     }
 
     var numberOfCardsShown: Int {
@@ -114,6 +118,7 @@ class ViewModel: ObservableObject{
     
     func addCardsShown(){
         model.addCardsShown()
+        model.refreshOnScreenCards() //updating the Array
     }
     
     var getPopupString: String{
@@ -137,7 +142,7 @@ class ViewModel: ObservableObject{
     func helpingHandToggle(){
         model.helpingHandState.toggle()
     }
-    
+    /*
     func gridSizeCalculator(){
         if model.numberOfCardsShown > 15 && numberOfCardsShown < 24{
             model.gridSize = CGFloat(70)
@@ -156,7 +161,7 @@ class ViewModel: ObservableObject{
             model.scalingFactor = 2/8
         }
         
-    }
+    }*/
     
     
     
