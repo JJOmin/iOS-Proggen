@@ -133,7 +133,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards[index].isSelected = true
                 refreshOnScreenCards()
                 deselecting += 1
-                print(helpingHand())
+                //print(helpingHand())
                 
             }
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
