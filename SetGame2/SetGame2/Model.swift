@@ -238,42 +238,19 @@ struct Model<CardContent> where CardContent: Equatable {
     
     func isValidSet(card1: ViewModel.CardContent, card2: ViewModel.CardContent, card3: ViewModel.CardContent) -> Bool{
         //Color different
-        let colorIsValid = (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor && card3.shapeColor == card1.shapeColor)
-        let colorIsNotValid = (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor && card1.shapeColor != card3.shapeColor)
+        let colorIsvalid = (card1.shapeColor == card2.shapeColor && card2.shapeColor == card3.shapeColor && card3.shapeColor == card1.shapeColor) ||
+        (card1.shapeColor != card2.shapeColor && card2.shapeColor != card3.shapeColor && card1.shapeColor != card3.shapeColor)
         //Amount
-        let amountIsValid = (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount && card1.shapeAmount == card3.shapeAmount)
-        let amountIsNotValid = (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount && card1.shapeAmount != card3.shapeAmount)
+        let amountIsvalid = (card1.shapeAmount == card2.shapeAmount && card2.shapeAmount == card3.shapeAmount && card1.shapeAmount == card3.shapeAmount) ||
+        (card1.shapeAmount != card2.shapeAmount && card2.shapeAmount != card3.shapeAmount && card1.shapeAmount != card3.shapeAmount)
         //ShapeName
-        let shapeNameIsValid = (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName && card1.shapeName == card3.shapeName)
-        let shapeNameIsNotValid = (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName && card1.shapeName != card3.shapeName)
+        let shapeNameIsvalid = (card1.shapeName == card2.shapeName && card2.shapeName == card3.shapeName && card1.shapeName == card3.shapeName) ||
+        (card1.shapeName != card2.shapeName && card2.shapeName != card3.shapeName && card1.shapeName != card3.shapeName)
         //Opacity
-        let opacityIsValid = (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity && card1.shapeOpacity == card3.shapeOpacity)
-        let opacityIsNotValid = (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity && card1.shapeOpacity != card3.shapeOpacity)
+        let opacityIsvalid = (card1.shapeOpacity == card2.shapeOpacity && card2.shapeOpacity == card3.shapeOpacity && card1.shapeOpacity == card3.shapeOpacity) ||
+        (card1.shapeOpacity != card2.shapeOpacity && card2.shapeOpacity != card3.shapeOpacity && card1.shapeOpacity != card3.shapeOpacity)
         
-        //1. Fall color the odd one out
-        if colorIsValid == true && amountIsNotValid == true && shapeNameIsNotValid == true && opacityIsNotValid == true || colorIsNotValid == true && amountIsValid == true && shapeNameIsValid == true && opacityIsValid == true{
-            return true
-        }
-        //2. Fall amount the odd one out
-        else if colorIsNotValid == true && amountIsValid == true && shapeNameIsNotValid == true && opacityIsNotValid == true || colorIsValid == true && amountIsNotValid == true && shapeNameIsValid == true && opacityIsValid == true{
-            return true
-        }
-        //3. Fall shapeName the odd one out
-        else if colorIsNotValid == true && amountIsNotValid == true && shapeNameIsValid == true && opacityIsNotValid == true || colorIsValid == true && amountIsValid == true && shapeNameIsNotValid == true && opacityIsValid == true{
-            return true
-        }
-        //4.Fall opacity the odd one out
-        else if colorIsNotValid == true && amountIsNotValid == true && shapeNameIsNotValid == true && opacityIsValid == true || colorIsValid == true && amountIsValid == true && shapeNameIsValid == true && opacityIsNotValid == true{
-            return true
-        }
-        //5. Fall all are different
-        else if colorIsNotValid == true && amountIsNotValid == true && shapeNameIsNotValid == true && opacityIsNotValid == true{
-            return true
-        } else{
-            return false
-        }
-        
-        
+        return colorIsvalid && amountIsvalid && shapeNameIsvalid && opacityIsvalid
     }
     
     //Function that shows (alt least on) solutions for the current Cards on Screen
