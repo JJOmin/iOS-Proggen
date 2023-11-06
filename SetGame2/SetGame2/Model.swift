@@ -4,39 +4,27 @@ import SwiftUI
 // Model
 struct Model<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
-    
-    private(set) var numberOfCardsInGame: Int
-    var numberOfCardsShown: Int
+    private(set) var numberOfCardsShown: Int
     private(set) var score: Int
-    //private(set) var reactingString: String
-    private(set) var numberOfPossiblePairs: Int
     private(set) var getPopupString: String
-    var gridSize: CGFloat
-    var scalingFactor: Double
-    var startMatching = 0
-    var deselecting: Int
-    var somethingMatched: statusMatched
+    private(set) var deselecting: Int
+    private(set) var helpingHandState: Bool
+    private(set) var onScreenCards: Array<Card>
+    private(set) var database = Database() //Zugriff auf die Database
+    private(set) var somethingMatched: statusMatched
     enum statusMatched {
         case falseMatched
         case trueMatched
         case notChecked
         case removePending
     }
-    //var placeholder: Int
-    var helpingHandState: Bool
-    private(set) var onScreenCards: Array<Card>
-    
     
     private var selectedCardIds: Array<Int> {
         get{
             return cards.indices.filter({cards[$0].isSelected}).selected}
-        /*
-        set{
-            return cards.indices.forEach{ cards[$0].isSelected = false}
-        }*/
     }
     
-    var matchedCardIds: Array<Int> {
+    private var matchedCardIds: Array<Int> {
         var matchedCardIndecies = [Int]()
         for index in cards.indices{
             //Wenn gematcht
@@ -63,25 +51,18 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
-    var database = Database() //Zugriff auf die Database
-    init(totalNumberOfCards: Int, numCardsShown: Int, createCardContent: (Int) -> CardContent) {
+    
+    
+    
+    init(totalNumberOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = []
         onScreenCards = []
-        //selectedCardIds = []
-        numberOfCardsInGame = totalNumberOfCards
-        numberOfCardsShown = numCardsShown
+        numberOfCardsShown = 12
         score = 0
-        //reactingString = " "
-        numberOfPossiblePairs = 0
         getPopupString = ""
-        gridSize = 94
-        scalingFactor = 1
         deselecting = 0
-        //placeholder = 0
         helpingHandState = false
         somethingMatched = .notChecked
-        
-        
         
         for i in 0..<totalNumberOfCards {
             let content: CardContent = createCardContent(i)
@@ -96,7 +77,6 @@ struct Model<CardContent> where CardContent: Equatable {
     struct Card: Identifiable, Equatable {
         var id: Int
         var isSelected = false
-        //var isMatched = false
         var content: CardContent
         var isMatched: MatchStatus
         enum MatchStatus {
@@ -106,6 +86,7 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
+    //Mutating funcs
     mutating func addCardsShown(){
         if numberOfCardsShown <= cards.count-3{
             numberOfCardsShown += 3
@@ -115,14 +96,13 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
+    
     mutating func refreshOnScreenCards(){
         onScreenCards = []
         for i in 0..<numberOfCardsShown {
             onScreenCards.append(cards[i])
         }
     }
-    
-    
     
     
     mutating func choose (_ card: Card) {
@@ -226,6 +206,11 @@ struct Model<CardContent> where CardContent: Equatable {
             numberOfCardsShown -= 3
         }
     }
+
+    mutating func toggleHelpingHand(){
+        helpingHandState.toggle()
+    }
+    
     
     
     

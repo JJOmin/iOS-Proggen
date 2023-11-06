@@ -13,11 +13,7 @@ struct CardView: View {
 
     var body: some View {
         GeometryReader(content: {geometry in
-
-            
             ZStack {
-                //let cardShape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius).fill()
-                
                 if card.isSelected && card.isMatched == .notChecked {
                     createShapeAndContent(borderColor: .orange, backgroundColor: .orange, geometry: geometry)
                 } else if card.isMatched == .trueMatch && card.isSelected {
@@ -55,7 +51,6 @@ struct CardView: View {
     }
     private func createShapeAndContent(borderColor: Color,backgroundColor: Color, geometry: GeometryProxy) -> some View{
         let cardShape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius).fill()
-        
         
         return cardShape
             .foregroundColor(backgroundColor)

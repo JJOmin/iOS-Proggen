@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-//Erstmal drin gelassen, da Tutorial
-
-struct DiamondShape: Shape{ //Create the Triangle
+struct DiamondShape: Shape{
     
     func path(in rect: CGRect) -> Path {
         Path { path in
             path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY)) //done
-            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY)) //
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
             path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
@@ -32,7 +30,7 @@ struct Diamond: View{
     let spacing: CGFloat
     
     var body: some View {
-        VStack(spacing: spacing) { // Adjust spacing according to your needs
+        VStack(spacing: spacing) {
             ForEach(0..<amount, id: \.self) { index in
                 DiamondShape()
                     .frame(width: width, height: height)
@@ -45,35 +43,6 @@ struct Diamond: View{
             }
         }
     }
-}
-
-
-
-
-
-struct Diamond2: View{
-    let primaryColor: Color
-    let opacity: Double
-    let width: CGFloat
-    let height: CGFloat
-    let amount: Int
-    var body: some View {
-        VStack(spacing: 10) { // Adjust spacing according to your needs
-            ForEach(0..<amount, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 1)
-                    .frame(width: width, height: height)
-                    .foregroundColor(primaryColor)
-                    .opacity(opacity)
-                    .rotationEffect(.degrees(45))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 1)
-                            .stroke(primaryColor, lineWidth: 2)
-                            .rotationEffect(.degrees(45))
-                    )
-            }
-        }
-    }
-    
 }
 
 struct Pill: View {
@@ -108,7 +77,6 @@ struct Rectangle: View {
     let amount: Int
     let spacing: CGFloat
     
-    
     var body: some View {
         VStack(spacing: spacing) { // Adjust spacing according to your needs
             ForEach(0..<amount, id: \.self) { index in
@@ -123,34 +91,4 @@ struct Rectangle: View {
             }
         }
     }
-}
-
-
-
-struct Symbol <Cards> {
-    // Eigenschaften der Struktur
-    let primaryColor: Color
-    let opacity: Double
-    let width: CGFloat
-    let height: CGFloat
-    let amount: Int
-    
-    // Initialisierermethode, um ein Theme-Objekt von einem vorhandenen Theme zu erstellen
-    init(symbol: Symbol<Cards>) {
-        self.primaryColor = symbol.primaryColor
-        self.opacity = symbol.opacity
-        self.width = symbol.width
-        self.height = symbol.height
-        self.amount = symbol.amount
-    }
-    
-    // Initialisierermethode, um ein neues Theme-Objekt zu erstellen
-    init(primaryColor: Color, opacity: Double, width: CGFloat, height: CGFloat, amount: Int) {
-        self.primaryColor = primaryColor
-        self.opacity = opacity
-        self.width = width
-        self.height = height
-        self.amount = amount
-    }
-    
 }

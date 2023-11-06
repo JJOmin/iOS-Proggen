@@ -9,9 +9,11 @@
 import SwiftUI
 class ViewModel: ObservableObject{
     
+    //typealias Card = Model<CardContent>.Card
+
     //-----------------Statics as Initalizer:-----------------
     static func createSetGame() -> Model<ViewModel.CardContent> {
-        Model<ViewModel.CardContent>(totalNumberOfCards: 81, numCardsShown: 12) { index in
+        Model<ViewModel.CardContent>(totalNumberOfCards: 81) { index in
             let properties = shapePropertyArray[index]
             return CardContent(shapeName: properties[0] as! String,
                                shapeColor: properties[1] as! Color,
@@ -83,20 +85,8 @@ class ViewModel: ObservableObject{
         return model.score
     }
     
-    var getPossiblePairs: Int {
-        return model.numberOfPossiblePairs
-    }
-    
     var getPopupString: String{
         model.getPopupString
-    }
-    
-    var gridSize: CGFloat{
-        model.gridSize
-    }
-    
-    var scalingFactor: Double{
-        model.scalingFactor
     }
     
     var possibleMatches: Int{
@@ -125,7 +115,7 @@ class ViewModel: ObservableObject{
         model.refreshOnScreenCards() //updating the Array
     }
     func helpingHandToggle(){
-        model.helpingHandState.toggle()
+        model.toggleHelpingHand()
     }
     
     
@@ -133,6 +123,12 @@ class ViewModel: ObservableObject{
     //-----------------MARK: - Intent(s):-----------------
     func choose(_ card: Model<CardContent>.Card){
         model.choose(card)
+    }
+    
+    enum shapeName: CaseIterable{
+        case diamond
+        case rectangle
+        case pill
     }
 }
 

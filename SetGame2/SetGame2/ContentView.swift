@@ -17,7 +17,6 @@ struct ContentView: View {
             Text("Game of Set").font(.title)
             Text("Cards Left: \(viewModel.cards.count)")
             Text("Score: \(viewModel.getScore)")
-            //Text("2. Wenn matched & +3 Cards matched ersetzt")
             //Text("3. Weiter an Video 6 46 min init und self")
             //Text("4. Helping hand um und einbauen")
             if viewModel.helpingHandState == true{
