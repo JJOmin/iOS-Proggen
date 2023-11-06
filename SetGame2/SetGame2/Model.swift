@@ -195,42 +195,35 @@ struct Model<CardContent> where CardContent: Equatable {
                 refreshOnScreenCards()
                 deselecting = 1
                 
-                
             } else if somethingMatched == .trueMatched {
-                /*
-                 for i in 0..<cards.count{
-                 if cards[i].isMatched == .trueMatch{
-                 print(matchedCardIds)
-                 cards[matchedCardIds[0]] = cards[cards.count-1]
-                 //refreshOnScreenCards()
-                 print("hier werden die drei Gematchten elemente mit den letzten 3 des cards Array ersetzt und aus cards gelöscht")
-                 }
-                 }*/
-                if cards[matchedCardIds[0]].isMatched == .trueMatch{
-                    cards[matchedCardIds[0]] = cards[cards.count-1]
-                }
-                if cards[matchedCardIds[0]].isMatched == .trueMatch{
-                    cards[matchedCardIds[0]] = cards[cards.count-2]
-                }
-                if cards[matchedCardIds[0]].isMatched == .trueMatch{
-                    cards[matchedCardIds[0]] = cards[cards.count-3]
-                }
-                cards.removeLast()
-                if numberOfCardsShown >= cards.count{
-                    numberOfCardsShown = cards.count-1
-                }
-                cards.removeLast()
-                if numberOfCardsShown >= cards.count{
-                    numberOfCardsShown = cards.count-1
-                }
-                cards.removeLast()
-                if numberOfCardsShown >= cards.count{
-                    numberOfCardsShown = cards.count-1
-                }
-                refreshOnScreenCards()
+                replaceMatchedCards()
+                replaceMatchedCards()
+                replaceMatchedCards()
+                
                 deselecting = 1
-                //somethingMatched = .removePending
             }
+        }
+    }
+    
+    
+    mutating func replaceMatchedCards(){
+        if cards[matchedCardIds[0]].isMatched == .trueMatch{
+            cards[matchedCardIds[0]] = cards[cards.count-1]
+            cards.removeLast()
+            if numberOfCardsShown >= cards.count{
+                numberOfCardsShown = cards.count-1
+            }
+            refreshOnScreenCards()
+        }
+        
+    }
+    
+    mutating func replaceCardsButton(){
+        if numberOfCardsShown <= cards.count-3{
+            replaceMatchedCards()
+            replaceMatchedCards()
+            replaceMatchedCards()
+            numberOfCardsShown -= 3
         }
     }
     
@@ -259,9 +252,11 @@ struct Model<CardContent> where CardContent: Equatable {
         for n in 0..<numberOfCardsShown{
             if cards[i].id == cards[n].id{
                 oneSet.append(n)
-            } else if cards[j].id == cards[n].id{
+            }
+            if cards[j].id == cards[n].id{
                 oneSet.append(n)
-            } else if cards[k].id == cards[n].id{
+            }
+            if cards[k].id == cards[n].id{
                 oneSet.append(n)
             }
         }

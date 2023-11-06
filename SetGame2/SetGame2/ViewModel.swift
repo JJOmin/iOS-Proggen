@@ -7,8 +7,6 @@
 
 //ViewModel
 import SwiftUI
-
-
 class ViewModel: ObservableObject{
     
     //-----------------Statics as Initalizer:-----------------
@@ -29,11 +27,8 @@ class ViewModel: ObservableObject{
         let shapeOpacity: Double
     }
     
-    //Setting the array into a let
     static var shapePropertyArray: [[Any]] = fillArrays()
 
-    //Function to create a Array of Propertys for the Shapes as CardContent
-        //Eventuelle auslagerung der Basispropertys
     static func fillArrays() -> [[Any]] {
             var cardInstance: [[Any]] = []
             for name in ["Pill", "Diamond", "Rectangle"] {
@@ -48,34 +43,7 @@ class ViewModel: ObservableObject{
         cardInstance.shuffle()
         return cardInstance
     }
-    //--------------------------------------------------------
     
-    func createNewSetGame() {
-        ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
-        model = ViewModel.createSetGame()
-    }
-    
-    
-    
-
-    //-----------------Used on every Instance:-----------------
-    @Published private var model: Model<CardContent> = createSetGame()
-    
-    var cards: Array<Model<CardContent>.Card>{
-        return model.cards
-    }
-    
-    var onScreenCards: Array<Model<CardContent>.Card>{
-        return model.onScreenCards
-    }
-
-    var numberOfCardsShown: Int {
-        return model.numberOfCardsShown
-    }
-    
-    
-    
-    //Wäre nett wenn das in das Model oder Database gehen könnte
     static func getColor(colorString : String) -> Color {
         let colorMapping: [String: Color] = [
             "white": .white,
@@ -95,38 +63,38 @@ class ViewModel: ObservableObject{
         return colorMapping[colorString] ?? .black
     }
     
+    
+    //-----------------Used on every Instance:-----------------
+    @Published private var model: Model<CardContent> = createSetGame()
+    
+    var cards: Array<Model<CardContent>.Card>{
+        return model.cards
+    }
+    
+    var onScreenCards: Array<Model<CardContent>.Card>{
+        return model.onScreenCards
+    }
+
+    var numberOfCardsShown: Int {
+        return model.numberOfCardsShown
+    }
+    
     var getScore: Int {
         return model.score
     }
     
     var getPossiblePairs: Int {
         return model.numberOfPossiblePairs
-        
-    }
-
-    //--------------------------------------------------------
-    
-    
-    
-    
-    //-----------------MARK: - Intent(s):-----------------
-    func choose(_ card: Model<CardContent>.Card){
-        model.choose(card)
-    }
-    
-
-    
-    func addCardsShown(){
-        model.addCardsShown()
-        model.refreshOnScreenCards() //updating the Array
     }
     
     var getPopupString: String{
         model.getPopupString
     }
+    
     var gridSize: CGFloat{
         model.gridSize
     }
+    
     var scalingFactor: Double{
         model.scalingFactor
     }
@@ -139,32 +107,33 @@ class ViewModel: ObservableObject{
         model.helpingHandState
     }
     
+    
+    
+    //Funktionen
+    func createNewSetGame() {
+        ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
+        model = ViewModel.createSetGame()
+    }
+    
+    func replaceMatchedCards(){
+        model.replaceCardsButton()
+        model.refreshOnScreenCards() //updating the Array
+    }
+    
+    func addCardsShown(){
+        model.addCardsShown()
+        model.refreshOnScreenCards() //updating the Array
+    }
     func helpingHandToggle(){
         model.helpingHandState.toggle()
     }
-    /*
-    func gridSizeCalculator(){
-        if model.numberOfCardsShown > 15 && numberOfCardsShown < 24{
-            model.gridSize = CGFloat(70)
-            model.scalingFactor = 4/6
-        } else if model.numberOfCardsShown > 24 && model.numberOfCardsShown < 36{
-            model.gridSize = CGFloat(60)
-            model.scalingFactor = 3/6
-        } else if model.numberOfCardsShown > 36 && model.numberOfCardsShown < 48{
-            model.gridSize = CGFloat(50)
-            model.scalingFactor = 2/6
-        } else if model.numberOfCardsShown > 48 && model.numberOfCardsShown < 63{
-            model.gridSize = CGFloat(45)
-            model.scalingFactor = 3/8
-        } else if model.numberOfCardsShown > 63 && model.numberOfCardsShown < 81{
-            model.gridSize = CGFloat(40)
-            model.scalingFactor = 2/8
-        }
-        
-    }*/
     
     
     
+    //-----------------MARK: - Intent(s):-----------------
+    func choose(_ card: Model<CardContent>.Card){
+        model.choose(card)
+    }
 }
 
 

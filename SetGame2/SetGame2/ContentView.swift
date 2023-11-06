@@ -13,25 +13,17 @@ struct ContentView: View {
     
     
     var body: some View {
-        
-        
         VStack{
             Text("Game of Set").font(.title)
             Text("Cards Left: \(viewModel.cards.count)")
-            //Text("Was fehkt noch?")
-            //Text("1. Matched mit altem style + neue logik")
+            Text("Score: \(viewModel.getScore)")
             //Text("2. Wenn matched & +3 Cards matched ersetzt")
             //Text("3. Weiter an Video 6 46 min init und self")
             //Text("4. Helping hand um und einbauen")
             if viewModel.helpingHandState == true{
                 Text("Possible Matches:\(viewModel.possibleMatches)")
             }
-            HStack{
-                Text("Score: \(viewModel.getScore)")
-                
-                //Text("PossiblePairs: \(viewModel.getPossiblePairs)")
-            }
-            
+
             AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
                 CardView(card: card)
                     .padding(2)
@@ -41,6 +33,7 @@ struct ContentView: View {
                         
                     }
             })
+            
             Spacer()
             HStack(spacing: 45) {
                 Button(action: {
@@ -55,7 +48,7 @@ struct ContentView: View {
                 Button(action: {
                     if viewModel.numberOfCardsShown < viewModel.cards.count{
                         viewModel.addCardsShown()
-                        //viewModel.gridSizeCalculator()
+                        viewModel.replaceMatchedCards()
                         showToast.toggle()
                     }
                     
