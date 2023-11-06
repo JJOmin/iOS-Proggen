@@ -133,7 +133,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards[index].isSelected = true
                 refreshOnScreenCards()
                 deselecting += 1
-                //print(helpingHand())
+                print(helpingHand())
                 
             }
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
@@ -254,8 +254,21 @@ struct Model<CardContent> where CardContent: Equatable {
     }
     
     //Function that shows (alt least on) solutions for the current Cards on Screen
-    func helpingHand() -> [[Card.ID]] {
-        var validSets: [[Card.ID]] = []
+    func helpingAdd(i: Int,j: Int,k: Int) -> [Int]{
+        var oneSet: [Int] = []
+        for n in 0..<numberOfCardsShown{
+            if cards[i].id == cards[n].id{
+                oneSet.append(n)
+            } else if cards[j].id == cards[n].id{
+                oneSet.append(n)
+            } else if cards[k].id == cards[n].id{
+                oneSet.append(n)
+            }
+        }
+        return oneSet
+    }
+    func helpingHand() -> [[Int]] {
+        var validSets: [[Int]] = []
 
         for i in 0..<numberOfCardsShown {
             for j in (i+1)..<numberOfCardsShown {
@@ -265,7 +278,8 @@ struct Model<CardContent> where CardContent: Equatable {
                     let checkingCard3 = cards[k]
                     if let card1 = checkingCard1.content as? ViewModel.CardContent, let card2 = checkingCard2.content as? ViewModel.CardContent, let card3 = checkingCard3.content as? ViewModel.CardContent{
                         if isValidSet(card1: card1, card2: card2, card3: card3) {
-                            validSets.append([cards[i].id, cards[j].id, cards[k].id])
+                            validSets.append(helpingAdd(i: i, j: j, k: k))
+                                //validSets.append([cards[i].id, cards[j].id, cards[k].id])
                         }
                     }
                 }

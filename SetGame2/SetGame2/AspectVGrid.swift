@@ -35,20 +35,6 @@ struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiabl
         return gridItem
     }
     
-    private func minimumWidthThatFits(itemCount: Int, in size: CGSize, itemAspectRatio: CGFloat, minimumWidth: CGFloat) -> CGFloat {
-        
-        var minimumWidth: CGFloat = minimumWidth
-        
-        for r in stride(from: 2, through: itemCount-1, by:+3){
-            if widthThatFits(itemCount: r, in: size, itemAspectRatio: itemAspectRatio, minimumWidth: 34) > minimumWidth{
-                minimumWidth = widthThatFits(itemCount: r, in: size, itemAspectRatio: itemAspectRatio, minimumWidth: 34)
-                
-            }else{
-                break
-            }
-        } 
-        return floor(minimumWidth)
-    }
     
     private func widthThatFits(itemCount: Int, in size: CGSize, itemAspectRatio: CGFloat, minimumWidth: CGFloat) -> CGFloat{
         var columnCount = 1
