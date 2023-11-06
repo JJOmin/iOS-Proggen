@@ -45,12 +45,8 @@ struct ContentView: View {
                 }
                 
                 Button(action: {
-                    if viewModel.numberOfCardsShown < viewModel.cards.count{
-                        viewModel.addCardsShown()
-                        viewModel.replaceMatchedCards()
-                        showToast.toggle()
-                    }
-                    
+                    viewModel.replaceMatchedCards()
+                
                 }) {
                     VStack {
                         if viewModel.numberOfCardsShown < viewModel.cards.count{

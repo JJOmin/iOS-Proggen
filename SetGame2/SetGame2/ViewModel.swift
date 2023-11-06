@@ -21,7 +21,6 @@ class ViewModel: ObservableObject{
                                shapeOpacity: properties[3] as! Double)
         }
     }
-    
     struct CardContent: Equatable {
         let shapeName: String
         let shapeColor: Color
@@ -33,10 +32,10 @@ class ViewModel: ObservableObject{
 
     static func fillArrays() -> [[Any]] {
             var cardInstance: [[Any]] = []
-            for name in ["Pill", "Diamond", "Rectangle"] {
-                for color in ["blue", "yellow", "black"] {
-                    for amount in [1, 2, 3] {
-                        for opacity in [0.0, 0.3, 1.0] {
+            for name in shapeNames {
+                for color in shapeColors {
+                    for amount in shapeAmounts {
+                        for opacity in shapeOpacitys {
                             cardInstance.append([name, getColor(colorString: color), amount, opacity] as [Any])
                         }
                     }
@@ -107,13 +106,9 @@ class ViewModel: ObservableObject{
     
     func replaceMatchedCards(){
         model.replaceCardsButton()
-        model.refreshOnScreenCards() //updating the Array
     }
     
-    func addCardsShown(){
-        model.addCardsShown()
-        model.refreshOnScreenCards() //updating the Array
-    }
+    
     func helpingHandToggle(){
         model.toggleHelpingHand()
     }
@@ -124,12 +119,12 @@ class ViewModel: ObservableObject{
     func choose(_ card: Model<CardContent>.Card){
         model.choose(card)
     }
+
     
-    enum shapeName: CaseIterable{
-        case diamond
-        case rectangle
-        case pill
-    }
+    static var shapeNames: [String]  = ["Pill", "Diamond", "Rectangle"]
+    static var shapeColors: [String]  = ["blue", "yellow", "black"]
+    static var shapeOpacitys: [Double] = [0, 0.3, 1]
+    static var shapeAmounts: [Int] = [1,2,3]
 }
 
 

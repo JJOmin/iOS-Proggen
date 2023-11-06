@@ -170,7 +170,7 @@ struct Model<CardContent> where CardContent: Equatable {
                         cards[i].isSelected = false
                         cards[i].isMatched = .notChecked
                     }
-                    
+                    somethingMatched = .notChecked
                 }
                 refreshOnScreenCards()
                 deselecting = 1
@@ -179,8 +179,10 @@ struct Model<CardContent> where CardContent: Equatable {
                 replaceMatchedCards()
                 replaceMatchedCards()
                 replaceMatchedCards()
-                
+                refreshOnScreenCards()
+                somethingMatched = .notChecked
                 deselecting = 1
+                
             }
         }
     }
@@ -195,15 +197,34 @@ struct Model<CardContent> where CardContent: Equatable {
             }
             refreshOnScreenCards()
         }
-        
     }
     
     mutating func replaceCardsButton(){
-        if numberOfCardsShown <= cards.count-3{
-            replaceMatchedCards()
-            replaceMatchedCards()
-            replaceMatchedCards()
-            numberOfCardsShown -= 3
+        if somethingMatched == .trueMatched{
+            print(matchedCardIds)
+            
+            cards[matchedCardIds[0]] = cards[cards.count-1]
+            cards[matchedCardIds[0]] = cards[cards.count-2]
+            cards[matchedCardIds[0]] = cards[cards.count-3]
+            cards.removeLast()
+            if numberOfCardsShown >= cards.count{
+                numberOfCardsShown = cards.count-1
+            }
+            cards.removeLast()
+            if numberOfCardsShown >= cards.count{
+                numberOfCardsShown = cards.count-1
+            }
+            cards.removeLast()
+            if numberOfCardsShown >= cards.count{
+                numberOfCardsShown = cards.count-1
+            }
+            refreshOnScreenCards()
+            somethingMatched = .notChecked
+           
+        }
+        else{
+            addCardsShown()
+            refreshOnScreenCards()
         }
     }
 
