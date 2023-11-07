@@ -18,7 +18,6 @@
 		19A48A412AEBD2C30059B3D9 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A48A402AEBD2C30059B3D9 /* ViewModel.swift */; };
 		19B1F9F32AED5E89003F03C9 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1F9F22AED5E89003F03C9 /* CardView.swift */; };
 		19B1F9F52AED5F20003F03C9 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1F9F42AED5F20003F03C9 /* Shapes.swift */; };
-		19B1F9F72AED7B12003F03C9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1F9F62AED7B12003F03C9 /* Database.swift */; };
 		19F904E12AF5575D00470568 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F904E02AF5575D00470568 /* AspectVGrid.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +53,6 @@
 		19A48A402AEBD2C30059B3D9 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		19B1F9F22AED5E89003F03C9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		19B1F9F42AED5F20003F03C9 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
-		19B1F9F62AED7B12003F03C9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		19F904E02AF5575D00470568 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				19F904E02AF5575D00470568 /* AspectVGrid.swift */,
-				19B1F9F62AED7B12003F03C9 /* Database.swift */,
 				19A48A142AEBD25B0059B3D9 /* SetGame2App.swift */,
 				19A48A162AEBD25B0059B3D9 /* ContentView.swift */,
 				19B1F9F22AED5E89003F03C9 /* CardView.swift */,
@@ -281,7 +278,6 @@
 				19A48A412AEBD2C30059B3D9 /* ViewModel.swift in Sources */,
 				19A48A152AEBD25B0059B3D9 /* SetGame2App.swift in Sources */,
 				19B1F9F32AED5E89003F03C9 /* CardView.swift in Sources */,
-				19B1F9F72AED7B12003F03C9 /* Database.swift in Sources */,
 				19B1F9F52AED5F20003F03C9 /* Shapes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

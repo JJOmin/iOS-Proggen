@@ -53,8 +53,8 @@ struct ContentView: View {
                             Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                             Text("+3 Cards").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                         } else{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0.4)
-                            Text("+3 Cards").foregroundColor(.gray).opacity(0.4)
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0)
+                            Text("+3 Cards").foregroundColor(.gray).opacity(0)
                         }
                     }
                     

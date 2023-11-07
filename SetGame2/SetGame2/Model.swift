@@ -11,7 +11,6 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var helpingHandState: Bool
     private(set) var isAddCardsButtonActive: Bool
     private(set) var onScreenCards: Array<Card>
-    private(set) var database = Database() //Zugriff auf die Database
     private(set) var somethingMatched: statusMatched
     enum statusMatched {
         case falseMatched

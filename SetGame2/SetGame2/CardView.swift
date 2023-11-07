@@ -21,7 +21,7 @@ struct CardView: View {
                 }else if card.isMatched == .falseMatch && card.isSelected {
                     createShapeAndContent(borderColor: .mint, backgroundColor: .red,backroundOpacity: 1,geometry: geometry)
                 }else if card.isSelected == false && card.isHelpingHand{
-                    createShapeAndContent(borderColor: .yellow, backgroundColor: .white,backroundOpacity: 1,geometry: geometry)
+                    createShapeAndContent(borderColor: .yellow, backgroundColor: .gray,backroundOpacity: 1,geometry: geometry)
                 }else{
                     createShapeAndContent(borderColor: .gray, backgroundColor: .white,backroundOpacity: 1,geometry: geometry)
                 }

@@ -12,7 +12,7 @@ class ViewModel: ObservableObject{
     //-----------------Statics as Initalizer:-----------------
     static func createSetGame() -> Model<ViewModel.CardContent> {
         Model<ViewModel.CardContent>(totalNumberOfCards: totalNumberOfCards) { index in
-            let properties = shapePropertyArray[index]
+            let properties = shapePropertyArray.shuffled()[index]
             return CardContent(shapeName: properties[0] as! String,
                                shapeColor: properties[1] as! Color,
                                shapeAmount: properties[2] as! Int,
@@ -39,9 +39,10 @@ class ViewModel: ObservableObject{
                     }
                 }
             };
-        cardInstance.shuffle()
+        //cardInstance.shuffle()
         return cardInstance
     }
+    
     
     static func getColor(colorString : String) -> Color {
         let colorMapping: [String: Color] = [
