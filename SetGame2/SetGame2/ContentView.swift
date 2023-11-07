@@ -9,8 +9,6 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var showToast: Bool = false
-
-    
     
     var body: some View {
         VStack{
@@ -18,9 +16,6 @@ struct ContentView: View {
             Text("Cards Left: \(viewModel.cards.count)")
             Text("Score: \(viewModel.getScore)")
             Text("Possible Matches:\(viewModel.possibleMatches)")
-            //Text("3. Weiter an Video 6 46 min init und self")
-            //Text("4. Helping hand um und einbauen")
-
             AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
                 CardView(card: card)
                     .padding(2)

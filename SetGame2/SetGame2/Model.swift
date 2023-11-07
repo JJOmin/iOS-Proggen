@@ -108,12 +108,12 @@ struct Model<CardContent> where CardContent: Equatable {
     
     mutating func choose (_ card: Card) {
         //De/Selecting Cards
-        if !card.isSelected && (card.isMatched == .falseMatch || card.isMatched == .notChecked) { //&& card.isMatched == false //nicht ausgewählt und nicht gematcht (notChecked + .falseMatched)
+        if !card.isSelected && (card.isMatched == .falseMatch || card.isMatched == .notChecked) {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
                 refreshOnScreenCards()
                 deselecting += 1
-                print(helpingHand())
+                print(deselecting)
                 
             }
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
@@ -214,6 +214,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 numberOfCardsShown = cards.count-1
             }
             refreshOnScreenCards()
+            deselecting = 0
             somethingMatched = .notChecked
            
         }
@@ -228,7 +229,6 @@ struct Model<CardContent> where CardContent: Equatable {
         setHelpingHand()
         
     }
-    
     
     mutating func setHelpingHand(){
         for i in cards.indices{
