@@ -33,8 +33,14 @@ struct ContentView: View {
                     viewModel.helpingHandToggle()
                 }) {
                     VStack {
-                        Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle)
-                        Text("Helping Hand")
+                        if viewModel.helpingHandState == true{
+                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.orange)
+                            Text("Helping Hand").foregroundColor(.orange)
+                        } else{
+                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.blue)
+                            Text("Helping Hand").foregroundColor(.blue)
+                            
+                        }
                     }
                 }
                 
@@ -44,12 +50,11 @@ struct ContentView: View {
                 }) {
                     VStack {
                         if viewModel.numberOfCardsShown < viewModel.cards.count{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
-                            Text("+3 Cards")
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                            Text("+3 Cards").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                         } else{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle)
-                            Text("+3 Cards")
-                            
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0.4)
+                            Text("+3 Cards").foregroundColor(.gray).opacity(0.4)
                         }
                     }
                     

@@ -15,13 +15,13 @@ struct CardView: View {
         GeometryReader(content: {geometry in
             ZStack {
                 if card.isSelected && card.isMatched == .notChecked {
-                    createShapeAndContent(borderColor: .orange, backgroundColor: .orange, geometry: geometry)
+                    createShapeAndContent(borderColor: .blue, backgroundColor: .gray, geometry: geometry)
                 } else if card.isMatched == .trueMatch && card.isSelected {
-                    createShapeAndContent(borderColor: .indigo, backgroundColor: .indigo,geometry: geometry)
+                    createShapeAndContent(borderColor: .green, backgroundColor: .green,geometry: geometry)
                 }else if card.isMatched == .falseMatch && card.isSelected {
-                    createShapeAndContent(borderColor: .gray, backgroundColor: .red,geometry: geometry)
+                    createShapeAndContent(borderColor: .red, backgroundColor: .red,geometry: geometry)
                 }else if card.isSelected == false && card.isHelpingHand{
-                    createShapeAndContent(borderColor: .gray, backgroundColor: .gray,geometry: geometry)
+                    createShapeAndContent(borderColor: .orange, backgroundColor: .white,geometry: geometry)
                 }else{
                     createShapeAndContent(borderColor: .gray, backgroundColor: .white,geometry: geometry)
                 }

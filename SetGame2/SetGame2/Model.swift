@@ -9,6 +9,7 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var getPopupString: String
     private(set) var deselecting: Int
     private(set) var helpingHandState: Bool
+    private(set) var isAddCardsButtonActive: Bool
     private(set) var onScreenCards: Array<Card>
     private(set) var database = Database() //Zugriff auf die Database
     private(set) var somethingMatched: statusMatched
@@ -19,11 +20,12 @@ struct Model<CardContent> where CardContent: Equatable {
         case removePending
     }
     
+    //Closure
     private var selectedCardIds: Array<Int> {
         get{
             return cards.indices.filter({cards[$0].isSelected}).selected}
     }
-    
+    //Closure
     private var matchedCardIds: Array<Int> {
         var matchedCardIndecies = [Int]()
         for index in cards.indices{
@@ -62,6 +64,7 @@ struct Model<CardContent> where CardContent: Equatable {
         getPopupString = ""
         deselecting = 0
         helpingHandState = false
+        isAddCardsButtonActive = true
         somethingMatched = .notChecked
         
         for i in 0..<totalNumberOfCards {
@@ -93,7 +96,7 @@ struct Model<CardContent> where CardContent: Equatable {
             numberOfCardsShown += 3
             
         } else {
-            getPopupString = "All Cards are Shown!"
+            isAddCardsButtonActive = false
         }
     }
     
@@ -174,6 +177,9 @@ struct Model<CardContent> where CardContent: Equatable {
                 replaceMatchedCards()
                 replaceMatchedCards()
                 replaceMatchedCards()
+                if numberOfCardsShown > 12 || cards.count < 12{
+                    numberOfCardsShown -= 3
+                }
                 refreshOnScreenCards()
                 somethingMatched = .notChecked
                 deselecting = 1
@@ -307,7 +313,7 @@ struct Model<CardContent> where CardContent: Equatable {
     
     //Beinhaltet das erste Set der auf dem bild sichtbaren karten
     var helpingHandOne: [Int]{
-        helpingHand()[0]
+            helpingHand()[0]
     }
 }
 
