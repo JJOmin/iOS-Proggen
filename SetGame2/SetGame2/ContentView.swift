@@ -12,17 +12,18 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
+
             Text("Game of Set").font(.title)
+            Text("Possible Matches: \(viewModel.possibleMatches)")
             Text("Cards Left: \(viewModel.cards.count)")
             Text("Score: \(viewModel.getScore)")
-            Text("Possible Matches:\(viewModel.possibleMatches)")
+            
             AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
                 CardView(card: card)
                     .padding(2)
                     .foregroundColor(Color(card.content.shapeColor))
                     .onTapGesture {
                         viewModel.choose(card)
-                        
                     }
             })
             

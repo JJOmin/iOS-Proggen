@@ -113,7 +113,6 @@ struct Model<CardContent> where CardContent: Equatable {
                 cards[index].isSelected = true
                 refreshOnScreenCards()
                 deselecting += 1
-                print(deselecting)
                 
             }
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
@@ -306,6 +305,7 @@ struct Model<CardContent> where CardContent: Equatable {
         return validSets
     }
     
+    //Beinhaltet das erste Set der auf dem bild sichtbaren karten
     var helpingHandOne: [Int]{
         helpingHand()[0]
     }
