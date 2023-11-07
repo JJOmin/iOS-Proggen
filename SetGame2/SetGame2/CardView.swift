@@ -15,15 +15,15 @@ struct CardView: View {
         GeometryReader(content: {geometry in
             ZStack {
                 if card.isSelected && card.isMatched == .notChecked {
-                    createShapeAndContent(borderColor: .blue, backgroundColor: .gray, geometry: geometry)
+                    createShapeAndContent(borderColor: .mint, backgroundColor: .indigo,backroundOpacity: 1, geometry: geometry)
                 } else if card.isMatched == .trueMatch && card.isSelected {
-                    createShapeAndContent(borderColor: .green, backgroundColor: .green,geometry: geometry)
+                    createShapeAndContent(borderColor: .mint, backgroundColor: .green,backroundOpacity: 1,geometry: geometry)
                 }else if card.isMatched == .falseMatch && card.isSelected {
-                    createShapeAndContent(borderColor: .red, backgroundColor: .red,geometry: geometry)
+                    createShapeAndContent(borderColor: .mint, backgroundColor: .red,backroundOpacity: 1,geometry: geometry)
                 }else if card.isSelected == false && card.isHelpingHand{
-                    createShapeAndContent(borderColor: .orange, backgroundColor: .white,geometry: geometry)
+                    createShapeAndContent(borderColor: .yellow, backgroundColor: .white,backroundOpacity: 1,geometry: geometry)
                 }else{
-                    createShapeAndContent(borderColor: .gray, backgroundColor: .white,geometry: geometry)
+                    createShapeAndContent(borderColor: .gray, backgroundColor: .white,backroundOpacity: 1,geometry: geometry)
                 }
                 
                 //-----------------Abfrage für Shapes:-----------------
@@ -51,21 +51,21 @@ struct CardView: View {
             }
         })
     }
-    private func createShapeAndContent(borderColor: Color,backgroundColor: Color, geometry: GeometryProxy) -> some View{
+    private func createShapeAndContent(borderColor: Color,backgroundColor: Color, backroundOpacity: CGFloat, geometry: GeometryProxy) -> some View{
         let cardShape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius).fill()
         
         return cardShape
             .foregroundColor(backgroundColor)
             .overlay(
                 RoundedRectangle(cornerRadius: geometry.size.width/DrawingConstants.cornerRadius)
-                    .strokeBorder(borderColor, lineWidth: geometry.size.width/DrawingConstants.lineWidth))
+                    .strokeBorder(borderColor, lineWidth: geometry.size.width/DrawingConstants.lineWidth).opacity(backroundOpacity))
     }
     private struct DrawingConstants{
         static let cornerRadius: CGFloat = 10
         static let lineWidth: CGFloat = 15
         static let rectScalingFactor: CGFloat = 3.5
         static let pillScalingFactor: CGFloat = 1.5
-        static let diamondScalingFactor: CGFloat = 3.3
+        static let diamondScalingFactor: CGFloat = 3.3 //1.8 //3.3
         static let spacingFactor: CGFloat = 10
         static let borderFactor: CGFloat = 0
         

@@ -11,12 +11,20 @@ struct DiamondShape: Shape{
     
     func path(in rect: CGRect) -> Path {
         Path { path in
-            path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.move(to: CGPoint(x: rect.minX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
             path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
-            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+            
+            //1. idee das ganze um zu setzen, einfacher war aber eine raute einfach nur zu stauchen
+            /*
+            path.move(to: CGPoint(x: rect.minX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY+rect.midY/2))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY-rect.midY/2))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+           */
         }
     }
 }
@@ -33,7 +41,7 @@ struct Diamond: View{
         VStack(spacing: spacing) {
             ForEach(0..<amount, id: \.self) { index in
                 DiamondShape()
-                    .frame(width: width, height: height)
+                    .frame(width: width*2, height: height)
                     .foregroundColor(primaryColor)
                     .opacity(opacity)
                     .overlay(

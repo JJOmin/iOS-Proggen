@@ -34,8 +34,8 @@ struct ContentView: View {
                 }) {
                     VStack {
                         if viewModel.helpingHandState == true{
-                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.orange)
-                            Text("Helping Hand").foregroundColor(.orange)
+                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.yellow)
+                            Text("Helping Hand").foregroundColor(.yellow)
                         } else{
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.blue)
                             Text("Helping Hand").foregroundColor(.blue)
