@@ -30,13 +30,18 @@ struct ContentView: View {
             Spacer()
             HStack(spacing: 45) {
                 Button(action: {
-                    viewModel.helpingHandToggle()
+                    if viewModel.numberOfCardsShown < 21{
+                        viewModel.helpingHandToggle()
+                    }
                 }) {
                     VStack {
                         if viewModel.helpingHandState == true{
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.yellow)
-                            Text("Helping Hand").foregroundColor(.yellow)
-                        } else{
+                            Text("Helping  Hand").foregroundColor(.yellow)
+                        } else if viewModel.numberOfCardsShown >= 21{
+                            Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.gray).opacity(0.5)
+                            Text("Helping Hand").foregroundColor(.gray).opacity(0.5)
+                        }else{
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.blue)
                             Text("Helping Hand").foregroundColor(.blue)
                             
@@ -53,8 +58,8 @@ struct ContentView: View {
                             Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                             Text("+3 Cards").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                         } else{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0)
-                            Text("+3 Cards").foregroundColor(.gray).opacity(0)
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0.5)
+                            Text("+3 Cards").foregroundColor(.gray).opacity(0.5)
                         }
                     }
                     

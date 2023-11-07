@@ -19,6 +19,7 @@ struct Model<CardContent> where CardContent: Equatable {
         case removePending
     }
     
+    
     //Closure
     private var selectedCardIds: Array<Int> {
         get{
@@ -236,7 +237,7 @@ struct Model<CardContent> where CardContent: Equatable {
     
     mutating func setHelpingHand(){
         for i in cards.indices{
-            if helpingHandState == true && helpingHandOne.count > 0{
+            if helpingHandState == true && helpingHandOne.count >= 3{
                 if i == helpingHandOne[0]{
                     cards[helpingHandOne[0]].isHelpingHand = true
                 } else if i == helpingHandOne[1]{
@@ -250,8 +251,6 @@ struct Model<CardContent> where CardContent: Equatable {
             refreshOnScreenCards()
         }
     }
-    
-    
     
     
     func isValidSet(card1: ViewModel.CardContent, card2: ViewModel.CardContent, card3: ViewModel.CardContent) -> Bool{
@@ -312,7 +311,11 @@ struct Model<CardContent> where CardContent: Equatable {
     
     //Beinhaltet das erste Set der auf dem bild sichtbaren karten
     var helpingHandOne: [Int]{
-            helpingHand()[0]
+        if helpingHand().count >= 1 {
+            return helpingHand()[0]
+        }else{
+            return [0]
+        }
     }
 }
 

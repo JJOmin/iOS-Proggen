@@ -95,10 +95,6 @@ class ViewModel: ObservableObject{
         model.helpingHandState
     }
     
-    var helpingHandOne: [Int]{
-        model.helpingHandOne
-    }
-    
     var isAddCardsButtonActive: Bool{
         model.isAddCardsButtonActive
     }
