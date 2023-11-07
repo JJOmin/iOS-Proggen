@@ -20,6 +20,8 @@ struct CardView: View {
                     createShapeAndContent(borderColor: .indigo, backgroundColor: .indigo,geometry: geometry)
                 }else if card.isMatched == .falseMatch && card.isSelected {
                     createShapeAndContent(borderColor: .gray, backgroundColor: .red,geometry: geometry)
+                }else if card.isSelected == false && card.isHelpingHand{
+                    createShapeAndContent(borderColor: .gray, backgroundColor: .gray,geometry: geometry)
                 }else{
                     createShapeAndContent(borderColor: .gray, backgroundColor: .white,geometry: geometry)
                 }

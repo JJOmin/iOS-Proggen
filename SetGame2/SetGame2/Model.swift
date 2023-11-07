@@ -77,6 +77,7 @@ struct Model<CardContent> where CardContent: Equatable {
     struct Card: Identifiable, Equatable {
         var id: Int
         var isSelected = false
+        var isHelpingHand = false
         var content: CardContent
         var isMatched: MatchStatus
         enum MatchStatus {
@@ -106,7 +107,6 @@ struct Model<CardContent> where CardContent: Equatable {
     
     
     mutating func choose (_ card: Card) {
-        
         //De/Selecting Cards
         if !card.isSelected && (card.isMatched == .falseMatch || card.isMatched == .notChecked) { //&& card.isMatched == false //nicht ausgewählt und nicht gematcht (notChecked + .falseMatched)
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
@@ -127,43 +127,39 @@ struct Model<CardContent> where CardContent: Equatable {
         
         //Code to test if something sould be testet for match
         if selectedCardIds.count == 3{
-            //print("Matching starts:\(selectedCardIds[0])\(selectedCardIds[1])\(selectedCardIds[2])")
             let selectedCard1 = cards[selectedCardIds[0]]
             let selectedCard2 = cards[selectedCardIds[1]]
             let selectedCard3 = cards[selectedCardIds[2]]
             
             if let card1 = selectedCard1.content as? ViewModel.CardContent, let card2 = selectedCard2.content as? ViewModel.CardContent, let card3 = selectedCard3.content as? ViewModel.CardContent{
                 
-                //wenn es ein set ist, dann setze matched status bei allen carten die matchen
-                print(isValidSet(card1: card1, card2: card2, card3: card3))
-                print(helpingHand())
+                //wenn es ein set ist, dann setze matched status bei allen carten die matched
                 if isValidSet(card1: card1, card2: card2, card3: card3){
                     
                     if selectedCard1.isMatched == .falseMatch || selectedCard1.isMatched == .notChecked || selectedCard2.isMatched == .falseMatch || selectedCard2.isMatched == .notChecked || selectedCard3.isMatched == .falseMatch || selectedCard3.isMatched == .notChecked {
                         cards[selectedCardIds[0]].isMatched = .trueMatch
                         cards[selectedCardIds[1]].isMatched = .trueMatch
                         cards[selectedCardIds[2]].isMatched = .trueMatch
-                        print("Its a match!!!")
-                        
+                        helpingHandState = false
+                        setHelpingHand()
                         refreshOnScreenCards()
                         score += 3
+                        
                         somethingMatched = .trueMatched
                         
                     }
                 } else {
-                    //print(selectedCardIds[0]
-                    //print("Not a set")
                     cards[selectedCardIds[0]].isMatched = .falseMatch
                     cards[selectedCardIds[1]].isMatched = .falseMatch
                     cards[selectedCardIds[2]].isMatched = .falseMatch
+                    helpingHandState = false
+                    setHelpingHand()
                     refreshOnScreenCards()
                     somethingMatched = .falseMatched
-                    //deselecting = 3
                 }
             }
         }
         if deselecting == 4{
-            print(selectedCardIds)
             if somethingMatched == .falseMatched{
                 for i in cards.indices{
                     if cards[i].isMatched == .falseMatch{
@@ -201,7 +197,6 @@ struct Model<CardContent> where CardContent: Equatable {
     
     mutating func replaceCardsButton(){
         if somethingMatched == .trueMatched{
-            print(matchedCardIds)
             
             cards[matchedCardIds[0]] = cards[cards.count-1]
             cards[matchedCardIds[0]] = cards[cards.count-2]
@@ -230,6 +225,26 @@ struct Model<CardContent> where CardContent: Equatable {
 
     mutating func toggleHelpingHand(){
         helpingHandState.toggle()
+        setHelpingHand()
+        
+    }
+    
+    
+    mutating func setHelpingHand(){
+        for i in cards.indices{
+            if helpingHandState == true && helpingHandOne.count > 0{
+                if i == helpingHandOne[0]{
+                    cards[helpingHandOne[0]].isHelpingHand = true
+                } else if i == helpingHandOne[1]{
+                    cards[helpingHandOne[1]].isHelpingHand = true
+                } else if i == helpingHandOne[2]{
+                    cards[helpingHandOne[2]].isHelpingHand = true
+                }
+            } else if helpingHandState == false {
+                cards[i].isHelpingHand = false
+            }
+            refreshOnScreenCards()
+        }
     }
     
     
@@ -268,6 +283,8 @@ struct Model<CardContent> where CardContent: Equatable {
         }
         return oneSet
     }
+    
+    
     func helpingHand() -> [[Int]] {
         var validSets: [[Int]] = []
 
@@ -287,6 +304,10 @@ struct Model<CardContent> where CardContent: Equatable {
             }
         }
         return validSets
+    }
+    
+    var helpingHandOne: [Int]{
+        helpingHand()[0]
     }
 }
 

@@ -17,11 +17,9 @@ struct ContentView: View {
             Text("Game of Set").font(.title)
             Text("Cards Left: \(viewModel.cards.count)")
             Text("Score: \(viewModel.getScore)")
+            Text("Possible Matches:\(viewModel.possibleMatches)")
             //Text("3. Weiter an Video 6 46 min init und self")
             //Text("4. Helping hand um und einbauen")
-            if viewModel.helpingHandState == true{
-                Text("Possible Matches:\(viewModel.possibleMatches)")
-            }
 
             AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
                 CardView(card: card)

@@ -96,6 +96,12 @@ class ViewModel: ObservableObject{
         model.helpingHandState
     }
     
+    var helpingHandOne: [Int]{
+        model.helpingHandOne
+    }
+    
+    
+    
     
     
     //Funktionen
@@ -111,7 +117,10 @@ class ViewModel: ObservableObject{
     
     func helpingHandToggle(){
         model.toggleHelpingHand()
+        
     }
+    
+    
     
     
     
