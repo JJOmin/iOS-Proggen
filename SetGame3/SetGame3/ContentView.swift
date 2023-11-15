@@ -57,10 +57,8 @@ struct ContentView: View {
             
             Spacer()
             HStack(spacing: 30) {
-                
+                /*
                  Button(action: {
-                 
-                 
                  }) {
                      ZStack {
                          ForEach(viewModel.matchedCards){ card in
@@ -73,8 +71,7 @@ struct ContentView: View {
                                      print("Test")
                                  }}
                      }
-                     
-                 }
+                 }*/
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
@@ -98,6 +95,22 @@ struct ContentView: View {
                     }
                 }
                 
+                Button(action: {
+                                    viewModel.addThreeCards()
+                                
+                }) {
+                    VStack {
+                        if viewModel.numberOfCardsShown < viewModel.cards.count{
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                            Text("+3 Cards").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        } else{
+                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0.5)
+                            Text("+3 Cards").foregroundColor(.gray).opacity(0.5)
+                        }
+                    }
+                    
+                }
+                
                 
                 Button(action: {
                     viewModel.createNewSetGame()
@@ -106,17 +119,10 @@ struct ContentView: View {
                         Image(systemName: "plus.rectangle.fill").font(.largeTitle)
                         Text("New Game")
                     }
-                }/*
-                Button(action: {
-                    viewModel.addThreeCards()
-                }) {
-                    VStack {
-                        Image(systemName: "plus.rectangle.fill").font(.largeTitle)
-                        Text("New Game")
-                    }
-                }*/
+                }
                 
                 
+                /*
                 Button(action: {
                     viewModel.addThreeCards()
                 }) {
@@ -130,7 +136,7 @@ struct ContentView: View {
                                 }
                     }
                     
-                }
+                }*/
                 
                 if showToast && viewModel.getPopupString != ""{
                     Text("\(viewModel.getPopupString)")
