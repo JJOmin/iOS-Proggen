@@ -117,11 +117,11 @@ class ViewModel: ObservableObject{
         ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
         model = ViewModel.createSetGame()
     }
-    
+    /*
     func replaceMatchedCards(){
         model.replaceCardsButton()
     }
-    
+    */
     
     func helpingHandToggle(){
         model.toggleHelpingHand()
