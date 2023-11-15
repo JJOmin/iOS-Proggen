@@ -12,7 +12,7 @@ class ViewModel: ObservableObject{
     //-----------------Statics as Initalizer:-----------------
     static func createSetGame() -> Model<ViewModel.CardContent> {
         Model<ViewModel.CardContent>(totalNumberOfCards: totalNumberOfCards) { index in
-            let properties = shapePropertyArray.shuffled()[index]
+            let properties = shapePropertyArray[index]
             return CardContent(shapeName: properties[0] as! String,
                                shapeColor: properties[1] as! Color,
                                shapeAmount: properties[2] as! Int,
@@ -39,7 +39,7 @@ class ViewModel: ObservableObject{
                     }
                 }
             };
-        //cardInstance.shuffle()
+        cardInstance.shuffle()
         return cardInstance
     }
     
@@ -67,12 +67,17 @@ class ViewModel: ObservableObject{
     //-----------------Used on every Instance:-----------------
     @Published private var model: Model<CardContent> = createSetGame()
     
+    
+    var cardsLeft: Array<Model<CardContent>.Card>{
+        return model.notPlayedCards
+    }
+    
     var cards: Array<Model<CardContent>.Card>{
         return model.cards
     }
     
-    var onScreenCards: Array<Model<CardContent>.Card>{
-        return model.onScreenCards
+    var cardsOnScreen: Array<Model<CardContent>.Card>{
+        return model.cardsOnScreen
     }
 
     var numberOfCardsShown: Int {
@@ -124,7 +129,9 @@ class ViewModel: ObservableObject{
     
     
     func addThreeCards(){
-        //model.removeCardsFromScreen()
+        model.addCardsFromPile()
+        model.addCardsFromPile()
+        model.addCardsFromPile()
     }
     
     

@@ -15,10 +15,10 @@ struct ContentView: View {
 
             Text("Game of Set").font(.title)
             Text("Possible Matches: \(viewModel.possibleMatches)")
-            Text("Cards Left: \(viewModel.cards.count)")
+            Text("Cards Left: \(viewModel.cardsLeft.count)")
             Text("Score: \(viewModel.getScore)")
             
-            AspectVGrid(items: viewModel.onScreenCards, aspectRatio: 2/3, content: {card in
+            AspectVGrid(items: viewModel.cardsOnScreen, aspectRatio: 2/3, content: {card in
                 CardView(card: card)
                     .padding(2)
                     .foregroundColor(Color(card.content.shapeColor))
@@ -57,6 +57,7 @@ struct ContentView: View {
             
             Spacer()
             HStack(spacing: 30) {
+                /*
                 Button(action: {
                     viewModel.replaceMatchedCards()
                 
@@ -73,7 +74,7 @@ struct ContentView: View {
                                 }}
                     }
                     
-                }
+                }*/
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
@@ -108,6 +109,15 @@ struct ContentView: View {
                 }
                 Button(action: {
                     viewModel.addThreeCards()
+                }) {
+                    VStack {
+                        Image(systemName: "plus.rectangle.fill").font(.largeTitle)
+                        Text("New Game")
+                    }
+                }
+                /*
+                Button(action: {
+                    viewModel.addThreeCards()
                 
                 }) {
                     VStack {
@@ -121,7 +131,7 @@ struct ContentView: View {
                     }
                     
                 }
-            }
+                 */}
             
             
             if showToast && viewModel.getPopupString != ""{
