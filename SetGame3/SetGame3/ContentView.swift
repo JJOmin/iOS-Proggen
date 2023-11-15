@@ -27,8 +27,53 @@ struct ContentView: View {
                     }
             })
             
+            /*
+            AspectVGrid(items: viewModel.matchedCards, aspectRatio: 2/3, content: {card in
+                CardView(card: card)
+                    //.padding(2)
+                    .foregroundColor(Color(card.content.shapeColor))
+                    .onTapGesture {
+                        print("Here")
+                    }
+            })
+            ZStack{
+                ForEach(viewModel.matchedCards){ card in
+                    CardPileView(card: card)
+                        .padding(2)
+                        .foregroundColor(Color(card.content.shapeColor))
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .onTapGesture {
+                            print("Test")
+                        }}
+            }
+            CardPileView(card: viewModel.cards2[viewModel.lastMatchedCard])
+                    .padding(2)
+                    //.foregroundColor(Color(card.content.shapeColor))
+                    .onTapGesture {
+                        print("Test")
+                    }*/
+            
+        
+            
             Spacer()
-            HStack(spacing: 45) {
+            HStack(spacing: 30) {
+                Button(action: {
+                    viewModel.replaceMatchedCards()
+                
+                }) {
+                    VStack {
+                        ForEach(viewModel.matchedCards){ card in
+                            CardPileView(card: card)
+                                .padding(2)
+                                .foregroundColor(Color(card.content.shapeColor))
+                                .aspectRatio(2/3, contentMode: .fit)
+                                .frame(width: 60)
+                                .onTapGesture {
+                                    print("Test")
+                                }}
+                    }
+                    
+                }
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
@@ -51,22 +96,8 @@ struct ContentView: View {
                         }
                     }
                 }
+               
                 
-                Button(action: {
-                    viewModel.replaceMatchedCards()
-                
-                }) {
-                    VStack {
-                        if viewModel.numberOfCardsShown < viewModel.cards.count{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                            Text("+3 Cards").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                        } else{
-                            Image(systemName: "rectangle.stack.badge.plus").font(.largeTitle).foregroundColor(.gray).opacity(0.5)
-                            Text("+3 Cards").foregroundColor(.gray).opacity(0.5)
-                        }
-                    }
-                    
-                }
                 Button(action: {
                     viewModel.createNewSetGame()
                 }) {
@@ -74,6 +105,21 @@ struct ContentView: View {
                         Image(systemName: "plus.rectangle.fill").font(.largeTitle)
                         Text("New Game")
                     }
+                }
+                Button(action: {
+                    viewModel.addThreeCards()
+                
+                }) {
+                    VStack {
+                        ForEach(viewModel.matchedCards){ card in
+                            CardPileView(card: card)
+                                .padding(2)
+                                .foregroundColor(Color(card.content.shapeColor))
+                                .aspectRatio(2/3, contentMode: .fit)
+                                .frame(width: 60)
+                        }
+                    }
+                    
                 }
             }
             

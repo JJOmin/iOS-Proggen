@@ -99,6 +99,10 @@ class ViewModel: ObservableObject{
         model.isAddCardsButtonActive
     }
     
+    var matchedCards: Array<Model<ViewModel.CardContent>.Card>{
+        return model.matchedCards
+    }
+    
     
     
     
@@ -116,9 +120,12 @@ class ViewModel: ObservableObject{
     
     func helpingHandToggle(){
         model.toggleHelpingHand()
-        
     }
     
+    
+    func addThreeCards(){
+        //model.addCardsOnScreen()
+    }
     
     
     

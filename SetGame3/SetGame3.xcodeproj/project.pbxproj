@@ -16,6 +16,8 @@
 		191A22F62B052CE500370CB0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A22F52B052CE500370CB0 /* Model.swift */; };
 		191A22F82B052CF500370CB0 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A22F72B052CF500370CB0 /* Shapes.swift */; };
 		191A22FA2B052CFF00370CB0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A22F92B052CFF00370CB0 /* ViewModel.swift */; };
+		191A22FC2B0533AB00370CB0 /* CardPileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A22FB2B0533AB00370CB0 /* CardPileView.swift */; };
+		191A22FE2B05443700370CB0 /* AspectZGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A22FD2B05443700370CB0 /* AspectZGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		191A22F52B052CE500370CB0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		191A22F72B052CF500370CB0 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 		191A22F92B052CFF00370CB0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		191A22FB2B0533AB00370CB0 /* CardPileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPileView.swift; sourceTree = "<group>"; };
+		191A22FD2B05443700370CB0 /* AspectZGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectZGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +103,9 @@
 				191A22C72B052C9700370CB0 /* SetGame3App.swift */,
 				191A22C92B052C9700370CB0 /* ContentView.swift */,
 				191A22F12B052CC700370CB0 /* AspectVGrid.swift */,
+				191A22FD2B05443700370CB0 /* AspectZGrid.swift */,
 				191A22F32B052CDA00370CB0 /* CardView.swift */,
+				191A22FB2B0533AB00370CB0 /* CardPileView.swift */,
 				191A22F52B052CE500370CB0 /* Model.swift */,
 				191A22F72B052CF500370CB0 /* Shapes.swift */,
 				191A22F92B052CFF00370CB0 /* ViewModel.swift */,
@@ -248,9 +254,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				191A22F62B052CE500370CB0 /* Model.swift in Sources */,
+				191A22FE2B05443700370CB0 /* AspectZGrid.swift in Sources */,
 				191A22CA2B052C9700370CB0 /* ContentView.swift in Sources */,
 				191A22C82B052C9700370CB0 /* SetGame3App.swift in Sources */,
 				191A22F42B052CDA00370CB0 /* CardView.swift in Sources */,
+				191A22FC2B0533AB00370CB0 /* CardPileView.swift in Sources */,
 				191A22F22B052CC700370CB0 /* AspectVGrid.swift in Sources */,
 				191A22F82B052CF500370CB0 /* Shapes.swift in Sources */,
 				191A22FA2B052CFF00370CB0 /* ViewModel.swift in Sources */,
