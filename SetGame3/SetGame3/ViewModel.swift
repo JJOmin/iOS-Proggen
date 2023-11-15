@@ -124,8 +124,10 @@ class ViewModel: ObservableObject{
     
     
     func addThreeCards(){
-        //model.addCardsOnScreen()
+        //model.removeCardsFromScreen()
     }
+    
+    
     
     
     

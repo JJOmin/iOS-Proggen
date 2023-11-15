@@ -10,7 +10,7 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var deselecting: Int
     private(set) var helpingHandState: Bool
     private(set) var isAddCardsButtonActive: Bool
-    private(set) var onScreenCards: Array<Card>
+    private(set) var cardsOnScreen: Array<Card>
     private(set) var matchedCards: Array<Card>
     private(set) var notPlayedCards: Array<Card>
     
@@ -62,7 +62,7 @@ struct Model<CardContent> where CardContent: Equatable {
     
     init(totalNumberOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = []
-        onScreenCards = []
+        cardsOnScreen = []
         numberOfCardsShown = 12
         score = 0
         getPopupString = ""
@@ -80,7 +80,7 @@ struct Model<CardContent> where CardContent: Equatable {
             cards.append(card)
             notPlayedCards.append(card)
             if i < numberOfCardsShown {
-                onScreenCards.append(card)
+                cardsOnScreen.append(card)
             }
         }
     }
@@ -108,13 +108,13 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
-    
+    /*
     mutating func refreshOnScreenCards(){
-        onScreenCards = []
+        cardsOnScreen = []
         for i in 0..<numberOfCardsShown {
-            onScreenCards.append(cards[i])
+            cardsOnScreen.append(cards[i])
         }
-    }
+    }*/
     
     
     mutating func choose (_ card: Card) {
@@ -122,14 +122,15 @@ struct Model<CardContent> where CardContent: Equatable {
         if !card.isSelected && (card.isMatched == .falseMatch || card.isMatched == .notChecked) {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = true
-                refreshOnScreenCards()
+                print(index)
+                //refreshOnScreenCards()
                 deselecting += 1
                 
             }
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
             if let index = cards.firstIndex(where: { $0.id == card.id }) {
                 cards[index].isSelected = false
-                refreshOnScreenCards()
+                //refreshOnScreenCards()
                 deselecting -= 1
                 
             }
@@ -163,7 +164,7 @@ struct Model<CardContent> where CardContent: Equatable {
                         
                         helpingHandState = false
                         setHelpingHand()
-                        refreshOnScreenCards()
+                        //refreshOnScreenCards()
                         score += 3
                         
                         somethingMatched = .trueMatched
@@ -175,7 +176,7 @@ struct Model<CardContent> where CardContent: Equatable {
                     cards[selectedCardIds[2]].isMatched = .falseMatch
                     helpingHandState = false
                     setHelpingHand()
-                    refreshOnScreenCards()
+                    //refreshOnScreenCards()
                     somethingMatched = .falseMatched
                 }
             }
@@ -189,7 +190,7 @@ struct Model<CardContent> where CardContent: Equatable {
                     }
                     somethingMatched = .notChecked
                 }
-                refreshOnScreenCards()
+                //refreshOnScreenCards()
                 deselecting = 1
                 
             } else if somethingMatched == .trueMatched {
@@ -200,7 +201,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 if numberOfCardsShown > 12 || cards.count < 12{
                     numberOfCardsShown -= 3
                 }
-                refreshOnScreenCards()
+                //refreshOnScreenCards()
                 somethingMatched = .notChecked
                 deselecting = 1
                 
@@ -216,7 +217,7 @@ struct Model<CardContent> where CardContent: Equatable {
             if numberOfCardsShown >= cards.count{
                 numberOfCardsShown = cards.count-1
             }
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
         }
     }
     mutating func removeMatchedCards(){
@@ -236,7 +237,7 @@ struct Model<CardContent> where CardContent: Equatable {
                 numberOfCardsShown = cards.count-1
                 print("Sicherheit")
             }*/
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
         }
     }
     
@@ -258,14 +259,14 @@ struct Model<CardContent> where CardContent: Equatable {
             if numberOfCardsShown >= cards.count{
                 numberOfCardsShown = cards.count-1
             }
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
             deselecting = 0
             somethingMatched = .notChecked
            
         }
         else{
             addCardsShown()
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
         }
     }
 
@@ -288,7 +289,7 @@ struct Model<CardContent> where CardContent: Equatable {
             } else if helpingHandState == false {
                 cards[i].isHelpingHand = false
             }
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
         }
     }
     
@@ -362,7 +363,17 @@ struct Model<CardContent> where CardContent: Equatable {
         if numberOfCardsShown < cards.count-3 {
             
             numberOfCardsShown += 3
-            refreshOnScreenCards()
+            //refreshOnScreenCards()
+        }
+    }
+    
+    
+    mutating func removeCardsFromScreen(idToRemove: Int ){
+        if let index = cardsOnScreen.firstIndex(where: { $0.id == idToRemove }) {
+            let removedObject = cardsOnScreen.remove(at: index)
+            matchedCards.append(removedObject)
+        } else {
+            print("Object with ID \(idToRemove) not found")
         }
     }
     /*
