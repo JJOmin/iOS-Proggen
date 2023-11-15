@@ -164,7 +164,6 @@ struct Model<CardContent> where CardContent: Equatable {
                        
                         helpingHandState = false
                         setHelpingHand()
-                        //refreshOnScreenCards()
                         score += 3
                         
                         somethingMatched = .trueMatched
@@ -201,9 +200,15 @@ struct Model<CardContent> where CardContent: Equatable {
                         idsToRemove.append(cardsOnScreen[i].id)
                     }
                 }
-                removeCardsFromScreen(idToRemove: idsToRemove[0])
-                removeCardsFromScreen(idToRemove: idsToRemove[1])
-                removeCardsFromScreen(idToRemove: idsToRemove[2])
+                //abgabe 3
+                replaceCardsOnScreenFromPile(idsToRemove[0])
+                replaceCardsOnScreenFromPile(idsToRemove[1])
+                replaceCardsOnScreenFromPile(idsToRemove[2])
+                
+                //Abgabe 4
+                //removeCardsFromScreen(idToRemove: idsToRemove[0])
+                //removeCardsFromScreen(idToRemove: idsToRemove[1])
+                //removeCardsFromScreen(idToRemove: idsToRemove[2])
                 somethingMatched = .notChecked
                 deselecting = 1
                 
@@ -315,6 +320,21 @@ struct Model<CardContent> where CardContent: Equatable {
             if let index = notPlayedCards.firstIndex(where: { $0.id == idToRemove }) {
                 let removedObject = notPlayedCards.remove(at: index)
                 cardsOnScreen.append(removedObject)
+            }
+        }
+        
+    }
+    
+    mutating func replaceCardsOnScreenFromPile(_ id:Int){
+        if notPlayedCards.count >= 1{
+            let idToAdd = notPlayedCards[0].id
+            if let indexToAdd = notPlayedCards.firstIndex(where: { $0.id == idToAdd }) {
+                let objectToAdd = notPlayedCards.remove(at: indexToAdd)
+                let idToRemove = id
+                if let indexToRemove = cardsOnScreen.firstIndex(where: { $0.id == idToRemove }) {
+                    cardsOnScreen.remove(at: indexToRemove)
+                    cardsOnScreen.insert(objectToAdd, at: indexToRemove)
+                }
             }
         }
         
