@@ -174,9 +174,15 @@ struct Model<CardContent> where CardContent: Equatable {
                 deselecting = 1
                 
             } else if somethingMatched == .trueMatched {
+                //print("Peter")
+                /*
                 replaceMatchedCards()
                 replaceMatchedCards()
                 replaceMatchedCards()
+                 */
+                removeMatchedCards()
+                removeMatchedCards()
+                removeMatchedCards()
                 if numberOfCardsShown > 12 || cards.count < 12{
                     numberOfCardsShown -= 3
                 }
@@ -196,6 +202,26 @@ struct Model<CardContent> where CardContent: Equatable {
             if numberOfCardsShown >= cards.count{
                 numberOfCardsShown = cards.count-1
             }
+            refreshOnScreenCards()
+        }
+    }
+    mutating func removeMatchedCards(){
+        if cards[matchedCardIds[0]].isMatched == .trueMatch{
+            //print("hier wird matched Card replaced")
+            print("Hier die carten die entfernt werden sollen")
+            //print(cards[matchedCardIds[0]])
+            cards.remove(at: matchedCardIds[0])
+            //cards[matchedCardIds[0]] = cards[cards.count-1]
+            //print("hier letzte Karte des cards arrays entfernt")
+            //cards.removeLast()
+            if numberOfCardsShown > 3{
+                numberOfCardsShown -= 1
+            }
+            /*
+            if numberOfCardsShown >= cards.count{
+                numberOfCardsShown = cards.count-1
+                print("Sicherheit")
+            }*/
             refreshOnScreenCards()
         }
     }

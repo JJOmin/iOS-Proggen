@@ -32,13 +32,16 @@ struct ContentView: View {
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
+                        if viewModel.possibleMatches == 0{
+                            viewModel.helpingHandToggle()
+                        }
                     }
                 }) {
                     VStack {
                         if viewModel.helpingHandState == true{
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.yellow)
-                            Text("Helping  Hand").foregroundColor(.yellow)
-                        } else if viewModel.numberOfCardsShown >= 21{
+                            Text("Helping Hand").foregroundColor(.yellow)
+                        } else if viewModel.numberOfCardsShown >= 21 || viewModel.possibleMatches == 0{
                             Image(systemName: "rectangle.and.hand.point.up.left.filled").font(.largeTitle).foregroundColor(.gray).opacity(0.5)
                             Text("Helping Hand").foregroundColor(.gray).opacity(0.5)
                         }else{
