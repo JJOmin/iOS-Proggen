@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-
+            
             Text("Game of Set").font(.title)
             Text("Possible Matches: \(viewModel.possibleMatches)")
             Text("Cards Left: \(viewModel.cardsLeft.count)")
@@ -28,53 +28,53 @@ struct ContentView: View {
             })
             
             /*
-            AspectVGrid(items: viewModel.matchedCards, aspectRatio: 2/3, content: {card in
-                CardView(card: card)
-                    //.padding(2)
-                    .foregroundColor(Color(card.content.shapeColor))
-                    .onTapGesture {
-                        print("Here")
-                    }
-            })
-            ZStack{
-                ForEach(viewModel.matchedCards){ card in
-                    CardPileView(card: card)
-                        .padding(2)
-                        .foregroundColor(Color(card.content.shapeColor))
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            print("Test")
-                        }}
-            }
-            CardPileView(card: viewModel.cards2[viewModel.lastMatchedCard])
-                    .padding(2)
-                    //.foregroundColor(Color(card.content.shapeColor))
-                    .onTapGesture {
-                        print("Test")
-                    }*/
+             AspectVGrid(items: viewModel.matchedCards, aspectRatio: 2/3, content: {card in
+             CardView(card: card)
+             //.padding(2)
+             .foregroundColor(Color(card.content.shapeColor))
+             .onTapGesture {
+             print("Here")
+             }
+             })
+             ZStack{
+             ForEach(viewModel.matchedCards){ card in
+             CardPileView(card: card)
+             .padding(2)
+             .foregroundColor(Color(card.content.shapeColor))
+             .aspectRatio(2/3, contentMode: .fit)
+             .onTapGesture {
+             print("Test")
+             }}
+             }
+             CardPileView(card: viewModel.cards2[viewModel.lastMatchedCard])
+             .padding(2)
+             //.foregroundColor(Color(card.content.shapeColor))
+             .onTapGesture {
+             print("Test")
+             }*/
             
-        
+            
             
             Spacer()
             HStack(spacing: 30) {
-                /*
-                Button(action: {
-                    viewModel.replaceMatchedCards()
                 
-                }) {
-                    VStack {
-                        ForEach(viewModel.matchedCards){ card in
-                            CardPileView(card: card)
-                                .padding(2)
-                                .foregroundColor(Color(card.content.shapeColor))
-                                .aspectRatio(2/3, contentMode: .fit)
-                                .frame(width: 60)
-                                .onTapGesture {
-                                    print("Test")
-                                }}
-                    }
-                    
-                }*/
+                 Button(action: {
+                 
+                 
+                 }) {
+                     ZStack {
+                         ForEach(viewModel.matchedCards){ card in
+                             CardPileView(card: card, faceUp: true)
+                                 .padding(2)
+                                 .foregroundColor(Color(card.content.shapeColor))
+                                 .aspectRatio(2/3, contentMode: .fit)
+                                 .frame(width: 60)
+                                 .onTapGesture {
+                                     print("Test")
+                                 }}
+                     }
+                     
+                 }
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
@@ -97,7 +97,7 @@ struct ContentView: View {
                         }
                     }
                 }
-               
+                
                 
                 Button(action: {
                     viewModel.createNewSetGame()
@@ -106,7 +106,7 @@ struct ContentView: View {
                         Image(systemName: "plus.rectangle.fill").font(.largeTitle)
                         Text("New Game")
                     }
-                }
+                }/*
                 Button(action: {
                     viewModel.addThreeCards()
                 }) {
@@ -114,44 +114,41 @@ struct ContentView: View {
                         Image(systemName: "plus.rectangle.fill").font(.largeTitle)
                         Text("New Game")
                     }
-                }
-                /*
+                }*/
+                
+                
                 Button(action: {
                     viewModel.addThreeCards()
-                
                 }) {
-                    VStack {
-                        ForEach(viewModel.matchedCards){ card in
-                            CardPileView(card: card)
+                    ZStack {
+                        ForEach(viewModel.notPlayedCards){ card in
+                            CardPileView(card: card, faceUp: false)
                                 .padding(2)
                                 .foregroundColor(Color(card.content.shapeColor))
                                 .aspectRatio(2/3, contentMode: .fit)
                                 .frame(width: 60)
-                        }
+                                }
                     }
                     
                 }
-                 */}
-            
-            
-            if showToast && viewModel.getPopupString != ""{
-                Text("\(viewModel.getPopupString)")
-                    .background(Color.orange).opacity(0.95)
-                    .foregroundColor(Color.black)
-                    .cornerRadius(15)
-                    .transition(.opacity)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation {
-                                showToast = false
+                
+                if showToast && viewModel.getPopupString != ""{
+                    Text("\(viewModel.getPopupString)")
+                        .background(Color.orange).opacity(0.95)
+                        .foregroundColor(Color.black)
+                        .cornerRadius(15)
+                        .transition(.opacity)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation {
+                                    showToast = false
+                                }
                             }
                         }
-                    }
-                
+                    
+                }
             }
         }
-        
-        
     }
 }
 

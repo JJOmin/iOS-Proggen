@@ -107,6 +107,9 @@ class ViewModel: ObservableObject{
     var matchedCards: Array<Model<ViewModel.CardContent>.Card>{
         return model.matchedCards
     }
+    var notPlayedCards: Array<Model<ViewModel.CardContent>.Card>{
+        model.notPlayedCards
+    }
     
     
     
