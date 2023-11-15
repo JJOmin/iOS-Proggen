@@ -11,6 +11,7 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var helpingHandState: Bool
     private(set) var isAddCardsButtonActive: Bool
     private(set) var idsToRemove: [Int]
+    private(set) var randomNumberArray: [Int]
     private(set) var cardsOnScreen: Array<Card>
     private(set) var matchedCards: Array<Card>
     private(set) var notPlayedCards: Array<Card>
@@ -74,11 +75,15 @@ struct Model<CardContent> where CardContent: Equatable {
         matchedCards = []
         notPlayedCards = []
         idsToRemove = []
-        
+        randomNumberArray = []
         
         for i in 0..<totalNumberOfCards {
-            let content: CardContent = createCardContent(i)
-            let card = Card(id: i+1, content: content, isMatched: .notChecked)
+            randomNumberArray.append(i)
+        }
+        
+        for number in randomNumberArray.shuffled(){
+            let content: CardContent = createCardContent(number)
+            let card = Card(id: number+1, content: content, isMatched: .notChecked)
             cards.append(card)
         }
         
@@ -116,30 +121,20 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
-    /*
-    mutating func refreshOnScreenCards(){
-        cardsOnScreen = []
-        for i in 0..<numberOfCardsShown {
-            cardsOnScreen.append(cards[i])
-        }
-    }*/
-    
     
     mutating func choose (_ card: Card) {
         
-        //De/Selecting Cards
+        //Selecting Cards
         if !card.isSelected && (card.isMatched == .falseMatch || card.isMatched == .notChecked) {
             if let index = cardsOnScreen.firstIndex(where: { $0.id == card.id }) {
                 cardsOnScreen[index].isSelected = true
-                //print(index)
-                //refreshOnScreenCards()
                 deselecting += 1
                 
             }
+            //Deselecting
         } else if card.isSelected == true && (card.isMatched == .notChecked) {
             if let index = cardsOnScreen.firstIndex(where: { $0.id == card.id }) {
                 cardsOnScreen[index].isSelected = false
-                //refreshOnScreenCards()
                 deselecting -= 1
                 
             }
@@ -160,7 +155,7 @@ struct Model<CardContent> where CardContent: Equatable {
                         cardsOnScreen[selectedCardIds[0]].isMatched = .trueMatch
                         cardsOnScreen[selectedCardIds[1]].isMatched = .trueMatch
                         cardsOnScreen[selectedCardIds[2]].isMatched = .trueMatch
-                        print("Matched")
+                    
                        
                         helpingHandState = false
                         setHelpingHand()
@@ -170,13 +165,12 @@ struct Model<CardContent> where CardContent: Equatable {
                         
                     }
                 } else {
-                    print("Peter")
+                    
                     cardsOnScreen[selectedCardIds[0]].isMatched = .falseMatch
                     cardsOnScreen[selectedCardIds[1]].isMatched = .falseMatch
                     cardsOnScreen[selectedCardIds[2]].isMatched = .falseMatch
                     helpingHandState = false
                     setHelpingHand()
-                    //refreshOnScreenCards()
                     somethingMatched = .falseMatched
                 }
             }
@@ -190,7 +184,6 @@ struct Model<CardContent> where CardContent: Equatable {
                     }
                     somethingMatched = .notChecked
                 }
-                //refreshOnScreenCards()
                 deselecting = 1
                 
             } else if somethingMatched == .trueMatched {
@@ -216,6 +209,25 @@ struct Model<CardContent> where CardContent: Equatable {
         }
     }
     
+    mutating func addAndReplace() {
+        if somethingMatched == .trueMatched {
+            idsToRemove = []
+            for i in 0..<cardsOnScreen.count{
+                if cardsOnScreen[i].isMatched == .trueMatch{
+                    idsToRemove.append(cardsOnScreen[i].id)
+                }
+            }
+            //abgabe 3
+            replaceCardsOnScreenFromPile(idsToRemove[0])
+            replaceCardsOnScreenFromPile(idsToRemove[1])
+            replaceCardsOnScreenFromPile(idsToRemove[2])
+            
+            somethingMatched = .notChecked
+            deselecting = 0
+            
+        }
+    }
+    
     
     mutating func toggleHelpingHand(){
         helpingHandState.toggle()
@@ -236,7 +248,6 @@ struct Model<CardContent> where CardContent: Equatable {
             } else if helpingHandState == false {
                 cardsOnScreen[i].isHelpingHand = false
             }
-            //refreshOnScreenCards()
         }
     }
     
@@ -322,7 +333,6 @@ struct Model<CardContent> where CardContent: Equatable {
                 cardsOnScreen.append(removedObject)
             }
         }
-        
     }
     
     mutating func replaceCardsOnScreenFromPile(_ id:Int){
@@ -339,70 +349,7 @@ struct Model<CardContent> where CardContent: Equatable {
         }
         
     }
-    /*
-    mutating func replaceMatchedCards(){
-        if cards[matchedCardIds[0]].isMatched == .trueMatch{
-            cards[matchedCardIds[0]] = cards[cards.count-1]
-            cards.removeLast()
-            if numberOfCardsShown >= cards.count{
-                numberOfCardsShown = cards.count-1
-            }
-            //refreshOnScreenCards()
-        }
-    }
-    
-    mutating func removeMatchedCards(){
-        if cards[matchedCardIds[0]].isMatched == .trueMatch{
-            //print("hier wird matched Card replaced")
-            
-            //print(cards[matchedCardIds[0]])
-            cards.remove(at: matchedCardIds[0])
-            //cards[matchedCardIds[0]] = cards[cards.count-1]
-            //print("hier letzte Karte des cards arrays entfernt")
-            //cards.removeLast()
-            if numberOfCardsShown > 3{
-                numberOfCardsShown -= 1
-            }
-            /*
-            if numberOfCardsShown >= cards.count{
-                numberOfCardsShown = cards.count-1
-                print("Sicherheit")
-            }*/
-            //refreshOnScreenCards()
-        }
-    }*/
-    /*
-    
-    mutating func replaceCardsButton(){
-        if somethingMatched == .trueMatched{
-            
-            cards[matchedCardIds[0]] = cards[cards.count-1]
-            cards[matchedCardIds[0]] = cards[cards.count-2]
-            cards[matchedCardIds[0]] = cards[cards.count-3]
-            cards.removeLast()
-            if numberOfCardsShown >= cards.count{
-                numberOfCardsShown = cards.count-1
-            }
-            cards.removeLast()
-            if numberOfCardsShown >= cards.count{
-                numberOfCardsShown = cards.count-1
-            }
-            cards.removeLast()
-            if numberOfCardsShown >= cards.count{
-                numberOfCardsShown = cards.count-1
-            }
-            //refreshOnScreenCards()
-            deselecting = 0
-            somethingMatched = .notChecked
-           
-        }
-        else{
-            addCardsShown()
-            //refreshOnScreenCards()
-        }
-    }
-     */
-    
+   
 }
 
 

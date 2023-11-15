@@ -117,14 +117,12 @@ class ViewModel: ObservableObject{
     
     //Funktionen
     func createNewSetGame() {
-        ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
+        //ViewModel.shapePropertyArray.shuffle() // Karten mischen, bevor sie dem Spiel hinzugefügt werden
         model = ViewModel.createSetGame()
     }
-    /*
-    func replaceMatchedCards(){
-        model.replaceCardsButton()
-    }
-    */
+    
+    
+    
     
     func helpingHandToggle(){
         model.toggleHelpingHand()
@@ -132,9 +130,14 @@ class ViewModel: ObservableObject{
     
     
     func addThreeCards(){
-        model.addCardsFromPile()
-        model.addCardsFromPile()
-        model.addCardsFromPile()
+        
+        if model.somethingMatched == .trueMatched{
+            model.addAndReplace()
+        } else {
+            model.addCardsFromPile()
+            model.addCardsFromPile()
+            model.addCardsFromPile()
+        }
     }
     
     
