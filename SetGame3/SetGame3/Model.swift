@@ -15,7 +15,6 @@ struct Model<CardContent> where CardContent: Equatable {
     private(set) var cardsOnScreen: Array<Card>
     private(set) var matchedCards: Array<Card>
     private(set) var notPlayedCards: Array<Card>
-    
     private(set) var somethingMatched: statusMatched
     
     enum statusMatched {
