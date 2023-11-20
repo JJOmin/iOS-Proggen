@@ -193,14 +193,14 @@ struct Model<CardContent> where CardContent: Equatable {
                     }
                 }
                 //abgabe 3
-                replaceCardsOnScreenFromPile(idsToRemove[0])
-                replaceCardsOnScreenFromPile(idsToRemove[1])
-                replaceCardsOnScreenFromPile(idsToRemove[2])
+                //replaceCardsOnScreenFromPile(idsToRemove[0])
+                //replaceCardsOnScreenFromPile(idsToRemove[1])
+                //replaceCardsOnScreenFromPile(idsToRemove[2])
                 
                 //Abgabe 4
-                //removeCardsFromScreen(idToRemove: idsToRemove[0])
-                //removeCardsFromScreen(idToRemove: idsToRemove[1])
-                //removeCardsFromScreen(idToRemove: idsToRemove[2])
+                removeCardsFromScreen(idToRemove: idsToRemove[0])
+                removeCardsFromScreen(idToRemove: idsToRemove[1])
+                removeCardsFromScreen(idToRemove: idsToRemove[2])
                 somethingMatched = .notChecked
                 deselecting = 1
                 

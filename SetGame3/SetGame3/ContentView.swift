@@ -57,7 +57,7 @@ struct ContentView: View {
             
             Spacer()
             HStack(spacing: 30) {
-                /*
+                
                  Button(action: {
                  }) {
                      ZStack {
@@ -71,7 +71,7 @@ struct ContentView: View {
                                      print("Test")
                                  }}
                      }
-                 }*/
+                 }
                 Button(action: {
                     if viewModel.numberOfCardsShown < 21{
                         viewModel.helpingHandToggle()
@@ -94,7 +94,7 @@ struct ContentView: View {
                         }
                     }
                 }
-                
+                /*
                 Button(action: {
                                     viewModel.addThreeCards()
                                 
@@ -110,7 +110,7 @@ struct ContentView: View {
                     }
                     
                 }
-                
+                */
                 
                 Button(action: {
                     viewModel.createNewSetGame()
@@ -122,7 +122,7 @@ struct ContentView: View {
                 }
                 
                 
-                /*
+                
                 Button(action: {
                     viewModel.addThreeCards()
                 }) {
@@ -136,7 +136,7 @@ struct ContentView: View {
                                 }
                     }
                     
-                }*/
+                }
                 
                 if showToast && viewModel.getPopupString != ""{
                     Text("\(viewModel.getPopupString)")
