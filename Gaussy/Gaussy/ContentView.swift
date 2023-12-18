@@ -10,20 +10,25 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 5) {
-            ForEach(0..<viewModel.matrix.count, id: \.self) { row in
-                HStack(spacing: 5) {
-                    ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
-                        Text("\(viewModel.matrix[row][col])")
-                            .font(.system(size: fontSize(for: viewModel.matrix)))
-                            .frame(width: squareSize(for: viewModel.matrix), height: squareSize(for: viewModel.matrix))
-                            .border(Color.black) // Optional: Rahmen um das Quadrat hinzufügen
-                            .padding(5) // Optional: Innenabstand des Quadrats
+        VStack{
+            VStack{
+                Text("Gaussy Game")
+            }
+            VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                
+                ForEach(0..<viewModel.matrix.count, id: \.self) { row in
+                    HStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                        ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
+                            Text("\(viewModel.matrix[row][col])")
+                                .font(.system(size: fontSize(for: viewModel.matrix)))
+                                .frame(width: squareSize(for: viewModel.matrix), height: squareSize(for: viewModel.matrix))
+                                .border(Color.black) // Optional: Rahmen um das Quadrat hinzufügen
+                                .padding(interSquareSpacing(for: viewModel.matrix)) // Optional: Innenabstand des Quadrats
+                        }
                     }
                 }
-            }
+            };Spacer()
         }
-        .padding() // Optional: Außenabstand des gesamten Inhalts
     }
 }
 

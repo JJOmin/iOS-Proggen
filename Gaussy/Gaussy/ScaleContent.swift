@@ -27,3 +27,12 @@ func fontSize(for matrix: [[Int]]) -> CGFloat {
     let fontSize = squareSizeValue * 0.5 // Adjust the multiplier to set the desired font size
     return fontSize
 }
+
+func interSquareSpacing(for matrix: [[Int]]) -> CGFloat {
+    let sizeMatrix = matrix.count
+    let maxSpacing: CGFloat = 8 // Maximaler Abstand zwischen den Quadraten
+
+    // Berechnung des Abstands basierend auf der Anzahl der Elemente in der Matrix
+    let spacing = maxSpacing / CGFloat(sizeMatrix)
+    return spacing
+}
