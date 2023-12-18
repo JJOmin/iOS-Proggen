@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct GaussyApp: App {
+    let viewModel = ViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: viewModel)
         }
     }
 }
