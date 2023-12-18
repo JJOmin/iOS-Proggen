@@ -11,6 +11,6 @@ import Foundation
 class ViewModel: ObservableObject {
     @Published var matrix: [[Int]] = []
     init() {
-        self.matrix = Model.identityMatrix(size: 4)
+        self.matrix = Model.identityMatrix(size: 2)
     }
 }

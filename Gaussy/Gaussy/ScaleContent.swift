@@ -10,10 +10,10 @@ import SwiftUI
 
 func squareSize(for matrix: [[Int]]) -> CGFloat {
     let sizeMatrix = matrix.count
-    let maxSize: CGFloat = 80 // Maximalgröße der Quadrate
+    let maxSize: CGFloat = 120 // Maximalgröße der Quadrate
 
-    let maxWidth = UIScreen.main.bounds.width - 40 // Breite des Bildschirms abzüglich Randabstand
-    let maxHeight = UIScreen.main.bounds.height - 40 // Höhe des Bildschirms abzüglich Randabstand
+    let maxWidth = UIScreen.main.bounds.width - 140 // Breite des Bildschirms abzüglich Randabstand
+    let maxHeight = UIScreen.main.bounds.height - 140 // Höhe des Bildschirms abzüglich Randabstand
 
     let maxPossibleWidth = maxWidth / CGFloat(sizeMatrix)
     let maxPossibleHeight = maxHeight / CGFloat(sizeMatrix)
