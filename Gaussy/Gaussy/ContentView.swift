@@ -26,7 +26,7 @@ struct ContentView: View {
     }
 
 struct MatrixView: View {
-    let matrix: [[Int]] // Assuming your matrix is of type [[Int]]
+    let matrix: [[Int]]
     let selectedRows: [Int]
     let selectedCols: [Int]
     @State var selectedRow: Int = -1
@@ -36,7 +36,13 @@ struct MatrixView: View {
                 .fill(Color.gray)
                 .frame(width: 20, height: 20)
                 .onTapGesture {
-                    print(row, col, orientation)
+                    if orientation == "top"{
+                        print("top")
+                        
+                    } else {
+                        print(orientation)
+                    }
+                    
                 }
         }
     
