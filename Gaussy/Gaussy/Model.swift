@@ -28,6 +28,7 @@ struct Model {
             }
             identity.append(row)
         }
+        // print(identity)
         self.matrix = identity
     }
     
