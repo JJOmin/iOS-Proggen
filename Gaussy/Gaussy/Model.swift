@@ -73,4 +73,22 @@ struct Model {
             selectedCols.remove(at: index)
         }
     }
+    
+    mutating func toggleSelection(row: Int, col: Int) {
+            if selectedRows.contains(row) {
+                if let index = selectedRows.firstIndex(of: row) {
+                    selectedRows.remove(at: index)
+                }
+            } else {
+                selectedRows.append(row)
+            }
+            
+            if selectedCols.contains(col) {
+                if let index = selectedCols.firstIndex(of: col) {
+                    selectedCols.remove(at: index)
+                }
+            } else {
+                selectedCols.append(col)
+            }
+        }
 }
