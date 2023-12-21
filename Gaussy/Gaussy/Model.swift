@@ -10,9 +10,10 @@ struct Model {
     var selectedRows: [Int]
     var selectedCols: [Int]
     let size: Int
+    var selectedLastCol: Int = -1
+    var selectedLastRow: Int = -1
     
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
-        
         self.size = size
         self.selectedRows = []
         self.selectedCols = []
@@ -54,39 +55,71 @@ struct Model {
     
     // adding and Removing cols and Rows based on input
     mutating func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
-        print(orientation, row, col)
+        // print(selectedCols, selectedRows)
+        // print(orientation, row, col)
         
         switch orientation {
         case "top":
-            // Überprüfe auf Überschneidungen in der gesamten Spalte
-            if !selectedCols.contains(col) {
-                if selectedRows.isEmpty || selectedRows.allSatisfy({ !selectedCols.contains($0) }) {
-                    selectedRows = []
-                    selectedCols.append(col)
-                    print("1 or 2")
+            if selectedCols.count < 2 {
+                if !selectedCols.contains(col) {
+                    if selectedRows.isEmpty || selectedRows.allSatisfy({ !selectedCols.contains($0) }) {
+                        selectedRows = []
+                        selectedCols.append(col)
+                        if selectedCols.count == 1 {
+                            selectedLastCol = col
+                        }
+                    }
+                } else if let index = selectedCols.firstIndex(of: col) {
+                    selectedCols.remove(at: index)
                 }
-            } else if let index = selectedCols.firstIndex(of: col) {
-                selectedCols.remove(at: index)
-                print("3")
+            } else {
+                if !selectedCols.contains(col) {
+                    // Replaces the first Selected with the last selecteed, if there are more then 2 selected
+                    if let index = selectedCols.firstIndex(of: selectedLastCol) {
+                        selectedCols.remove(at: index)
+                        if selectedCols.count == 1 {
+                            selectedLastCol = selectedCols[0]
+                        }
+                        selectedCols.append(col)
+                    }
+                } else if let index = selectedCols.firstIndex(of: col) {
+                    selectedCols.remove(at: index)
+                }
             }
             
         case "left", "right":
-            // Überprüfe auf Überschneidungen in der gesamten Reihe
-            if !selectedRows.contains(row) {
-                if selectedCols.isEmpty || selectedCols.allSatisfy({ !selectedRows.contains($0) }) {
-                    selectedCols = []
-                    selectedRows.append(row)
-                    print("4 or 5")
+            if selectedRows.count < 2 {
+                if !selectedRows.contains(row) {
+                    if selectedCols.isEmpty || selectedCols.allSatisfy({ !selectedRows.contains($0) }) {
+                        selectedCols = []
+                        selectedRows.append(row)
+                        if selectedRows.count == 1 {
+                            selectedLastRow = row
+                        }
+                    }
+                } else if let index = selectedRows.firstIndex(of: row) {
+                    selectedRows.remove(at: index)
                 }
-            } else if let index = selectedRows.firstIndex(of: row) {
-                selectedRows.remove(at: index)
-                print("6")
+            } else {
+                if !selectedRows.contains(row) {
+                    // Replaces the first Selected with the last selecteed, if there are more then 2 selected
+                    if let index = selectedRows.firstIndex(of: selectedLastRow) {
+                        selectedRows.remove(at: index)
+                        if selectedRows.count == 1 {
+                            selectedLastRow = selectedRows[0]
+                        }
+                        selectedRows.append(row)
+                    }
+                } else if let index = selectedRows.firstIndex(of: row) {
+                    selectedRows.remove(at: index)
+                }
             }
             
         default:
             break
         }
     }
+
     /*
     // Work in progress
     mutating func toggleSelection(row: Int, col: Int) {
