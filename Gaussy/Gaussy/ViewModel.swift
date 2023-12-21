@@ -15,10 +15,7 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
     
     init() {
-        // self.matrix = Model.identityMatrix(size: 3)
         self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 3)
-        
-        // print(Model.getNumberOfNumbers)
     }
     
     // _____Intents____

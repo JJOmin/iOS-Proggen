@@ -32,7 +32,7 @@ struct Model {
     }
     
     // generating a einheitsmatrix in jeder größe
-    mutating func identityMatrix(size: Int) -> [[Int]] {
+    func identityMatrix(size: Int) -> [[Int]] {
         var identity: [[Int]] = []
         for i in 0..<size {
             var row: [Int] = []
