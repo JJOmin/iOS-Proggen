@@ -34,7 +34,7 @@ struct MatrixView: View {
     var body: some View {
         ForEach(0..<matrix.count, id: \.self) { row in
             HStack(spacing: (squareSize(for: matrix) - 20 + interSquareSpacing(for: matrix) * 3)) {
-                ForEach(0..<matrix[row].count, id: \.self) { _ in
+                ForEach(0..<matrix[row].count, id: \.self) {col in
                     if row == 0 {
                         Circle()
                             .fill(Color.gray)
