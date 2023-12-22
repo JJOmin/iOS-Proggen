@@ -36,3 +36,11 @@ func interSquareSpacing(for matrix: [[Int]]) -> CGFloat {
     let spacing = maxSpacing / CGFloat(sizeMatrix)
     return spacing
 }
+
+func buttonSize(for matrix: [[Int]]) -> CGFloat {
+    let sizeMatrix = matrix.count
+    let maxSpacing: CGFloat = 60 // Max button size
+
+    let spacing = maxSpacing / CGFloat(sizeMatrix)
+    return spacing
+}

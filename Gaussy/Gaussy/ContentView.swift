@@ -34,7 +34,7 @@ struct ContentView: View {
             HStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                 ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
                     if col == 0 {
-                        self.selectableCircle(col: col, row: row, orientation:"left")
+                        self.selectableCircle(col: col, row: row, orientation:"left").padding(10)
                     }
                     Text("\(viewModel.matrix[row][col])")
                         .font(.system(size: fontSize(for: viewModel.matrix)))
@@ -43,7 +43,8 @@ struct ContentView: View {
                         .background((viewModel.selectedCols.contains(col) || viewModel.selectedRows.contains(row)) ? Color.yellow : Color.white)
                         .padding(interSquareSpacing(for: viewModel.matrix)) // Optional: Padding inside the square */
                     if col == viewModel.matrix.count - 1 {
-                        self.selectableCircle(col: col, row: row, orientation:"right")
+                        self.selectableCircle(col: col, row: row, orientation:"right").padding(10)
+
                     }
                 }
             }
