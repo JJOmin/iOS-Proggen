@@ -121,7 +121,7 @@ struct Model {
     }
     
     // Func that swaps the rows
-    mutating func swapSelectedRows() {
+    mutating func swapSelected() {
         if selectedRows.count == 2 {
             let matrixFirst: [Int] = matrix[selectedRows[0]]
             let matrixSecond: [Int] = matrix[selectedRows[1]]

@@ -37,7 +37,7 @@ class ViewModel: ObservableObject {
         model.addRemoveFromSelected(col: col, row: row, orientation: orientation)
     }
     
-    func swapSelectedRows() {
-        model.swapSelectedRows()
+    func swapSelected() {
+        model.swapSelected()
     }
 }

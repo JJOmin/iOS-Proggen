@@ -62,46 +62,47 @@ struct ContentView: View {
         }
     }
 
-        var body: some View {
+    var body: some View {
+        VStack {
             VStack {
-                VStack {
-                    Text("Gaussy Game").font(.title)
-                }
-                HStack {
-                    VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
-                        buttonsTop()
-                        rectAndButtons()
-                        
-                    }
-                }
-                Spacer()// Create a button
-                Button(action: {
-                    viewModel.swapSelectedRows()
-                }) {
-                    VStack {
-                        if viewModel.selectedCols.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Swap Cols")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Swap Rows")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedRows.count != 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Swap")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                
+                Text("Gaussy Game").font(.title)
             }
+            HStack {
+                VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                    buttonsTop()
+                    rectAndButtons()
+                    
+                }
+            }
+            Spacer()// Create a button
+            Button(action: {
+                viewModel.swapSelected()
+            }) {
+                VStack {
+                    if viewModel.selectedCols.count == 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Swap Cols")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedRows.count == 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Swap Rows")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedRows.count != 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.gray)
+                        Text("Swap")
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            
+        }
+    
         }
     }
 
