@@ -119,24 +119,21 @@ struct Model {
             break
         }
     }
-
-    /*
-    // Work in progress
-    mutating func toggleSelection(row: Int, col: Int) {
-            if selectedRows.contains(row) {
-                if let index = selectedRows.firstIndex(of: row) {
-                    selectedRows.remove(at: index)
-                }
-            } else {
-                selectedRows.append(row)
-            }
+    
+    // Func that swaps the rows
+    mutating func swapSelectedRows() {
+        if selectedRows.count == 2 {
+            let matrixFirst: [Int] = matrix[selectedRows[0]]
+            let matrixSecond: [Int] = matrix[selectedRows[1]]
+            matrix[selectedRows[0]] = matrixSecond
+            matrix[selectedRows[1]] = matrixFirst
             
-            if selectedCols.contains(col) {
-                if let index = selectedCols.firstIndex(of: col) {
-                    selectedCols.remove(at: index)
-                }
-            } else {
-                selectedCols.append(col)
-            }
-        }*/
+        } else if selectedCols.count == 2 {
+            let matrixFirst: [Int] = matrix[selectedCols[0]]
+            let matrixSecond: [Int] = matrix[selectedCols[1]]
+            matrix[selectedCols[0]] = matrixSecond
+            matrix[selectedCols[1]] = matrixFirst
+        }
+    }
+    
 }

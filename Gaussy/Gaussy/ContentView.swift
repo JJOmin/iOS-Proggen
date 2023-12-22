@@ -9,13 +9,24 @@ struct ContentView: View {
         self.viewModel = viewModel
     }
     func selectableCircle(col: Int, row: Int, orientation: String) -> some View {
-            return Circle()
-                .fill(Color.gray)
-                .frame(width: 20, height: 20)
-                .onTapGesture {
-                    viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
-                }
-        }
+        let isColSelected: Bool = viewModel.selectedCols.contains(col)
+        let isRowSelected: Bool = viewModel.selectedRows.contains(row)
+        let rowAndTop: Bool = isColSelected && (orientation == "top")
+        let colAndLeftRight: Bool = isRowSelected && (orientation == "left" || orientation == "right")
+        
+        let circleColor: Color = rowAndTop || colAndLeftRight ? Color.yellow : Color.gray
+        
+        return Circle()
+            .fill(circleColor)
+            .frame(width: 20, height: 20)
+            .overlay(
+                Circle()
+                    .stroke(Color.black, lineWidth: 2) // Add a black border with a width of 2
+            )
+            .onTapGesture {
+                viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
+            }
+    }
     
     func buttonsTop() -> some View {
         return ForEach(0..<viewModel.matrix.count, id: \.self) { row in
@@ -63,7 +74,33 @@ struct ContentView: View {
                         
                     }
                 }
-                Spacer()
+                Spacer()// Create a button
+                Button(action: {
+                    viewModel.swapSelectedRows()
+                }) {
+                    VStack {
+                        if viewModel.selectedCols.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Swap Cols")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Swap Rows")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedRows.count != 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Swap")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                
             }
         }
     }
