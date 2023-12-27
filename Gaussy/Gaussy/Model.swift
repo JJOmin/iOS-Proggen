@@ -136,4 +136,29 @@ struct Model {
         }
     }
     
+    // addieren von reihen
+    mutating func addRows() {
+        if selectedRows.count == 2 {
+            let matrixFirst: [Int] = matrix[selectedRows[0]]
+            let matrixSecond: [Int] = matrix[selectedRows[1]]
+            if matrixFirst.count == matrixSecond.count {
+                let resultArray = zip(matrixFirst, matrixSecond).map { $0 + $1 }
+                matrix[selectedRows[1]] = resultArray
+            }
+        }
+    }
+    
+    // subtrahieren von reihen
+    mutating func subRows() {
+        if selectedRows.count == 2 {
+            let matrixFirst: [Int] = matrix[selectedRows[0]]
+            let matrixSecond: [Int] = matrix[selectedRows[1]]
+            
+            if matrixFirst.count == matrixSecond.count {
+                let resultArray = zip(matrixSecond, matrixFirst).map { $0 - $1 }
+                matrix[selectedRows[1]] = resultArray
+            }
+        }
+    }
+
 }

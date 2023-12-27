@@ -40,4 +40,11 @@ class ViewModel: ObservableObject {
     func swapSelected() {
         model.swapSelected()
     }
+    
+    func addRows() {
+        model.addRows()
+    }
+    func subRows() {
+        model.subRows()
+    }
 }

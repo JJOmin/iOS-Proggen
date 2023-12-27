@@ -74,29 +74,70 @@ struct ContentView: View {
                     
                 }
             }
-            Spacer()// Create a button
-            Button(action: {
-                viewModel.swapSelected()
-            }) {
-                VStack {
-                    if viewModel.selectedCols.count == 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Swap Cols")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedRows.count == 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Swap Rows")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedRows.count != 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("Swap")
-                            .foregroundColor(.gray)
+            Spacer()
+            // Create a button
+            HStack {
+                Button(action: {
+                    viewModel.swapSelected()
+                }) {
+                    VStack {
+                        if viewModel.selectedCols.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Swap Cols")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Swap Rows")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedRows.count != 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Swap")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                Button(action: {
+                    viewModel.addRows()
+                }) {
+                    VStack {
+                        if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "plus.app")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Add Cols")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedCols.count != 2 {
+                            Image(systemName: "plus.app")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Add Cols")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                Button(action: {
+                    viewModel.subRows()
+                }) {
+                    VStack {
+                        if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "minus.square")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Subtract Cols")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedCols.count != 2 {
+                            Image(systemName: "minus.square")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Subtract Cols")
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
             }
