@@ -134,7 +134,6 @@ struct ContentView: View {
                 VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                     buttonsTop()
                     rectAndButtons()
-                    
                 }
             }
             Spacer()
