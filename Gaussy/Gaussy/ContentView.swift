@@ -5,7 +5,8 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedNumber = 1
-    // let allowedValues = [0, 1, 2, 3, 5, 4, 7, 91]
+    
+     @State private var selectedOption = 0
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -98,7 +99,7 @@ struct ContentView: View {
     // fu
     
     func numberSlider() -> some View {
-        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "devide" && self.viewModel.devideByArray.count != 1 {
+        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "devide" && self.viewModel.devideByArray.count == 1 {
             return VStack {
                 Text("Devide Row by: \(selectedNumber)")
                     .padding(5)
@@ -125,6 +126,28 @@ struct ContentView: View {
         }
     }
     
+    // function that enables 
+    func switchModes() -> some View {
+        return VStack {
+            Picker(selection: $selectedOption, label: Text("")) {
+                Text("Multiply").tag(0)
+                Text("Divide").tag(1)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            .onChange(of: selectedOption) { _ in
+                if selectedOption == 0 {
+                    self.viewModel.setScaleType(currentType: "multiply")
+                    
+                } else if selectedOption == 1 {
+                    self.viewModel.setScaleType(currentType: "devide")
+                }
+                print(self.viewModel.scaleType)
+            }
+        }
+    
+    }
+    
     var body: some View {
         VStack {
             VStack {
@@ -137,6 +160,7 @@ struct ContentView: View {
                 }
             }
             Spacer()
+            switchModes()
             numberSlider()
         
             Spacer()

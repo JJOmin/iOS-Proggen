@@ -16,6 +16,8 @@ struct Model {
     var devideByArray: [Int]
     private var newScalFactor: Int
     
+     // var isToggled = false
+    
     var scaleType: String
     // private var scaleFactor: Int
     
@@ -24,7 +26,7 @@ struct Model {
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
         self.newScalFactor = 1 // factor that can be multiplyed or devided with the one Row
-        self.scaleType = "devide"
+        self.scaleType = "multiply"
         self.selectedCols = []
         var identity: [[Int]] = []
         for i in 0..<size {

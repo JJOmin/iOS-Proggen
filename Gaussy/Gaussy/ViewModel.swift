@@ -59,4 +59,8 @@ class ViewModel: ObservableObject {
     func getDivider() {
         model.getDivider()
     }
+    
+    func setScaleType(currentType: String) {
+        model.scaleType = currentType
+    }
 }
