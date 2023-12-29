@@ -15,6 +15,8 @@ struct Model {
     
     var devideByArray: [Int]
     private var newScalFactor: Int
+    
+    var scaleType: String
     // private var scaleFactor: Int
     
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
@@ -22,6 +24,7 @@ struct Model {
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
         self.newScalFactor = 1 // factor that can be multiplyed or devided with the one Row
+        self.scaleType = "devide"
         self.selectedCols = []
         var identity: [[Int]] = []
         for i in 0..<size {
@@ -166,11 +169,25 @@ struct Model {
             }
         }
     }
+    
     // function that calculates the scaling factors for devision
-    mutating func getDevider() {
-        devideByArray = []
-        devideByArray.append(1)
-        print(devideByArray)
+    mutating func getDivider() {
+        devideByArray = [] // Reset possible dividers
+        var foundDivisors = 0 // Counter to track the number of found divisors
+        
+        if selectedRows.count == 1 {
+            let matrixScaled: [Int] = matrix[selectedRows[0]]
+            // let matrixScaled: [Int] = [2, 4, 6]
+            let nonZeroValues = matrixScaled.filter { $0 != 0 }
+            
+            for divisor in 1...(nonZeroValues.max() ?? 1) where foundDivisors < 5 {
+                if nonZeroValues.allSatisfy({ $0.isMultiple(of: divisor) }) {
+                    devideByArray.append(divisor)
+                    foundDivisors += 1 // Increment the counter
+                    
+                }
+            }; print("Divisor", devideByArray)
+        }
     }
 
 }

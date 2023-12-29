@@ -4,7 +4,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var selectedNumber = 0
+    @State private var selectedNumber = 1
     // let allowedValues = [0, 1, 2, 3, 5, 4, 7, 91]
     
     init(viewModel: ViewModel) {
@@ -27,6 +27,7 @@ struct ContentView: View {
             )
             .onTapGesture {
                 viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
+                self.viewModel.getDivider()
             }
     }
     
@@ -59,17 +60,47 @@ struct ContentView: View {
                         self.selectableCircle(col: col, row: row, orientation:"right").padding(10)
 
                     }
+                    
                 }
             }
         }
     }
     
+    func saveScaling() -> some View {
+        return HStack {
+            Button(action: {
+                // Action for Save button
+                // Put your save logic here
+                print("Save button tapped")
+            }) {
+                Text("Save")
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+            
+            Button(action: {
+                // Action for Cancel button
+                // Put your cancel logic here
+                print("Cancel button tapped")
+            }) {
+                Text("Cancel")
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.red)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+    }
+    
     // fu
     
     func numberSlider() -> some View {
-        if self.viewModel.selectedRows.count == 1 {
+        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "devide" && self.viewModel.devideByArray.count != 1 {
             return VStack {
-                Text("Scale Row by: \(selectedNumber)")
+                Text("Devide Row by: \(selectedNumber)")
                     .padding(5)
                 Picker("Scale", selection: $selectedNumber) {
                     ForEach(self.viewModel.devideByArray, id: \.self) { value in
@@ -81,15 +112,19 @@ struct ContentView: View {
                 .onChange(of: selectedNumber) { newNumber in
                     selectedNumber = newNumber
                 }
+                saveScaling()
+
             }
+            .eraseToAnyView() // Use an extension method to erase the type
         } else {
             return VStack {
-                Text("Select one Row to Scale...greyed out Picker coming soon")
+                Text("Select Row or Row only devidor is 1")
                     .padding(5)
             }
+            .eraseToAnyView() // Use an extension method to erase the type
         }
     }
-
+    
     var body: some View {
         VStack {
             VStack {
@@ -104,6 +139,7 @@ struct ContentView: View {
             }
             Spacer()
             numberSlider()
+        
             Spacer()
             
             // Create a button
@@ -177,6 +213,11 @@ struct ContentView: View {
     
         }
     }
+extension View {
+    func eraseToAnyView() -> AnyView {
+        return AnyView(self)
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

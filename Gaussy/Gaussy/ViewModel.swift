@@ -32,6 +32,10 @@ class ViewModel: ObservableObject {
     var devideByArray: [Int] {
         model.devideByArray
     }
+    
+    var scaleType: String {
+        model.scaleType
+    }
     /*
     func toggleSelection(row: Int, col: Int) {
         model.toggleSelection(row: row, col: col)
@@ -50,5 +54,9 @@ class ViewModel: ObservableObject {
     }
     func subRows() {
         model.subRows()
+    }
+    
+    func getDivider() {
+        model.getDivider()
     }
 }
