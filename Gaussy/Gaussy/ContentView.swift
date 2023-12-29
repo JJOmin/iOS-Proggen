@@ -7,6 +7,16 @@ struct ContentView: View {
     @State private var selectedNumber = 1
     @State private var selectionMultiply = 1
     @State private var selectiondevide = 1
+    @State private var tapped: Bool = false
+    @State var matrix: [[Int]] = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        
+        @State private var selectedRow: Int?
+        @State private var dragOffset: CGSize = .zero
+
     
     
      @State private var selectedOption = 0
@@ -256,6 +266,7 @@ struct ContentView: View {
         
             Spacer()
             buttonRowMenue()
+            
             
         }
         }
