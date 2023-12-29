@@ -97,51 +97,48 @@ struct ContentView: View {
     
     // fu
     
+    @ViewBuilder
     func numberSlider() -> some View {
-        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "divide" && self.viewModel.devideByArray.count != 1 {
-            return VStack {
-                Text("Devide Row by: \(selectedNumber)")
-                    .padding(5)
-                Picker("Scale", selection: $selectedNumber) {
-                    ForEach(self.viewModel.devideByArray, id: \.self) { value in
-                        Text("\(value)").tag(value)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .onChange(of: selectedNumber) { newNumber in
-                    selectedNumber = newNumber
-                }
-                saveScaling()
-
-            }
-            .eraseToAnyView() // Use an extension method to erase the type
-        } else if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "multiply" {
-            return VStack {
-                Text("Multiply Row by: \(selectedNumber)")
-                    .padding(5)
-                Picker("Scale", selection: $selectedNumber) {
-                    ForEach(self.viewModel.multiplyByArray, id: \.self) { value in
-                        Text("\(value)").tag(value)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .onChange(of: selectedNumber) { newNumber in
-                    selectedNumber = newNumber
-                }
-                saveScaling()
-
-            }
-            .eraseToAnyView() // Use an extension method to erase the type
-            
+        switch (self.viewModel.selectedRows.count, self.viewModel.scaleType) {
+        case (1, "divide") where self.viewModel.devideByArray.count >= 1:
+            makeScalingView(title: "Devide Row by: \(selectedNumber)",
+                            array: self.viewModel.devideByArray)
+        case (1, "multiply"):
+            makeScalingView(title: "Multiply Row by: \(selectedNumber)",
+                            array: self.viewModel.multiplyByArray)
+        case (1, "divide"):
+            makeInfoView(message: "Row has no common divider")
+        case (let count, _) where count > 1:
+            makeInfoView(message: "Too many rows selected!")
+        default:
+            makeInfoView(message: "Select a row to scale")
         }
-            else {
-            return VStack {
-                Text("Select Row or Row only devidor is 1")
-                    .padding(5)
+    }
+
+    @ViewBuilder
+    func makeScalingView(title: String, array: [Int]) -> some View {
+        VStack {
+            Text(title)
+                .padding(5)
+            Picker("Scale", selection: $selectedNumber) {
+                ForEach(array, id: \.self) { value in
+                    Text("\(value)").tag(value)
+                }
             }
-            .eraseToAnyView() // Use an extension method to erase the type
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            .onChange(of: selectedNumber) { newNumber in
+                selectedNumber = newNumber
+            }
+            saveScaling()
+        }
+    }
+
+    @ViewBuilder
+    func makeInfoView(message: String) -> some View {
+        VStack {
+            Text(message)
+                .padding(5)
         }
     }
     
@@ -156,9 +153,11 @@ struct ContentView: View {
             .padding()
             .onChange(of: selectedOption) { _ in
                 if selectedOption == 0 {
+                    selectedNumber = self.viewModel.multiplyByArray[0]
                     self.viewModel.setScaleType(currentType: "multiply")
                     
                 } else if selectedOption == 1 {
+                    if self.viewModel.devideByArray.count > 0 { selectedNumber = self.viewModel.devideByArray[0]}
                     self.viewModel.setScaleType(currentType: "divide")
                 }
                 print(self.viewModel.scaleType)

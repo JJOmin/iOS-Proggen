@@ -155,7 +155,7 @@ struct Model {
             let multipliedRow = matrixFirst.map { $0 * value }
             matrix[selectedRows[0]] = multipliedRow
         }
-        removeAllSelected()
+        removeAllSelected() //necessary to ensure that new matrix is used everywhere and not the old one
     }
     
     // Func that swaps the rows
