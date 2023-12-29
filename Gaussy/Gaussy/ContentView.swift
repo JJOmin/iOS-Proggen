@@ -30,8 +30,10 @@ struct ContentView: View {
                     .stroke(Color.black, lineWidth: 2) // Add a black border with a width of 2
             )
             .onTapGesture {
-                viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
-                self.viewModel.getDivider()
+                withAnimation {
+                    viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
+                }
+                    self.viewModel.getDivider()
             }
     }
     
@@ -168,7 +170,9 @@ struct ContentView: View {
     func buttonRowMenue() -> some View {
         return HStack {
             Button(action: {
-                viewModel.swapSelected()
+                withAnimation {
+                    viewModel.swapSelected()
+                }
             }) {
                 VStack {
                     if viewModel.selectedCols.count == 2 {
@@ -248,14 +252,12 @@ struct ContentView: View {
                 }
                 switchModes()
             }
-            
             numberSlider()
         
             Spacer()
             buttonRowMenue()
             
         }
-    
         }
     }
 extension View {
