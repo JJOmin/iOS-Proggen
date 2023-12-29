@@ -28,6 +28,10 @@ class ViewModel: ObservableObject {
     var selectedCols: [Int] {
         model.selectedCols
     }
+    
+    var devideByArray: [Int] {
+        model.devideByArray
+    }
     /*
     func toggleSelection(row: Int, col: Int) {
         model.toggleSelection(row: row, col: col)

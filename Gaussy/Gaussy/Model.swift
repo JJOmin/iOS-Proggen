@@ -13,9 +13,15 @@ struct Model {
     var selectedLastCol: Int = -1
     var selectedLastRow: Int = -1
     
+    var devideByArray: [Int]
+    private var newScalFactor: Int
+    // private var scaleFactor: Int
+    
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
         self.size = size
         self.selectedRows = []
+        self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
+        self.newScalFactor = 1 // factor that can be multiplyed or devided with the one Row
         self.selectedCols = []
         var identity: [[Int]] = []
         for i in 0..<size {
@@ -159,6 +165,12 @@ struct Model {
                 matrix[selectedRows[1]] = resultArray
             }
         }
+    }
+    // function that calculates the scaling factors for devision
+    mutating func getDevider() {
+        devideByArray = []
+        devideByArray.append(1)
+        print(devideByArray)
     }
 
 }
