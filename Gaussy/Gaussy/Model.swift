@@ -14,7 +14,8 @@ struct Model {
     var selectedLastRow: Int = -1
     
     var devideByArray: [Int]
-    private var newScalFactor: Int
+    var multiplyByArray: [Int]
+    var scalFactor: Int
     
      // var isToggled = false
     
@@ -25,7 +26,8 @@ struct Model {
         self.size = size
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
-        self.newScalFactor = 1 // factor that can be multiplyed or devided with the one Row
+        self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9]
+        self.scalFactor = 1 // factor that can be multiplyed or devided with the one Row
         self.scaleType = "multiply"
         self.selectedCols = []
         var identity: [[Int]] = []
@@ -129,6 +131,31 @@ struct Model {
         default:
             break
         }
+    }
+    
+    //function that resetts all Rows/cols -> used for Cancel Button in Scaling
+    mutating func removeAllSelected() {
+        selectedRows = []
+        selectedCols = []
+        selectedLastRow = -1
+        selectedLastCol = -1
+    }
+    
+    mutating func scaleRow(value: Int){
+        if scaleType == "divide" {
+            print("DEVIDE NOW")
+            if  value != 0 {
+                let matrixFirst: [Int] = matrix[selectedRows[0]]
+                let dividedRow = matrixFirst.map { $0 / value }
+                matrix[selectedRows[0]] = dividedRow
+            }
+            
+        } else if scaleType == "multiply"{
+            let matrixFirst: [Int] = matrix[selectedRows[0]]
+            let multipliedRow = matrixFirst.map { $0 * value }
+            matrix[selectedRows[0]] = multipliedRow
+        }
+        removeAllSelected()
     }
     
     // Func that swaps the rows

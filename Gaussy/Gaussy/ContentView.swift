@@ -5,6 +5,9 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedNumber = 1
+    @State private var selectionMultiply = 1
+    @State private var selectiondevide = 1
+    
     
      @State private var selectedOption = 0
     
@@ -70,11 +73,9 @@ struct ContentView: View {
     func saveScaling() -> some View {
         return HStack {
             Button(action: {
-                // Action for Save button
-                // Put your save logic here
-                print("Save button tapped")
+                self.viewModel.scaleRow(value: selectedNumber)
             }) {
-                Text("Save")
+                Text("Apply")
                     .padding()
                     .foregroundColor(.white)
                     .background(Color.blue)
@@ -82,9 +83,7 @@ struct ContentView: View {
             }
             
             Button(action: {
-                // Action for Cancel button
-                // Put your cancel logic here
-                print("Cancel button tapped")
+                self.viewModel.removeAllSelected()
             }) {
                 Text("Cancel")
                     .padding()
@@ -99,7 +98,7 @@ struct ContentView: View {
     // fu
     
     func numberSlider() -> some View {
-        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "devide" && self.viewModel.devideByArray.count == 1 {
+        if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "divide" && self.viewModel.devideByArray.count != 1 {
             return VStack {
                 Text("Devide Row by: \(selectedNumber)")
                     .padding(5)
@@ -117,7 +116,27 @@ struct ContentView: View {
 
             }
             .eraseToAnyView() // Use an extension method to erase the type
-        } else {
+        } else if self.viewModel.selectedRows.count == 1 && self.viewModel.scaleType == "multiply" {
+            return VStack {
+                Text("Multiply Row by: \(selectedNumber)")
+                    .padding(5)
+                Picker("Scale", selection: $selectedNumber) {
+                    ForEach(self.viewModel.multiplyByArray, id: \.self) { value in
+                        Text("\(value)").tag(value)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .onChange(of: selectedNumber) { newNumber in
+                    selectedNumber = newNumber
+                }
+                saveScaling()
+
+            }
+            .eraseToAnyView() // Use an extension method to erase the type
+            
+        }
+            else {
             return VStack {
                 Text("Select Row or Row only devidor is 1")
                     .padding(5)
@@ -140,7 +159,7 @@ struct ContentView: View {
                     self.viewModel.setScaleType(currentType: "multiply")
                     
                 } else if selectedOption == 1 {
-                    self.viewModel.setScaleType(currentType: "devide")
+                    self.viewModel.setScaleType(currentType: "divide")
                 }
                 print(self.viewModel.scaleType)
             }

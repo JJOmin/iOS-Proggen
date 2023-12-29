@@ -13,7 +13,7 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
 
     init() {
-        self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 6)
+        self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 2)
     }
     
     var matrix: [[Int]] {
@@ -31,6 +31,10 @@ class ViewModel: ObservableObject {
     
     var devideByArray: [Int] {
         model.devideByArray
+    }
+    
+    var multiplyByArray: [Int] {
+        model.multiplyByArray
     }
     
     var scaleType: String {
@@ -62,5 +66,13 @@ class ViewModel: ObservableObject {
     
     func setScaleType(currentType: String) {
         model.scaleType = currentType
+    }
+    
+    func removeAllSelected(){
+        model.removeAllSelected()
+    }
+    
+    func scaleRow(value: Int){
+        model.scaleRow(value: value)
     }
 }
