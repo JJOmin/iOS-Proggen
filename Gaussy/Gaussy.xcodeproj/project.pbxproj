@@ -89,7 +89,6 @@
 				19686FE02B30DD6A00D7417C /* Sources */,
 				19686FE12B30DD6A00D7417C /* Frameworks */,
 				19686FE22B30DD6A00D7417C /* Resources */,
-				19686FF52B30DD7A00D7417C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -145,27 +144,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		19686FF52B30DD7A00D7417C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "##sudo ln -s /opt/homebrew/Cellar/swiftlint /usr/local/bin/swiftlint\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint --autocorrect --clear-cache\n    swiftlint --fix\n  swiftlint\n  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		19686FE02B30DD6A00D7417C /* Sources */ = {

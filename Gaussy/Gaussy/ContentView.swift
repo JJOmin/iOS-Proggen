@@ -126,7 +126,7 @@ struct ContentView: View {
         }
     }
     
-    // function that enables 
+    // function that enables switching between multiply and divide mode
     func switchModes() -> some View {
         return VStack {
             Picker(selection: $selectedOption, label: Text("")) {
@@ -145,7 +145,74 @@ struct ContentView: View {
                 print(self.viewModel.scaleType)
             }
         }
+    }
     
+    func buttonRowMenue() -> some View {
+        return HStack {
+            Button(action: {
+                viewModel.swapSelected()
+            }) {
+                VStack {
+                    if viewModel.selectedCols.count == 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Swap Cols")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedRows.count == 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Swap Rows")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedRows.count != 2 {
+                        Image(systemName: "rectangle.2.swap")
+                            .font(.largeTitle)
+                            .foregroundColor(.gray)
+                        Text("Swap")
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            Button(action: {
+                viewModel.addRows()
+            }) {
+                VStack {
+                    if viewModel.selectedRows.count == 2 {
+                        Image(systemName: "plus.app")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Add Cols")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedCols.count != 2 {
+                        Image(systemName: "plus.app")
+                            .font(.largeTitle)
+                            .foregroundColor(.gray)
+                        Text("Add Cols")
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            Button(action: {
+                viewModel.subRows()
+            }) {
+                VStack {
+                    if viewModel.selectedRows.count == 2 {
+                        Image(systemName: "minus.square")
+                            .font(.largeTitle)
+                            .foregroundColor(.yellow)
+                        Text("Subtract Cols")
+                            .foregroundColor(.yellow)
+                    } else if viewModel.selectedCols.count != 2 {
+                        Image(systemName: "minus.square")
+                            .font(.largeTitle)
+                            .foregroundColor(.gray)
+                        Text("Subtract Cols")
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+        }
     }
     
     var body: some View {
@@ -153,84 +220,21 @@ struct ContentView: View {
             VStack {
                 Text("Gaussy Game").font(.title)
             }
-            HStack {
-                VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
-                    buttonsTop()
-                    rectAndButtons()
+            VStack {
+                HStack {
+                    VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                        buttonsTop()
+                        rectAndButtons()
+                    }
+                    
                 }
+                switchModes()
             }
-            Spacer()
-            switchModes()
+            
             numberSlider()
         
             Spacer()
-            
-            // Create a button
-            HStack {
-                Button(action: {
-                    viewModel.swapSelected()
-                }) {
-                    VStack {
-                        if viewModel.selectedCols.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Swap Cols")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Swap Rows")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedRows.count != 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Swap")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                Button(action: {
-                    viewModel.addRows()
-                }) {
-                    VStack {
-                        if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "plus.app")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Add Cols")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedCols.count != 2 {
-                            Image(systemName: "plus.app")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Add Cols")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                Button(action: {
-                    viewModel.subRows()
-                }) {
-                    VStack {
-                        if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "minus.square")
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                            Text("Subtract Cols")
-                                .foregroundColor(.yellow)
-                        } else if viewModel.selectedCols.count != 2 {
-                            Image(systemName: "minus.square")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Subtract Cols")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-            }
+            buttonRowMenue()
             
         }
     
