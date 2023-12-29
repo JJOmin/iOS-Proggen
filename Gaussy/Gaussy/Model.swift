@@ -17,10 +17,9 @@ struct Model {
     var multiplyByArray: [Int]
     var scalFactor: Int
     
-     // var isToggled = false
-    
     var scaleType: String
-    // private var scaleFactor: Int
+  
+    public var numberOfMoves: Int
     
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
         self.size = size
@@ -30,6 +29,8 @@ struct Model {
         self.scalFactor = 1 // factor that can be multiplyed or devided with the one Row
         self.scaleType = "multiply"
         self.selectedCols = []
+        self.numberOfMoves = 0
+        
         var identity: [[Int]] = []
         for i in 0..<size {
             var row: [Int] = []
@@ -143,17 +144,19 @@ struct Model {
     
     mutating func scaleRow(value: Int){
         if scaleType == "divide" {
-            print("DEVIDE NOW")
+            //print("DEVIDE NOW")
             if  value != 0 {
                 let matrixFirst: [Int] = matrix[selectedRows[0]]
                 let dividedRow = matrixFirst.map { $0 / value }
                 matrix[selectedRows[0]] = dividedRow
+                addMove()
             }
             
         } else if scaleType == "multiply"{
             let matrixFirst: [Int] = matrix[selectedRows[0]]
             let multipliedRow = matrixFirst.map { $0 * value }
             matrix[selectedRows[0]] = multipliedRow
+            addMove()
         }
         removeAllSelected() //necessary to ensure that new matrix is used everywhere and not the old one
     }
@@ -165,12 +168,14 @@ struct Model {
                 let matrixSecond: [Int] = matrix[selectedRows[1]]
                 matrix[selectedRows[0]] = matrixSecond
                 matrix[selectedRows[1]] = matrixFirst
+                addMove()
                 
             } else if selectedCols.count == 2 {
                 let matrixFirst: [Int] = matrix[selectedCols[0]]
                 let matrixSecond: [Int] = matrix[selectedCols[1]]
                 matrix[selectedCols[0]] = matrixSecond
                 matrix[selectedCols[1]] = matrixFirst
+                addMove()
             }
     }
     
@@ -182,6 +187,7 @@ struct Model {
             if matrixFirst.count == matrixSecond.count {
                 let resultArray = zip(matrixFirst, matrixSecond).map { $0 + $1 }
                 matrix[selectedRows[1]] = resultArray
+                addMove()
             }
         }
     }
@@ -195,6 +201,7 @@ struct Model {
             if matrixFirst.count == matrixSecond.count {
                 let resultArray = zip(matrixSecond, matrixFirst).map { $0 - $1 }
                 matrix[selectedRows[1]] = resultArray
+                addMove()
             }
         }
     }
@@ -206,7 +213,6 @@ struct Model {
         
         if selectedRows.count == 1 {
             let matrixScaled: [Int] = matrix[selectedRows[0]]
-            // let matrixScaled: [Int] = [2, 4, 6]
             let nonZeroValues = matrixScaled.filter { $0 != 0 }
             
             for divisor in 1...(nonZeroValues.max() ?? 1) where foundDivisors < 5 {
@@ -215,8 +221,13 @@ struct Model {
                     foundDivisors += 1 // Increment the counter
                     
                 }
-            }; print("Divisor", devideByArray)
+            }//; print("Divisor", devideByArray)
         }
     }
+    
+    mutating func addMove(){
+        numberOfMoves += 1
+    }
+
 
 }

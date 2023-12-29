@@ -5,20 +5,6 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedNumber = 1
-    @State private var selectionMultiply = 1
-    @State private var selectiondevide = 1
-    @State private var tapped: Bool = false
-    @State var matrix: [[Int]] = [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9]
-        ]
-        
-        @State private var selectedRow: Int?
-        @State private var dragOffset: CGSize = .zero
-
-    
-    
      @State private var selectedOption = 0
     
     init(viewModel: ViewModel) {
@@ -132,18 +118,20 @@ struct ContentView: View {
         VStack {
             Text(title)
                 .padding(5)
-            Picker("Scale", selection: $selectedNumber) {
-                ForEach(array, id: \.self) { value in
-                    Text("\(value)").tag(value)
+                Picker("Scale", selection: $selectedNumber) {
+                    ForEach(array, id: \.self) { value in
+                        Text("\(value)").tag(value)
+                    }
                 }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            .onChange(of: selectedNumber) { newNumber in
-                selectedNumber = newNumber
-            }
-            saveScaling()
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .onChange(of: selectedNumber) { newNumber in
+                    selectedNumber = newNumber
+                }
+            
         }
+            saveScaling()
+        
     }
 
     @ViewBuilder
@@ -157,28 +145,31 @@ struct ContentView: View {
     // function that enables switching between multiply and divide mode
     func switchModes() -> some View {
         return VStack {
-            Picker(selection: $selectedOption, label: Text("")) {
-                Text("Multiply").tag(0)
-                Text("Divide").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            .onChange(of: selectedOption) { _ in
-                if selectedOption == 0 {
-                    selectedNumber = self.viewModel.multiplyByArray[0]
-                    self.viewModel.setScaleType(currentType: "multiply")
-                    
-                } else if selectedOption == 1 {
-                    if self.viewModel.devideByArray.count > 0 { selectedNumber = self.viewModel.devideByArray[0]}
-                    self.viewModel.setScaleType(currentType: "divide")
+            if self.viewModel.selectedCols.count == 1 || self.viewModel.selectedRows.count == 1 {
+                Picker(selection: $selectedOption, label: Text("")) {
+                    Text("Multiply").tag(0)
+                    Text("Divide").tag(1)
                 }
-                print(self.viewModel.scaleType)
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                .onChange(of: selectedOption) { _ in
+                    if selectedOption == 0 {
+                        selectedNumber = self.viewModel.multiplyByArray[0]
+                        self.viewModel.setScaleType(currentType: "multiply")
+                        
+                    } else if selectedOption == 1 {
+                        if self.viewModel.devideByArray.count > 0 { selectedNumber = self.viewModel.devideByArray[0]}
+                        self.viewModel.setScaleType(currentType: "divide")
+                    }
+                    //print(self.viewModel.scaleType)
+                }
             }
         }
     }
     
     func buttonRowMenue() -> some View {
         return HStack {
+            Spacer()
             Button(action: {
                 withAnimation {
                     viewModel.swapSelected()
@@ -195,7 +186,7 @@ struct ContentView: View {
                         Image(systemName: "rectangle.2.swap")
                             .font(.largeTitle)
                             .foregroundColor(.yellow)
-                        Text("Swap Rows")
+                        Text("Swap")
                             .foregroundColor(.yellow)
                     } else if viewModel.selectedRows.count != 2 {
                         Image(systemName: "rectangle.2.swap")
@@ -206,6 +197,7 @@ struct ContentView: View {
                     }
                 }
             }
+            Spacer()
             Button(action: {
                 viewModel.addRows()
             }) {
@@ -214,17 +206,18 @@ struct ContentView: View {
                         Image(systemName: "plus.app")
                             .font(.largeTitle)
                             .foregroundColor(.yellow)
-                        Text("Add Cols")
+                        Text("Add")
                             .foregroundColor(.yellow)
                     } else if viewModel.selectedCols.count != 2 {
                         Image(systemName: "plus.app")
                             .font(.largeTitle)
                             .foregroundColor(.gray)
-                        Text("Add Cols")
+                        Text("Add")
                             .foregroundColor(.gray)
                     }
                 }
             }
+            Spacer()
             Button(action: {
                 viewModel.subRows()
             }) {
@@ -233,17 +226,18 @@ struct ContentView: View {
                         Image(systemName: "minus.square")
                             .font(.largeTitle)
                             .foregroundColor(.yellow)
-                        Text("Subtract Cols")
+                        Text("Sub")
                             .foregroundColor(.yellow)
                     } else if viewModel.selectedCols.count != 2 {
                         Image(systemName: "minus.square")
                             .font(.largeTitle)
                             .foregroundColor(.gray)
-                        Text("Subtract Cols")
+                        Text("Sub")
                             .foregroundColor(.gray)
                     }
                 }
             }
+            Spacer()
         }
     }
     
@@ -251,6 +245,7 @@ struct ContentView: View {
         VStack {
             VStack {
                 Text("Gaussy Game").font(.title)
+                Text("Moves: \(self.viewModel.numberOfMoves)")
             }
             VStack {
                 HStack {
@@ -260,14 +255,35 @@ struct ContentView: View {
                     }
                     
                 }
-                switchModes()
+                
             }
-            numberSlider()
-        
-            Spacer()
-            buttonRowMenue()
-            
-            
+            //if self.viewModel.selectedCols.count == 1 || self.viewModel.selectedRows.count == 1 {
+                VStack{
+                    switchModes()
+                    numberSlider()
+                }.padding(5)
+                    .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
+                    )
+                    .padding(10) // Adjust the padding around the frame
+                Spacer()
+            //} else if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
+                VStack{
+                    buttonRowMenue()
+                }.padding(10)
+                    .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
+                    )
+                    .padding(10) // Adjust the padding around the frame
+                Spacer()
+                
+            //} else{
+                //Spacer()
+            //}
         }
         }
     }

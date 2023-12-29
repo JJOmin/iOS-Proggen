@@ -40,6 +40,10 @@ class ViewModel: ObservableObject {
     var scaleType: String {
         model.scaleType
     }
+    
+    var numberOfMoves: Int{
+        model.numberOfMoves
+    }
     /*
     func toggleSelection(row: Int, col: Int) {
         model.toggleSelection(row: row, col: col)
