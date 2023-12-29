@@ -4,6 +4,8 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
+     @State private var selectedNumber = 0
+    let allowedValues = [0, 4, 7, 91]
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -61,6 +63,25 @@ struct ContentView: View {
             }
         }
     }
+    
+    // fu
+    
+    func numberSlider() -> some View {
+            return VStack {
+                Text("Scale Row by: \(selectedNumber)")
+                    .padding(5)
+                Picker("Scale", selection: $selectedNumber) {
+                    ForEach(allowedValues, id: \.self) { value in
+                        Text("\(value)").tag(value)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .onChange(of: selectedNumber) { newNumber in
+                    selectedNumber = newNumber
+                }
+            }
+        }
 
     var body: some View {
         VStack {
@@ -75,6 +96,9 @@ struct ContentView: View {
                 }
             }
             Spacer()
+            numberSlider()
+            Spacer()
+            
             // Create a button
             HStack {
                 Button(action: {
