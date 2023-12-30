@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct GameContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedNumber = 1
     @State private var selectedOption = 0
@@ -266,7 +266,7 @@ struct ContentView: View {
     }
     // Game Screen
     var body: some View {
-        HomeScreenView()
+        //HomeScreenView()
         VStack {
             VStack {
                 HStack{
@@ -332,16 +332,10 @@ struct ContentView: View {
             Spacer()
         }
     }
-}
+}/**
 extension View {
     func eraseToAnyView() -> AnyView {
         return AnyView(self)
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = ViewModel() // Initializing ViewModel with a size of 4x4
-        ContentView(viewModel: viewModel)
-    }
-}
+*/
