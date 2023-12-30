@@ -109,7 +109,7 @@ struct GameContentView: View {
         case (let count, _) where count > 1:
             makeInfoView(message: "Too many rows selected!")
         default:
-            makeInfoView(message: "Select a row to scale")
+            makeInfoView(message: "Select a row for Scaling")
         }
     }
     
@@ -140,6 +140,7 @@ struct GameContentView: View {
             Spacer()
             Text(message)
                 .padding(5)
+            Spacer()
         }
     }
     
@@ -323,10 +324,4 @@ struct GameContentView: View {
         .navigationBarTitle("Gaussy Game")
         .navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
     }
-}/**
-extension View {
-    func eraseToAnyView() -> AnyView {
-        return AnyView(self)
-    }
 }
-*/

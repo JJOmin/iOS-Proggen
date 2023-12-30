@@ -17,6 +17,7 @@
 		19B8E6A72B30E57600BDD0EA /* ScaleContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8E6A62B30E57600BDD0EA /* ScaleContent.swift */; };
 		19D5AAE82B4067270062F18F /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D5AAE72B4067270062F18F /* HomeScreenView.swift */; };
 		19D5AAEA2B4068260062F18F /* GameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D5AAE92B4068260062F18F /* GameContentView.swift */; };
+		19D5AAEC2B4093CD0062F18F /* HighScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D5AAEB2B4093CD0062F18F /* HighScoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		19B8E6A62B30E57600BDD0EA /* ScaleContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleContent.swift; sourceTree = "<group>"; };
 		19D5AAE72B4067270062F18F /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		19D5AAE92B4068260062F18F /* GameContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContentView.swift; sourceTree = "<group>"; };
+		19D5AAEB2B4093CD0062F18F /* HighScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HighScoreView.swift; path = Gaussy/HighScoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 		19686FDB2B30DD6A00D7417C = {
 			isa = PBXGroup;
 			children = (
+				19D5AAEB2B4093CD0062F18F /* HighScoreView.swift */,
 				19686FF62B30DDA700D7417C /* .swiftlint.yml */,
 				19686FE62B30DD6A00D7417C /* Gaussy */,
 				19686FE52B30DD6A00D7417C /* Products */,
@@ -161,6 +164,7 @@
 				19D5AAE82B4067270062F18F /* HomeScreenView.swift in Sources */,
 				19D5AAEA2B4068260062F18F /* GameContentView.swift in Sources */,
 				19B8E6A72B30E57600BDD0EA /* ScaleContent.swift in Sources */,
+				19D5AAEC2B4093CD0062F18F /* HighScoreView.swift in Sources */,
 				196EAB7D2B30E14700B64E03 /* ViewModel.swift in Sources */,
 				19686FE82B30DD6A00D7417C /* GaussyApp.swift in Sources */,
 			);
