@@ -140,7 +140,6 @@ struct GameContentView: View {
             Spacer()
             Text(message)
                 .padding(5)
-            Spacer()
         }
     }
     
@@ -174,77 +173,83 @@ struct GameContentView: View {
             
             Spacer()
             if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
-                Button(action: {
-                    withAnimation {
-                        viewModel.swapSelected()
-                    }
-                }) {
-                    VStack {
-                        if viewModel.selectedCols.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.blue)
-                            Text("Swap Cols")
-                                .foregroundColor(.blue)
-                        } else if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.blue)
-                            Text("Swap")
-                                .foregroundColor(.blue)
-                        } else if viewModel.selectedRows.count != 2 {
-                            Image(systemName: "rectangle.2.swap")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Swap")
-                                .foregroundColor(.gray)
+                VStack {
+                    Text("Multi Row Aktions").padding(2).fontWeight(.bold)
+                    HStack{
+                        Button(action: {
+                            withAnimation {
+                                viewModel.swapSelected()
+                            }
+                        }) {
+                            VStack {
+                                if viewModel.selectedCols.count == 2 {
+                                    Image(systemName: "rectangle.2.swap")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.blue)
+                                    Text("Swap Cols")
+                                        .foregroundColor(.blue)
+                                } else if viewModel.selectedRows.count == 2 {
+                                    Image(systemName: "rectangle.2.swap")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.blue)
+                                    Text("Swap")
+                                        .foregroundColor(.blue)
+                                } else if viewModel.selectedRows.count != 2 {
+                                    Image(systemName: "rectangle.2.swap")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.gray)
+                                    Text("Swap")
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        Spacer()
+                        Button(action: {
+                            viewModel.addRows()
+                        }) {
+                            VStack {
+                                if viewModel.selectedRows.count == 2 {
+                                    Image(systemName: "plus.app")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.blue)
+                                    Text("Add")
+                                        .foregroundColor(.blue)
+                                } else if viewModel.selectedCols.count != 2 {
+                                    Image(systemName: "plus.app")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.gray)
+                                    Text("Add")
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        Spacer()
+                        Button(action: {
+                            viewModel.subRows()
+                        }) {
+                            VStack {
+                                if viewModel.selectedRows.count == 2 {
+                                    
+                                    Image(systemName: "minus.square")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.blue)
+                                    Text("Sub")
+                                        .foregroundColor(.blue)
+                                } else if viewModel.selectedCols.count != 2 {
+                                    Image(systemName: "minus.square")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.gray)
+                                    Text("Sub")
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            
                         }
                     }
                 }
-                Spacer()
-                Button(action: {
-                    viewModel.addRows()
-                }) {
-                    VStack {
-                        if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "plus.app")
-                                .font(.largeTitle)
-                                .foregroundColor(.blue)
-                            Text("Add")
-                                .foregroundColor(.blue)
-                        } else if viewModel.selectedCols.count != 2 {
-                            Image(systemName: "plus.app")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Add")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    viewModel.subRows()
-                }) {
-                    VStack {
-                        if viewModel.selectedRows.count == 2 {
-                            Image(systemName: "minus.square")
-                                .font(.largeTitle)
-                                .foregroundColor(.blue)
-                            Text("Sub")
-                                .foregroundColor(.blue)
-                        } else if viewModel.selectedCols.count != 2 {
-                            Image(systemName: "minus.square")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray)
-                            Text("Sub")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                
                 Spacer()
             } else {
-                makeInfoView(message: "Select two rows/cols to Swap/Add/Sub ")
+                makeInfoView(message: "Select more for Muli Row Aktions")
             }
         }
     }
@@ -269,30 +274,13 @@ struct GameContentView: View {
         //HomeScreenView()
         VStack {
             VStack {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        print("Home")
-                    }) {
-                        Image(systemName: "house")
-                            .font(.largeTitle)
-                            .foregroundColor(.blue)
-                    }
-                    Spacer()
+                
+                    
                     VStack{
-                        Text("Gaussy Game").font(.title)
+                        //Text("Gaussy Game").font(.title)
                         Text("Moves: \(self.viewModel.numberOfMoves)")
                     }
-                    Spacer()
-                    Button(action: {
-                        print("HighScore")
-                    }) {
-                        Image(systemName: "list.number")
-                            .font(.largeTitle)
-                            .foregroundColor(.blue)
-                    }
-                    Spacer()
-                }
+                    
                 HStack {
                     VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                         buttonsTop()
@@ -314,7 +302,7 @@ struct GameContentView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                     )
-                    .padding(10) // Adjust the padding around the frame
+                    .padding(5) // Adjust the padding around the frame
                 
                 withAnimation{
                     VStack{
@@ -325,12 +313,15 @@ struct GameContentView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                         )
-                        .padding(10) // Adjust the padding around the frame
+                        .padding(5) // Adjust the padding around the frame
                     
                 }
             }
             Spacer()
+                
         }
+        .navigationBarTitle("Gaussy Game")
+        .navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
     }
 }/**
 extension View {
