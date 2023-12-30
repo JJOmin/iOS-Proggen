@@ -13,7 +13,7 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
 
     init() {
-        self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 4)
+        self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 6)
     }
     
     var matrix: [[Int]] {

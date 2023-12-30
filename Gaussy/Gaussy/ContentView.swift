@@ -5,7 +5,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedNumber = 1
-     @State private var selectedOption = 0
+    @State private var selectedOption = 0
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -29,7 +29,7 @@ struct ContentView: View {
                 withAnimation {
                     viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
                 }
-                    self.viewModel.getDivider()
+                self.viewModel.getDivider()
             }
     }
     
@@ -60,7 +60,7 @@ struct ContentView: View {
                         .padding(interSquareSpacing(for: viewModel.matrix)) // Optional: Padding inside the square */
                     if col == viewModel.matrix.count - 1 {
                         self.selectableCircle(col: col, row: row, orientation:"right").padding(10)
-
+                        
                     }
                     
                 }
@@ -74,7 +74,7 @@ struct ContentView: View {
                 self.viewModel.scaleRow(value: selectedNumber)
             }) {
                 Text("Apply")
-                    .padding()
+                    .padding(7)
                     .foregroundColor(.white)
                     .background(Color.blue)
                     .cornerRadius(8)
@@ -83,14 +83,14 @@ struct ContentView: View {
             Button(action: {
                 self.viewModel.removeAllSelected()
             }) {
-                Text("Cancel")
-                    .padding()
+                Text("Close")
+                    .padding(7)
                     .foregroundColor(.white)
                     .background(Color.red)
                     .cornerRadius(8)
             }
         }
-        .padding()
+        .padding(2)
     }
     
     // fu
@@ -112,33 +112,35 @@ struct ContentView: View {
             makeInfoView(message: "Select a row to scale")
         }
     }
-
+    
     @ViewBuilder
     func makeScalingView(title: String, array: [Int]) -> some View {
         VStack {
             Text(title)
-                .padding(5)
-                Picker("Scale", selection: $selectedNumber) {
-                    ForEach(array, id: \.self) { value in
-                        Text("\(value)").tag(value)
-                    }
+                .padding(2)
+            Picker("Scale", selection: $selectedNumber) {
+                ForEach(array, id: \.self) { value in
+                    Text("\(value)").tag(value)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .onChange(of: selectedNumber) { newNumber in
-                    selectedNumber = newNumber
-                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            .onChange(of: selectedNumber) { newNumber in
+                selectedNumber = newNumber
+            }
             
         }
-            saveScaling()
+        saveScaling()
         
     }
-
+    
     @ViewBuilder
     func makeInfoView(message: String) -> some View {
-        VStack {
+        HStack {
+            Spacer()
             Text(message)
                 .padding(5)
+            Spacer()
         }
     }
     
@@ -170,84 +172,89 @@ struct ContentView: View {
     func buttonRowMenue() -> some View {
         return HStack {
             Spacer()
-            Button(action: {
-                withAnimation {
-                    viewModel.swapSelected()
-                }
-            }) {
-                VStack {
-                    if viewModel.selectedCols.count == 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Swap Cols")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedRows.count == 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Swap")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedRows.count != 2 {
-                        Image(systemName: "rectangle.2.swap")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("Swap")
-                            .foregroundColor(.gray)
+            if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
+                Button(action: {
+                    withAnimation {
+                        viewModel.swapSelected()
+                    }
+                }) {
+                    VStack {
+                        if viewModel.selectedCols.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.green)
+                            Text("Swap Cols")
+                                .foregroundColor(.green)
+                        } else if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.green)
+                            Text("Swap")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedRows.count != 2 {
+                            Image(systemName: "rectangle.2.swap")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Swap")
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
-            }
-            Spacer()
-            Button(action: {
-                viewModel.addRows()
-            }) {
-                VStack {
-                    if viewModel.selectedRows.count == 2 {
-                        Image(systemName: "plus.app")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Add")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedCols.count != 2 {
-                        Image(systemName: "plus.app")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("Add")
-                            .foregroundColor(.gray)
+                Spacer()
+                Button(action: {
+                    viewModel.addRows()
+                }) {
+                    VStack {
+                        if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "plus.app")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Add")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedCols.count != 2 {
+                            Image(systemName: "plus.app")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Add")
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
-            }
-            Spacer()
-            Button(action: {
-                viewModel.subRows()
-            }) {
-                VStack {
-                    if viewModel.selectedRows.count == 2 {
-                        Image(systemName: "minus.square")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                        Text("Sub")
-                            .foregroundColor(.yellow)
-                    } else if viewModel.selectedCols.count != 2 {
-                        Image(systemName: "minus.square")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("Sub")
-                            .foregroundColor(.gray)
+                Spacer()
+                Button(action: {
+                    viewModel.subRows()
+                }) {
+                    VStack {
+                        if viewModel.selectedRows.count == 2 {
+                            Image(systemName: "minus.square")
+                                .font(.largeTitle)
+                                .foregroundColor(.yellow)
+                            Text("Sub")
+                                .foregroundColor(.yellow)
+                        } else if viewModel.selectedCols.count != 2 {
+                            Image(systemName: "minus.square")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray)
+                            Text("Sub")
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
+                
+                Spacer()
+            } else {
+                makeInfoView(message: "Select two rows/cols to Swap/Add/Sub ")
             }
-            Spacer()
         }
     }
     
+    
     var body: some View {
         VStack {
+            
             VStack {
                 Text("Gaussy Game").font(.title)
                 Text("Moves: \(self.viewModel.numberOfMoves)")
-            }
-            VStack {
                 HStack {
                     VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                         buttonsTop()
@@ -257,7 +264,8 @@ struct ContentView: View {
                 }
                 
             }
-            //if self.viewModel.selectedCols.count == 1 || self.viewModel.selectedRows.count == 1 {
+            
+            VStack{
                 VStack{
                     switchModes()
                     numberSlider()
@@ -268,25 +276,22 @@ struct ContentView: View {
                             .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                     )
                     .padding(10) // Adjust the padding around the frame
-                Spacer()
-            //} else if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
                 VStack{
                     buttonRowMenue()
-                }.padding(10)
+                }.padding(5)
                     .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                     )
                     .padding(10) // Adjust the padding around the frame
-                Spacer()
                 
-            //} else{
-                //Spacer()
-            //}
-        }
+            }
+            Spacer()
+        
         }
     }
+}
 extension View {
     func eraseToAnyView() -> AnyView {
         return AnyView(self)
