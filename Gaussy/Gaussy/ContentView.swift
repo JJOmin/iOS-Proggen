@@ -171,6 +171,7 @@ struct ContentView: View {
     
     func buttonRowMenue() -> some View {
         return HStack {
+            
             Spacer()
             if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
                 Button(action: {
@@ -182,15 +183,15 @@ struct ContentView: View {
                         if viewModel.selectedCols.count == 2 {
                             Image(systemName: "rectangle.2.swap")
                                 .font(.largeTitle)
-                                .foregroundColor(.green)
+                                .foregroundColor(.blue)
                             Text("Swap Cols")
-                                .foregroundColor(.green)
+                                .foregroundColor(.blue)
                         } else if viewModel.selectedRows.count == 2 {
                             Image(systemName: "rectangle.2.swap")
                                 .font(.largeTitle)
-                                .foregroundColor(.green)
+                                .foregroundColor(.blue)
                             Text("Swap")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                         } else if viewModel.selectedRows.count != 2 {
                             Image(systemName: "rectangle.2.swap")
                                 .font(.largeTitle)
@@ -208,9 +209,9 @@ struct ContentView: View {
                         if viewModel.selectedRows.count == 2 {
                             Image(systemName: "plus.app")
                                 .font(.largeTitle)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                             Text("Add")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                         } else if viewModel.selectedCols.count != 2 {
                             Image(systemName: "plus.app")
                                 .font(.largeTitle)
@@ -228,9 +229,9 @@ struct ContentView: View {
                         if viewModel.selectedRows.count == 2 {
                             Image(systemName: "minus.square")
                                 .font(.largeTitle)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                             Text("Sub")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                         } else if viewModel.selectedCols.count != 2 {
                             Image(systemName: "minus.square")
                                 .font(.largeTitle)
@@ -266,6 +267,7 @@ struct ContentView: View {
             }
             
             VStack{
+                
                 VStack{
                     switchModes()
                     numberSlider()
@@ -276,16 +278,19 @@ struct ContentView: View {
                             .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                     )
                     .padding(10) // Adjust the padding around the frame
-                VStack{
-                    buttonRowMenue()
-                }.padding(5)
-                    .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
-                    )
-                    .padding(10) // Adjust the padding around the frame
                 
+                withAnimation{
+                    VStack{
+                        buttonRowMenue()
+                    }.padding(5)
+                        .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
+                        )
+                        .padding(10) // Adjust the padding around the frame
+                    
+                }
             }
             Spacer()
         
