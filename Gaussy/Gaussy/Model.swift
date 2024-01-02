@@ -5,21 +5,27 @@
 //  Created by Leonhard Tilly on 18.12.23.
 //
 
+import Foundation
+
 struct Model {
     var matrix: [[Int]] // = [[1, 2], [3, 4]] // Beispielmatrix
     var selectedRows: [Int]
     var selectedCols: [Int]
-    let size: Int
+    var size: Int
     var selectedLastCol: Int = -1
     var selectedLastRow: Int = -1
     
     var devideByArray: [Int]
     var multiplyByArray: [Int]
     var scalFactor: Int
+    var difficulty: String
+    var maxCharacterCount: Int = 21
+    let possibleSizes: [Int] = [2,3,4,5,6]
     
     var scaleType: String
   
     public var numberOfMoves: Int
+    var difficultyLevels: [String]
     
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
         self.size = size
@@ -30,6 +36,9 @@ struct Model {
         self.scaleType = "multiply"
         self.selectedCols = []
         self.numberOfMoves = 0
+        self.difficulty = "easy"
+        self.difficultyLevels = ["easy", "normal", "hard"]
+        
         
         var identity: [[Int]] = []
         for i in 0..<size {
@@ -249,6 +258,13 @@ struct Model {
         }
 
         return matrix
+    }
+    
+    
+    
+    
+    mutating func setSize(newSize: Int) {
+        size = newSize
     }
 
 

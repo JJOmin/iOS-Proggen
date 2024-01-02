@@ -44,6 +44,26 @@ class ViewModel: ObservableObject {
     var numberOfMoves: Int{
         model.numberOfMoves
     }
+    
+    var difficultyLevels: [String] {
+        model.difficultyLevels
+    }
+    
+    var maxCharacterCount: Int {
+        model.maxCharacterCount
+    }
+    
+    var getPossibleSizes: [Int]{
+        model.possibleSizes
+    }
+    
+    func setSize(newSize: Int) {
+        model.setSize(newSize: newSize)
+    }
+    
+    
+    
+    
     /*
     func toggleSelection(row: Int, col: Int) {
         model.toggleSelection(row: row, col: col)
@@ -79,4 +99,9 @@ class ViewModel: ObservableObject {
     func scaleRow(value: Int){
         model.scaleRow(value: value)
     }
+    
+    func setDifficulty(newDifficulty: String){
+        model.difficulty = newDifficulty
+    }
+    
 }
