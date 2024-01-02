@@ -28,6 +28,7 @@ struct Model {
     var gameRunning: Bool
     var username: String
     
+    
     init(size: Int, difficulty: String, username: String) {
         self.size = size
         self.username = username
@@ -42,9 +43,14 @@ struct Model {
         self.numberOfMoves = 0
         self.difficultyLevels = ["easy", "normal", "hard"]
         self.gameRunning = false
-
         
         
+        enum Difficulty {
+            case easy
+            case normal
+            case hard
+        }
+        /*
         var identity: [[Int]] = []
         for i in 0..<size {
             var row: [Int] = []
@@ -57,7 +63,35 @@ struct Model {
             }
             identity.append(row)
         }
-        self.matrix = identity
+        self.matrix = identity*/
+        var matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
+
+            // Diagonale der Matrix mit Einsen füllen
+            for i in 0..<size {
+                matrix[i][i] = 1
+            }
+
+            // Zufällige Anpassung der Einträge für die Schwierigkeit
+            var maxIterations = 0
+            switch difficulty {
+            case "easy":
+                maxIterations = Int(Double(size * size) * 0.25) // Adjust the factor for 'easy'
+            case "normal":
+                maxIterations = Int(Double(size * size) * 0.5) // Adjust the factor for 'normal'
+            case "hard":
+                maxIterations = Int(Double(size * size) * 0.99) // Adjust the factor for 'hard'
+            default:
+               break
+            }
+
+            var iterations = 0
+            while iterations < maxIterations {
+                let row = Int.random(in: 0..<size)
+                let col = Int.random(in: 0..<size)
+                matrix[row][col] = Int.random(in: 1...9) // Verwendung von Integer-Werten zwischen 1 und 9
+                iterations += 1
+            }
+        self.matrix = matrix
     }
     
     
