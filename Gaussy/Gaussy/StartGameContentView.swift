@@ -29,10 +29,11 @@ struct StartGameContentView: View {
                 
                 LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
-                    .onChange(of: difficultyLevel) { newValue, _ in
-                        withAnimation {
-                            topColor = colorForDifficulty(newValue)
-                        }}
+                    .onChange(of: difficultyLevel) { newValue in
+                      withAnimation {
+                        topColor = colorForDifficulty(newValue)
+                      }
+                    }
             
                     
                 VStack {
