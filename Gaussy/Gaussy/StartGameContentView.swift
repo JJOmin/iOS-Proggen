@@ -99,15 +99,15 @@ struct StartGameContentView: View {
                     
                     
                     Button(action: {
-                        //self.viewModel.scaleRow(value: selectedNumber)
+                        self.viewModel.setGameRunning()
                     }) {
                         Text("Start Game")
-                            .padding(18)
+                            .padding(15)
                             .foregroundColor(.white)
-                            .background(.green)
-                            .cornerRadius(12)
+                            .background(Color.green)
+                            .cornerRadius(8)
                     }
-                    
+                    .padding()
                     Spacer()
                 }
             }

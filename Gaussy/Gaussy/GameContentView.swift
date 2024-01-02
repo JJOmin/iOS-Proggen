@@ -7,9 +7,7 @@ struct GameContentView: View {
     @State private var selectedNumber = 1
     @State private var selectedOption = 0
     
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
-    }
+    
     func selectableCircle(col: Int, row: Int, orientation: String) -> some View {
         let isColSelected: Bool = viewModel.selectedCols.contains(col)
         let isRowSelected: Bool = viewModel.selectedRows.contains(row)
@@ -321,7 +319,8 @@ struct GameContentView: View {
             Spacer()
                 
         }
-        .navigationBarTitle("Gaussy Game")
+        .navigationBarBackButtonHidden(true)
+
         .navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
     }
 }

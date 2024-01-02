@@ -27,6 +27,8 @@ struct Model {
     public var numberOfMoves: Int
     var difficultyLevels: [String]
     
+    var gameRunning: Bool
+    
     init(selectedRows: [Int], selectedCols: [Int], size: Int) {
         self.size = size
         self.selectedRows = []
@@ -38,8 +40,26 @@ struct Model {
         self.numberOfMoves = 0
         self.difficulty = "easy"
         self.difficultyLevels = ["easy", "normal", "hard"]
+        self.gameRunning = false
         
         
+        var identity: [[Int]] = []
+        for i in 0..<size {
+            var row: [Int] = []
+            for j in 0..<size {
+                if i == j {
+                    row.append(1)
+                } else {
+                    row.append(0)
+                }
+            }
+            identity.append(row)
+        }
+        self.matrix = identity
+    }
+    
+    
+    mutating func createNewMatrix(){
         var identity: [[Int]] = []
         for i in 0..<size {
             var row: [Int] = []
@@ -261,10 +281,9 @@ struct Model {
     }
     
     
-    
-    
+
     mutating func setSize(newSize: Int) {
-        size = newSize
+        self.size = newSize
     }
 
 

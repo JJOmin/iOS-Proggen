@@ -16,6 +16,11 @@ class ViewModel: ObservableObject {
         self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 6)
     }
     
+    
+    
+    
+    //func createNewGame
+    
     var matrix: [[Int]] {
         model.matrix
         
@@ -57,6 +62,16 @@ class ViewModel: ObservableObject {
         model.possibleSizes
     }
     
+    var gameRunning: Bool{
+        model.gameRunning
+    }
+    
+    
+    
+    
+    
+    
+    
     func setSize(newSize: Int) {
         model.setSize(newSize: newSize)
     }
@@ -64,10 +79,10 @@ class ViewModel: ObservableObject {
     
     
     
-    /*
-    func toggleSelection(row: Int, col: Int) {
-        model.toggleSelection(row: row, col: col)
-    }*/
+    
+    func setGameRunning(){
+        model.gameRunning.toggle()
+    }
     
     func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
         model.addRemoveFromSelected(col: col, row: row, orientation: orientation)
