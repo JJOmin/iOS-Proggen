@@ -132,72 +132,98 @@ struct Model {
         matrix.reduce(0) { $0 + $1.count }
     }
     
+    
+    
+    //REFACTORED
+    
+    
     // adding and Removing cols and Rows based on input
     mutating func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
-        // print(selectedCols, selectedRows)
-        // print(orientation, row, col)
-        
         switch orientation {
         case "top":
             if selectedCols.count < 2 {
                 if !selectedCols.contains(col) {
-                    if selectedRows.isEmpty || selectedRows.allSatisfy({ !selectedCols.contains($0) }) {
-                        selectedRows = []
-                        selectedCols.append(col)
-                        if selectedCols.count == 1 {
-                            selectedLastCol = col
-                        }
+                    updateSelectedCols(newCol: col)
+                } else {
+                    if let index = selectedCols.firstIndex(of: col) {
+                        selectedCols.remove(at: index)
                     }
-                } else if let index = selectedCols.firstIndex(of: col) {
-                    selectedCols.remove(at: index)
                 }
             } else {
-                if !selectedCols.contains(col) {
-                    // Replaces the first Selected with the last selecteed, if there are more then 2 selected
-                    if let index = selectedCols.firstIndex(of: selectedLastCol) {
-                        selectedCols.remove(at: index)
-                        if selectedCols.count == 1 {
-                            selectedLastCol = selectedCols[0]
-                        }
-                        selectedCols.append(col)
-                    }
-                } else if let index = selectedCols.firstIndex(of: col) {
-                    selectedCols.remove(at: index)
-                }
+                handleMoreThanTwoSelectedCols(col)
             }
             
         case "left", "right":
             if selectedRows.count < 2 {
                 if !selectedRows.contains(row) {
-                    if selectedCols.isEmpty || selectedCols.allSatisfy({ !selectedRows.contains($0) }) {
-                        selectedCols = []
-                        selectedRows.append(row)
-                        if selectedRows.count == 1 {
-                            selectedLastRow = row
-                        }
+                    updateSelectedRows(newRow: row)
+                } else {
+                    if let index = selectedRows.firstIndex(of: row) {
+                        selectedRows.remove(at: index)
                     }
-                } else if let index = selectedRows.firstIndex(of: row) {
-                    selectedRows.remove(at: index)
                 }
             } else {
-                if !selectedRows.contains(row) {
-                    // Replaces the first Selected with the last selecteed, if there are more then 2 selected
-                    if let index = selectedRows.firstIndex(of: selectedLastRow) {
-                        selectedRows.remove(at: index)
-                        if selectedRows.count == 1 {
-                            selectedLastRow = selectedRows[0]
-                        }
-                        selectedRows.append(row)
-                    }
-                } else if let index = selectedRows.firstIndex(of: row) {
-                    selectedRows.remove(at: index)
-                }
+                handleMoreThanTwoSelectedRows(row)
             }
             
         default:
             break
         }
     }
+
+    private mutating func updateSelectedCols(newCol: Int) {
+        if selectedRows.isEmpty || selectedRows.allSatisfy({ !selectedCols.contains($0) }) {
+            selectedRows = []
+            selectedCols.append(newCol)
+            if selectedCols.count == 1 {
+                selectedLastCol = newCol
+            }
+        }
+    }
+
+    private mutating func handleMoreThanTwoSelectedCols(_ col: Int) {
+        if !selectedCols.contains(col), let index = selectedCols.firstIndex(of: selectedLastCol) {
+            selectedCols.remove(at: index)
+            if selectedCols.count == 1 {
+                selectedLastCol = selectedCols[0]
+            }
+            selectedCols.append(col)
+        } else if let index = selectedCols.firstIndex(of: col) {
+            selectedCols.remove(at: index)
+        }
+    }
+
+    private mutating func updateSelectedRows(newRow: Int) {
+        if selectedCols.isEmpty || selectedCols.allSatisfy({ !selectedRows.contains($0) }) {
+            selectedCols = []
+            selectedRows.append(newRow)
+            if selectedRows.count == 1 {
+                selectedLastRow = newRow
+            }
+        }
+    }
+
+    private mutating func handleMoreThanTwoSelectedRows(_ row: Int) {
+        if !selectedRows.contains(row), let index = selectedRows.firstIndex(of: selectedLastRow) {
+            selectedRows.remove(at: index)
+            if selectedRows.count == 1 {
+                selectedLastRow = selectedRows[0]
+            }
+            selectedRows.append(row)
+        } else if let index = selectedRows.firstIndex(of: row) {
+            selectedRows.remove(at: index)
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //function that resetts all Rows/cols -> used for Cancel Button in Scaling
     mutating func removeAllSelected() {
@@ -236,15 +262,14 @@ struct Model {
                 addMove()
                 
             } else if selectedCols.count == 2 {
-                /*
-                let matrixFirst: [Int] = matrix[selectedCols[0]]
-                let matrixSecond: [Int] = matrix[selectedCols[1]]
-                matrix[selectedCols[0]] = matrixSecond
-                matrix[selectedCols[1]] = matrixFirst
-                addMove()*/
-                print(selectedCols)
-                print(matrix[selectedCols[0]])
-                print(matrix[selectedCols[1]])
+                var matrixT = transposeMatrix(matrix)
+                
+                let matrixFirst: [Int] = matrixT[selectedCols[0]]
+                let matrixSecond: [Int] = matrixT[selectedCols[1]]
+                matrixT[selectedCols[0]] = matrixSecond
+                matrixT[selectedCols[1]] = matrixFirst
+                matrix = transposeMatrix(matrixT) //Zurücktransposed
+                addMove()
             }
     }
     
@@ -324,6 +349,27 @@ struct Model {
 
     mutating func setSize(newSize: Int) {
         self.size = newSize
+    }
+    
+    
+    //function to Transpose a matrix to easily get the cols
+    func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {
+        guard !matrix.isEmpty else {
+            return []
+        }
+
+        let rowCount = matrix.count
+        let colCount = matrix[0].count
+
+        var transposedMatrix = Array(repeating: Array(repeating: 0, count: rowCount), count: colCount)
+
+        for i in 0..<rowCount {
+            for j in 0..<colCount {
+                transposedMatrix[j][i] = matrix[i][j]
+            }
+        }
+
+        return transposedMatrix
     }
 
 

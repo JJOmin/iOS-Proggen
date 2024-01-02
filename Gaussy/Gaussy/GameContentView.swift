@@ -101,11 +101,9 @@ struct GameContentView: View {
     func numberSlider() -> some View {
         switch (self.viewModel.selectedRows.count, self.viewModel.scaleType) {
         case (1, "divide") where self.viewModel.devideByArray.count >= 1:
-            makeScalingView(title: "Devide Row by: \(selectedNumber)",
-                            array: self.viewModel.devideByArray)
+            makeScalingView(title: "Devide Row by: \(selectedNumber)", array: self.viewModel.devideByArray)
         case (1, "multiply"):
-            makeScalingView(title: "Multiply Row by: \(selectedNumber)",
-                            array: self.viewModel.multiplyByArray)
+            makeScalingView(title: "Multiply Row by: \(selectedNumber)", array: self.viewModel.multiplyByArray)
         case (1, "divide"):
             makeInfoView(message: "Row has no common divider")
         case (let count, _) where count > 1:
@@ -149,7 +147,7 @@ struct GameContentView: View {
     // function that enables switching between multiply and divide mode
     func switchModes() -> some View {
         return VStack {
-            if self.viewModel.selectedCols.count == 1 || self.viewModel.selectedRows.count == 1 {
+            if self.viewModel.selectedRows.count == 1 {
                 Picker(selection: $selectedOption, label: Text("")) {
                     Text("Multiply").tag(0)
                     Text("Divide").tag(1)
@@ -179,6 +177,7 @@ struct GameContentView: View {
                 VStack {
                     Text("Multi Row Aktions").padding(2).fontWeight(.bold)
                     HStack{
+                        Spacer()
                         Button(action: {
                             withAnimation {
                                 viewModel.swapSelected()
@@ -206,48 +205,39 @@ struct GameContentView: View {
                                 }
                             }
                         }
-                        Spacer()
-                        Button(action: {
-                            viewModel.addRows()
-                        }) {
-                            VStack {
-                                if viewModel.selectedRows.count == 2 {
+                        
+                        if viewModel.selectedRows.count == 2{
+                            Button(action: {
+                                viewModel.addRows()
+                            }) {
+                                VStack {
+                                    
                                     Image(systemName: "plus.app")
                                         .font(.largeTitle)
                                         .foregroundColor(.blue)
                                     Text("Add")
                                         .foregroundColor(.blue)
-                                } else if viewModel.selectedCols.count != 2 {
-                                    Image(systemName: "plus.app")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.gray)
-                                    Text("Add")
-                                        .foregroundColor(.gray)
                                 }
+                                
                             }
-                        }
-                        Spacer()
-                        Button(action: {
-                            viewModel.subRows()
-                        }) {
-                            VStack {
-                                if viewModel.selectedRows.count == 2 {
+                            Spacer()
+                            Button(action: {
+                                viewModel.subRows()
+                            }) {
+                                VStack {
+                                    
                                     
                                     Image(systemName: "minus.square")
                                         .font(.largeTitle)
                                         .foregroundColor(.blue)
                                     Text("Sub")
                                         .foregroundColor(.blue)
-                                } else if viewModel.selectedCols.count != 2 {
-                                    Image(systemName: "minus.square")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.gray)
-                                    Text("Sub")
-                                        .foregroundColor(.gray)
+                                    
                                 }
+                                
                             }
-                            
                         }
+                        Spacer()
                     }
                 }
                 Spacer()
