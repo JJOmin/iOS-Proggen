@@ -26,14 +26,15 @@ struct HomeScreenView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
-                        Text("New Game")
+                    NavigationLink(destination: StartGameContentView(viewModel: self.viewModel)) {
+                        Text("Start a New Game")
                             .padding()
                             .foregroundColor(.white)
                             .background(Color.blue)
                             .cornerRadius(10)
                     }
                     .padding()
+                    
                     
                     NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
                         Text("See High Score List")

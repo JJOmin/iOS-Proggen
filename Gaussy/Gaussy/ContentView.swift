@@ -6,11 +6,9 @@ struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        //HomeScreenView(viewModel: self.viewModel)
+        HomeScreenView(viewModel: self.viewModel)
         //GameContentView(viewModel: self.viewModel)
-        StartGameContentView(viewModel: self.viewModel)
-
-        
+        //StartGameContentView(viewModel: self.viewModel)
     }
 }
 

@@ -15,19 +15,22 @@ struct StartGameContentView: View {
     @State var playerName: String = "JohnDoe" // Initial value for difficulty
     @State var size: Int = 2
     let maxCharacterCount = 21
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var backButtonOpacity: Double = 0.0 // Initial opacity for animation
+    @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
     var topColor: Color {
-            if difficultyLevel == "easy" {
-                return Color.green
-            } else if difficultyLevel == "normal" {
-                return Color.blue
-            } else if difficultyLevel == "hard" {
-                return Color.red
-            } else {
-                // Handle other cases or set a default color
-                return Color.gray
-            }
+        if difficultyLevel == "easy" {
+            return Color.green
+        } else if difficultyLevel == "normal" {
+            return Color.blue
+        } else if difficultyLevel == "hard" {
+            return Color.red
+        } else {
+            // Handle other cases or set a default color
+            return Color.gray
         }
+    }
     
     var body: some View {
         NavigationView {
@@ -74,17 +77,17 @@ struct StartGameContentView: View {
                     }
                     Spacer()
                     
-                     Text("Set your Username")
-                     .font(.title)
-                     .foregroundColor(.black)
+                    Text("Set your Username")
+                        .font(.title)
+                        .foregroundColor(.black)
                     HStack{
                         Spacer()
                         TextField("Enter your name", text: $playerName)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        .padding()
-                                        .onChange(of: playerName) { newValue, _ in
-                                            playerName = newValue.filter { $0.isLetter }
-                                        }
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
+                            .onChange(of: playerName) { newValue, _ in
+                                playerName = newValue.filter { $0.isLetter }
+                            }
                     }
                     
                     Text("You entered: \(playerName)")
@@ -99,7 +102,7 @@ struct StartGameContentView: View {
                         //self.viewModel.scaleRow(value: selectedNumber)
                     }) {
                         Text("Start Game")
-                            .padding(20)
+                            .padding(18)
                             .foregroundColor(.white)
                             .background(.green)
                             .cornerRadius(12)
@@ -107,6 +110,36 @@ struct StartGameContentView: View {
                     
                     Spacer()
                 }
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+                                Button(action: {
+            withAnimation(.linear(duration: 0.7)) {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }) {
+            Image(systemName: "house")
+                .foregroundColor(.black) // Change the color here
+                .font(.title)
+        }
+            .opacity(backButtonOpacity),
+                            trailing:
+                                NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
+            Button(action: {
+                // Navigate to HighScoreView
+                self.showHighScoreView = true
+            }) {
+                Image(systemName: "list.number")
+                    .foregroundColor(.black)
+                    .font(.title)
+            }
+            .opacity(backButtonOpacity)
+        }
+    )
+        .onAppear {
+            withAnimation(.snappy(duration: 0.7)) {
+                backButtonOpacity = 1.0 // Set opacity to 1 on view appear
             }
         }
     }
