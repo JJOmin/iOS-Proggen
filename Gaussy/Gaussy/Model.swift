@@ -228,6 +228,28 @@ struct Model {
     mutating func addMove(){
         numberOfMoves += 1
     }
+    //
+    func createGameMatrix(_ size: Int, difficulty: Double) -> [[Int]] {
+        var matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
+
+        // Diagonale der Matrix mit Einsen füllen
+        for i in 0..<size {
+            matrix[i][i] = 1
+        }
+
+        // Zufällige Anpassung der Einträge für die Schwierigkeit
+        let maxIterations = Int(Double(size * size) * difficulty)
+        var iterations = 0
+
+        while iterations < maxIterations {
+            let row = Int.random(in: 0..<size)
+            let col = Int.random(in: 0..<size)
+            matrix[row][col] = Int.random(in: 1...9) // Verwendung von Integer-Werten zwischen 1 und 9
+            iterations += 1
+        }
+
+        return matrix
+    }
 
 
 }
