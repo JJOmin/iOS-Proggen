@@ -19,26 +19,22 @@ struct StartGameContentView: View {
     @State private var backButtonOpacity: Double = 0.0 // Initial opacity for animation
     @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
-    var topColor: Color {
-        if difficultyLevel == "easy" {
-            return Color.green
-        } else if difficultyLevel == "normal" {
-            return Color.blue
-        } else if difficultyLevel == "hard" {
-            return Color.red
-        } else {
-            // Handle other cases or set a default color
-            return Color.gray
-        }
-    }
+    @State private var topColor: Color = .green // Default color
+    
+    
     
     var body: some View {
         NavigationView {
             ZStack {
+                
                 LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
-                
-                
+                    .onChange(of: difficultyLevel) { newValue, _ in
+                        withAnimation {
+                            topColor = colorForDifficulty(newValue)
+                        }}
+            
+                    
                 VStack {
                     Text("Before you can start...")
                         .font(.largeTitle)
@@ -153,4 +149,15 @@ struct StartGameContentView: View {
         }
         
     }
+    func colorForDifficulty(_ difficulty: String) -> Color {
+        switch difficulty {
+        case "easy":
+            return Color.green
+        case "normal":
+            return Color.blue
+        case "hard":
+            return Color.red
+        default:
+            return Color.gray
+        }}
 }
