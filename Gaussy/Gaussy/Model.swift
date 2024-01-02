@@ -236,11 +236,15 @@ struct Model {
                 addMove()
                 
             } else if selectedCols.count == 2 {
+                /*
                 let matrixFirst: [Int] = matrix[selectedCols[0]]
                 let matrixSecond: [Int] = matrix[selectedCols[1]]
                 matrix[selectedCols[0]] = matrixSecond
                 matrix[selectedCols[1]] = matrixFirst
-                addMove()
+                addMove()*/
+                print(selectedCols)
+                print(matrix[selectedCols[0]])
+                print(matrix[selectedCols[1]])
             }
     }
     
