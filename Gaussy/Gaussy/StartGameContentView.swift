@@ -14,6 +14,7 @@ struct StartGameContentView: View {
     @State var difficultyLevel: String = "easy" // Initial value for difficulty
     @State var playerName: String = "JohnDoe" // Initial value for difficulty
     @State var size: Int = 2
+    let maxCharacterCount = 21
     
     var topColor: Color {
             if difficultyLevel == "easy" {
@@ -72,21 +73,18 @@ struct StartGameContentView: View {
                         self.viewModel.setSize(newSize: newSize) // Update the external variable
                     }
                     Spacer()
-                    /*
+                    
                      Text("Set your Username")
                      .font(.title)
-                     .foregroundColor(.black) */
+                     .foregroundColor(.black)
                     HStack{
                         Spacer()
                         TextField("Enter your name", text: $playerName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding()
-                            .onChange(of: playerName) { newValue, _ in
-                                if newValue.count > self.viewModel.maxCharacterCount {
-                                    playerName = String(newValue.prefix(self.viewModel.maxCharacterCount))
-                                }
-                            }
-                        Spacer()
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .padding()
+                                        .onChange(of: playerName) { newValue, _ in
+                                            playerName = newValue.filter { $0.isLetter }
+                                        }
                     }
                     
                     Text("You entered: \(playerName)")
