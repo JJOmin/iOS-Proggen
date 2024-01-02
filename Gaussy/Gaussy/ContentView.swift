@@ -6,12 +6,8 @@ struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        if self.viewModel.gameRunning{
-            GameContentView(viewModel: self.viewModel)
-        } else {
-            HomeScreenView(viewModel: self.viewModel)}
-        //GameContentView(viewModel: self.viewModel)
-        //StartGameContentView(viewModel: self.viewModel)
+            HomeScreenView(viewModel: self.viewModel)
+
     }
 }
 

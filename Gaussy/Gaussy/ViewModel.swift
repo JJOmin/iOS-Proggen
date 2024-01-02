@@ -13,9 +13,13 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
 
     init() {
-        self.model = Model(selectedRows: [-1], selectedCols: [-1], size: 6)
+        self.model = Model(size: 6, difficulty: "easy", username: "Peter")
     }
     
+    func createNewGame(size: Int, difficulty: String, username: String){
+        self.model = Model(size: size, difficulty: difficulty, username: username)
+        setGameRunning(true)
+    }
     
     
     
@@ -65,6 +69,7 @@ class ViewModel: ObservableObject {
     var gameRunning: Bool{
         model.gameRunning
     }
+
     
     
     
@@ -76,12 +81,8 @@ class ViewModel: ObservableObject {
         model.setSize(newSize: newSize)
     }
     
-    
-    
-    
-    
-    func setGameRunning(){
-        model.gameRunning.toggle()
+    func setGameRunning(_ value: Bool){
+        model.gameRunning = value
     }
     
     func addRemoveFromSelected(col: Int, row: Int, orientation: String) {

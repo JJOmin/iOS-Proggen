@@ -23,14 +23,16 @@ struct Model {
     let possibleSizes: [Int] = [2,3,4,5,6]
     
     var scaleType: String
-  
     public var numberOfMoves: Int
     var difficultyLevels: [String]
-    
     var gameRunning: Bool
+    var username: String
     
-    init(selectedRows: [Int], selectedCols: [Int], size: Int) {
+    init(size: Int, difficulty: String, username: String) {
         self.size = size
+        self.username = username
+        self.difficulty = difficulty
+        
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
         self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9]
@@ -38,9 +40,9 @@ struct Model {
         self.scaleType = "multiply"
         self.selectedCols = []
         self.numberOfMoves = 0
-        self.difficulty = "easy"
         self.difficultyLevels = ["easy", "normal", "hard"]
         self.gameRunning = false
+
         
         
         var identity: [[Int]] = []

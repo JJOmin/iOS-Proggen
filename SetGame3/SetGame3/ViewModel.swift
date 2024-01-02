@@ -10,8 +10,7 @@ import SwiftUI
 class ViewModel: ObservableObject{
     
     //-----------------Statics as Initalizer:-----------------
-    static func createSetGame() -> Model<ViewModel.CardContent> {
-        Model<ViewModel.CardContent>(totalNumberOfCards: totalNumberOfCards) { index in
+    static func createSetGame() -> Model<ViewModel.CardContent> {Model<ViewModel.CardContent>(totalNumberOfCards: totalNumberOfCards) { index in
             let properties = shapePropertyArray[index]
             return CardContent(shapeName: properties[0] as! String,
                                shapeColor: properties[1] as! Color,

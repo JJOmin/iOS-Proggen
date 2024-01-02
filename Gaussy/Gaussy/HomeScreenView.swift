@@ -36,6 +36,7 @@ struct HomeScreenView: View {
                     .padding()
                     
                     
+                    
                     NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
                         Text("See High Score List")
                             .foregroundColor(.white)
