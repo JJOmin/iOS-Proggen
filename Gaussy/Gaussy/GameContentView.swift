@@ -207,6 +207,7 @@ struct GameContentView: View {
                         }
                         
                         if viewModel.selectedRows.count == 2{
+                            Spacer()
                             Button(action: {
                                 viewModel.addRows()
                             }) {
