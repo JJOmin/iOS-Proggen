@@ -18,7 +18,7 @@ class ViewModel: ObservableObject {
     
     func createNewGame(size: Int, difficulty: String, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
-        setGameRunning(true)
+        //setGameRunning(true)
     }
     
     

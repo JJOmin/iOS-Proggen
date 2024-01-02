@@ -32,8 +32,21 @@ struct HomeScreenView: View {
                             .foregroundColor(.white)
                             .background(Color.blue)
                             .cornerRadius(10)
-                    }
+                    }.simultaneousGesture(TapGesture().onEnded {
+                        self.viewModel.setGameRunning(false)
+                    })
                     .padding()
+                    
+                        NavigationLink(destination: StartGameContentView(viewModel: self.viewModel)) {
+                            Text("Continue Game comming Soon")
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.yellow)
+                                .cornerRadius(10)
+                        }.simultaneousGesture(TapGesture().onEnded {
+                            print(self.viewModel.gameRunning)
+                        })
+                        .padding()
                     
                     
                     

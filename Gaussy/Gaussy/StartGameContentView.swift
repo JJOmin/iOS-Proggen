@@ -38,6 +38,7 @@ struct StartGameContentView: View {
                 LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
                 
+                
                 VStack {
                     Text("Before you can start...")
                         .font(.largeTitle)
@@ -89,25 +90,22 @@ struct StartGameContentView: View {
                                 playerName = newValue.filter { $0.isLetter }
                             }
                     }
-                    
                     Text("You entered: \(playerName)")
                         .foregroundColor(.black) // Just for demonstration to show the entered name
                         .padding()
-                    
-                    
                     Spacer()
                     
                     /*
-                    Button(action: {
-                        self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
-                    }) {
-                        Text("Start Game")
-                            .padding(15)
-                            .foregroundColor(.white)
-                            .background(Color.green)
-                            .cornerRadius(8)
-                    }
-                    .padding()*/
+                     Button(action: {
+                     self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
+                     }) {
+                     Text("Start Game")
+                     .padding(15)
+                     .foregroundColor(.white)
+                     .background(Color.green)
+                     .cornerRadius(8)
+                     }
+                     .padding()*/
                     NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
                         Text("Start a New Game")
                             .padding()
@@ -146,11 +144,13 @@ struct StartGameContentView: View {
             }
             .opacity(backButtonOpacity)
         }
-    )
+        )
         .onAppear {
             withAnimation(.snappy(duration: 0.7)) {
                 backButtonOpacity = 1.0 // Set opacity to 1 on view appear
             }
+            
         }
+        
     }
 }
