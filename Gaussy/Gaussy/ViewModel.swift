@@ -11,6 +11,8 @@ import SwiftUI
 
 class ViewModel: ObservableObject {
     @Published private var model: Model
+    @State private var timer: Timer?
+    
 
     init() {
         self.model = Model(size: 6, difficulty: "easy", username: "Peter")
@@ -19,6 +21,12 @@ class ViewModel: ObservableObject {
     func createNewGame(size: Int, difficulty: String, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         //setGameRunning(true)
+        let newDataToAdd: [String: Any] = [
+            "newKey": "newValue",
+            "anotherNewKey": 123
+        ]
+
+        model.appendToJSONFile(newData: newDataToAdd)
     }
     
     
@@ -119,5 +127,5 @@ class ViewModel: ObservableObject {
     func setDifficulty(newDifficulty: String){
         model.difficulty = newDifficulty
     }
-    
+
 }

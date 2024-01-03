@@ -27,6 +27,12 @@ struct Model {
     var difficultyLevels: [String]
     var gameRunning: Bool
     var username: String
+    //var gameTime: Int
+    var gameTime: TimeInterval = 0.0
+    var timer: Timer?
+    
+    let jsonFilePath = "top10"
+    
     
     
     init(size: Int, difficulty: String, username: String) {
@@ -34,6 +40,7 @@ struct Model {
         self.username = username
         self.difficulty = difficulty
         
+        //self.gameTime = 0
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
         self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9]
@@ -371,6 +378,44 @@ struct Model {
 
         return transposedMatrix
     }
+    
+    
+    
+    func readFileContent(atPath filePath: String) -> String? {
+        do {
+            let content = try String(contentsOfFile: filePath, encoding: .utf8)
+            return content
+        } catch {
+            print("Error reading file at path \(filePath): \(error)")
+            return nil
+        }
+    }
+    
+    func appendToJSONFile(newData: [String: Any]) {
+        guard let filePath = Bundle.main.path(forResource: jsonFilePath, ofType: "json") else {
+            print("JSON file not found in the bundle.")
+            return
+        }
 
+        do {
+            // Read the existing JSON data from the file
+            var existingData = try Data(contentsOf: URL(fileURLWithPath: filePath))
 
+            // Decode the existing JSON data into a dictionary
+            var existingDictionary = try JSONSerialization.jsonObject(with: existingData, options: []) as? [String: Any] ?? [:]
+
+            // Append the new data to the existing dictionary
+            for (key, value) in newData {
+                existingDictionary[key] = value
+            }
+
+            // Encode the updated dictionary back to JSON data
+            let updatedData = try JSONSerialization.data(withJSONObject: existingDictionary, options: [.prettyPrinted])
+
+            // Write the updated JSON data back to the file
+            try updatedData.write(to: URL(fileURLWithPath: filePath))
+        } catch {
+            print("Error appending data to JSON file at path \(filePath): \(error)")
+        }
+    }
 }

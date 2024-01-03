@@ -272,7 +272,10 @@ struct GameContentView: View {
                     
                     VStack{
                         //Text("Gaussy Game").font(.title)
-                        Text("Moves: \(self.viewModel.numberOfMoves)")
+                        HStack{
+                            Text("Moves: \(self.viewModel.numberOfMoves)")
+                            
+                        }
                     }
                     
                 HStack {

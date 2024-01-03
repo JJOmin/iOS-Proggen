@@ -111,7 +111,10 @@ struct StartGameContentView: View {
                             .cornerRadius(10)
                     }
                     .simultaneousGesture(TapGesture().onEnded {
+                        
+                        //self.viewModel.startTimer()
                         self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
+                        
                     })
                     Spacer()
                 }
@@ -121,6 +124,7 @@ struct StartGameContentView: View {
         .navigationBarItems(leading:
                                 Button(action: {
             withAnimation(.linear(duration: 0.7)) {
+                //self.viewModel.stopTimer()
                 self.presentationMode.wrappedValue.dismiss()
             }
         }) {
@@ -133,6 +137,7 @@ struct StartGameContentView: View {
                                 NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
             Button(action: {
                 // Navigate to HighScoreView
+                //self.viewModel.stopTimer()
                 self.showHighScoreView = true
             }) {
                 Image(systemName: "list.number")

@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 struct HomeScreenView: View {
     @ObservedObject var viewModel: ViewModel
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -34,6 +33,9 @@ struct HomeScreenView: View {
                             .cornerRadius(10)
                     }.simultaneousGesture(TapGesture().onEnded {
                         self.viewModel.setGameRunning(false)
+                        /*let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                            print("Timer fired!")
+                        }*/
                     })
                     .padding()
                     
