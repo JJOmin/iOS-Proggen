@@ -16,10 +16,10 @@ class ViewModel: ObservableObject {
     
 
     init() {
-        self.model = Model(size: 6, difficulty: "easy", username: "Peter")
+        self.model = Model(size: 6, difficulty: .easy, username: "Peter")
     }
     
-    func createNewGame(size: Int, difficulty: String, username: String){
+    func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         //setGameRunning(true)
         let newDataToAdd: [String: Any] = [
@@ -27,16 +27,8 @@ class ViewModel: ObservableObject {
             "anotherNewKey": 123
         ]
         
-        
         model.appendToJSONFile(newData: newDataToAdd)
     }
-    
-    
-    
-    
-    
-    
-    
     
     
     //func createNewGame
@@ -70,13 +62,11 @@ class ViewModel: ObservableObject {
         model.numberOfMoves
     }
     
-    var difficultyLevels: [String] {
+    var difficultyLevels: [Difficulty] {
         model.difficultyLevels
     }
     
-    var difficulty: String {
-        model.difficulty
-    }
+    
     
     var maxCharacterCount: Int {
         model.maxCharacterCount
@@ -136,8 +126,8 @@ class ViewModel: ObservableObject {
         model.scaleRow(value: value)
     }
     
-    func setDifficulty(newDifficulty: String){
-        model.difficulty = newDifficulty
+    func setDifficulty(newDifficulty: Difficulty){
+        model.gameDifficulty = newDifficulty
     }
 
 }

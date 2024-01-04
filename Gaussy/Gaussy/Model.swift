@@ -6,9 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
+
+enum Difficulty: String {
+    case easy = "easy"
+    case normal = "normal"
+    case hard = "hard"
+}
+enum scaleTypeEnum {
+    case multiply
+    case divide
+}
 
 struct Model {
-    var matrix: [[Int]] // = [[1, 2], [3, 4]] // Beispielmatrix
+    var matrix: [[Int]]
     var selectedRows: [Int]
     var selectedCols: [Int]
     var size: Int
@@ -18,91 +29,78 @@ struct Model {
     var devideByArray: [Int]
     var multiplyByArray: [Int]
     var scalFactor: Int
-    var difficulty: String
+    
     var maxCharacterCount: Int = 21
     let possibleSizes: [Int] = [2,3,4,5,6]
     
     var scaleType: String
     public var numberOfMoves: Int
-    var difficultyLevels: [String]
+    let difficultyLevels: [Difficulty] = [.easy, .normal, .hard]
     var gameRunning: Bool
     var username: String
-    //var gameTime: Int
     var gameTime: TimeInterval = 0.0
-    //var timer:
-    var startTime = Date() // Startzeit des aktuellen Spiels
+    var startTime = Date()
     var time: Double
     
     let jsonFilePath = "top10"
     
     
+    //Refactoring
+    var gameDifficulty: Difficulty
+    var gameBackgroundColor: Color = Color.green
     
     
-    init(size: Int, difficulty: String, username: String) {
+
+    
+    init(size: Int, difficulty: Difficulty, username: String) {
         self.size = size
         self.username = username
-        self.difficulty = difficulty
         
-        //self.gameTime = 0
+        self.gameDifficulty = .easy
+        
+        
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
         self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9]
-        self.scalFactor = 1 // factor that can be multiplyed or devided with the one Row
+        self.scalFactor = 1
         self.scaleType = "multiply"
         self.selectedCols = []
         self.numberOfMoves = 0
-        self.difficultyLevels = ["easy", "normal", "hard"]
+        
         self.gameRunning = false
-        self.time = 0.0 // Initialisierung der Spielzeit
+        self.time = 0.0
         
-        
-        enum Difficulty {
-            case easy
-            case normal
-            case hard
-        }
-        /*
-        var identity: [[Int]] = []
+        self.matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
+        fillMatrix(with: gameDifficulty)
+    }
+    
+    mutating func fillMatrix(with difficulty: Difficulty) {
+        // Fill the diagonal with ones
         for i in 0..<size {
-            var row: [Int] = []
-            for j in 0..<size {
-                if i == j {
-                    row.append(1)
-                } else {
-                    row.append(0)
-                }
-            }
-            identity.append(row)
+            matrix[i][i] = 1
         }
-        self.matrix = identity*/
-        var matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
-
-            // Diagonale der Matrix mit Einsen füllen
-            for i in 0..<size {
-                matrix[i][i] = 1
-            }
-
-            // Zufällige Anpassung der Einträge für die Schwierigkeit
-            var maxIterations = 0
-            switch difficulty {
-            case "easy":
-                maxIterations = Int(Double(size * size) * 0.25) // Adjust the factor for 'easy'
-            case "normal":
-                maxIterations = Int(Double(size * size) * 0.5) // Adjust the factor for 'normal'
-            case "hard":
-                maxIterations = Int(Double(size * size) * 0.99) // Adjust the factor for 'hard'
-            default:
-               break
-            }
-
-            var iterations = 0
-            while iterations < maxIterations {
-                let row = Int.random(in: 0..<size)
-                let col = Int.random(in: 0..<size)
-                matrix[row][col] = Int.random(in: 1...9) // Verwendung von Integer-Werten zwischen 1 und 9
-                iterations += 1
-            }
-        self.matrix = matrix
+        
+        // Adjust the matrix entries based on difficulty
+        var maxIterations = 0
+        switch difficulty {
+        case .easy:
+            maxIterations = Int(Double(size * size) * 0.25)
+            
+        case .normal:
+            maxIterations = Int(Double(size * size) * 0.5)
+        case .hard:
+            maxIterations = Int(Double(size * size) * 0.99)
+        default:
+            break
+        }
+        
+        var iterations = 0
+        while iterations < maxIterations {
+            let row = Int.random(in: 0..<size)
+            let col = Int.random(in: 0..<size)
+            matrix[row][col] = Int.random(in: 1...9)
+            iterations += 1
+        }
     }
     
     
@@ -317,7 +315,7 @@ struct Model {
                     foundDivisors += 1 // Increment the counter
                     
                 }
-            }//; print("Divisor", devideByArray)
+            }
         }
     }
     

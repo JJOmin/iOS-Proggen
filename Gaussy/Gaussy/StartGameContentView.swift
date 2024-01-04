@@ -11,7 +11,7 @@ import SwiftUI
 
 struct StartGameContentView: View {
     @ObservedObject var viewModel: ViewModel
-    @State var difficultyLevel: String = "easy" // Initial value for difficulty
+    @State var difficultyLevel: Difficulty = .easy // Initial value for difficulty
     @State var playerName: String = "JohnDoe" // Initial value for difficulty
     @State var size: Int = 2
     let maxCharacterCount = 21
@@ -35,8 +35,6 @@ struct StartGameContentView: View {
                           
                       }
                     }
-            
-                    
                 VStack {
                     Text("Before you can start...")
                         .font(.largeTitle)
@@ -48,10 +46,10 @@ struct StartGameContentView: View {
                     Text("Select Difficulty Level")
                         .font(.title)
                         .foregroundColor(.black)
-                    
+
                     Picker("Difficulty Level: ", selection: $difficultyLevel) {
                         ForEach(self.viewModel.difficultyLevels, id: \.self) { value in
-                            Text("\(value)").tag(value)
+                            Text("\(value.rawValue)").tag(value)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -146,13 +144,13 @@ struct StartGameContentView: View {
         }
         
     }
-    func colorForDifficulty(_ difficulty: String) -> Color {
+    func colorForDifficulty(_ difficulty: Difficulty) -> Color {
         switch difficulty {
-        case "easy":
+        case .easy:
             return Color.green
-        case "normal":
+        case .normal:
             return Color.blue
-        case "hard":
+        case .hard:
             return Color.red
         default:
             return Color.gray
