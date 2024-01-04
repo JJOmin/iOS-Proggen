@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		193247012B4760CD00C4A985 /* HighScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193247002B4760CD00C4A985 /* HighScoreModel.swift */; };
 		19686FE82B30DD6A00D7417C /* GaussyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19686FE72B30DD6A00D7417C /* GaussyApp.swift */; };
 		19686FEA2B30DD6A00D7417C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19686FE92B30DD6A00D7417C /* ContentView.swift */; };
 		19686FEC2B30DD6A00D7417C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19686FEB2B30DD6A00D7417C /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		193247002B4760CD00C4A985 /* HighScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreModel.swift; sourceTree = "<group>"; };
 		19686FE42B30DD6A00D7417C /* Gaussy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaussy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19686FE72B30DD6A00D7417C /* GaussyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussyApp.swift; sourceTree = "<group>"; };
 		19686FE92B30DD6A00D7417C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		19686FE62B30DD6A00D7417C /* Gaussy */ = {
 			isa = PBXGroup;
 			children = (
+				193247002B4760CD00C4A985 /* HighScoreModel.swift */,
 				19A9FFDA2B4479EC005F7E9D /* StartGameContentView.swift */,
 				19D5AAEB2B4093CD0062F18F /* HighScoreView.swift */,
 				19D5AAE72B4067270062F18F /* HomeScreenView.swift */,
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				193247012B4760CD00C4A985 /* HighScoreModel.swift in Sources */,
 				19686FF92B30DEC700D7417C /* Model.swift in Sources */,
 				19686FEA2B30DD6A00D7417C /* ContentView.swift in Sources */,
 				19A9FFDB2B4479EC005F7E9D /* StartGameContentView.swift in Sources */,

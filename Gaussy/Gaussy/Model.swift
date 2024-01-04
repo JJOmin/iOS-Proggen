@@ -381,7 +381,7 @@ struct Model {
         let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
 
         let seconds = Int(remainingSecondsAfterMinutes)
-        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 1000)
+        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
 
         // Use String(format:) to format minutes with leading zeros if needed
         let formattedMinutes = String(format: "%02d", minutes)
@@ -427,41 +427,5 @@ struct Model {
     
     
     //work in progress
-    func readFileContent(atPath filePath: String) -> String? {
-        do {
-            let content = try String(contentsOfFile: filePath, encoding: .utf8)
-            return content
-        } catch {
-            print("Error reading file at path \(filePath): \(error)")
-            return nil
-        }
-    }
-    
-    func appendToJSONFile(newData: [String: Any]) {
-        guard let filePath = Bundle.main.path(forResource: jsonFilePath, ofType: "json") else {
-            print("JSON file not found in the bundle.")
-            return
-        }
 
-        do {
-            // Read the existing JSON data from the file
-            var existingData = try Data(contentsOf: URL(fileURLWithPath: filePath))
-
-            // Decode the existing JSON data into a dictionary
-            var existingDictionary = try JSONSerialization.jsonObject(with: existingData, options: []) as? [String: Any] ?? [:]
-
-            // Append the new data to the existing dictionary
-            for (key, value) in newData {
-                existingDictionary[key] = value
-            }
-
-            // Encode the updated dictionary back to JSON data
-            let updatedData = try JSONSerialization.data(withJSONObject: existingDictionary, options: [.prettyPrinted])
-
-            // Write the updated JSON data back to the file
-            try updatedData.write(to: URL(fileURLWithPath: filePath))
-        } catch {
-            print("Error appending data to JSON file at path \(filePath): \(error)")
-        }
-    }
 }
