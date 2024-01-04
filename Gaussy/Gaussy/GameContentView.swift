@@ -11,6 +11,7 @@ struct GameContentView: View {
     @State private var backButtonOpacity: Double = 0.0 // Initial opacity for animation
     @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
+    @State private var topColor: Color = .green // Default color
     
     func selectableCircle(col: Int, row: Int, orientation: String) -> some View {
         let isColSelected: Bool = viewModel.selectedCols.contains(col)
@@ -266,9 +267,13 @@ struct GameContentView: View {
     // Game Screen
     var body: some View {
         //HomeScreenView()
-        VStack {
+        ZStack {
+            
+            LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
             VStack {
-                
+                VStack {
+                    
                     
                     VStack{
                         //Text("Gaussy Game").font(.title)
@@ -278,32 +283,21 @@ struct GameContentView: View {
                         }
                     }
                     
-                HStack {
-                    VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
-                        buttonsTop()
-                        rectAndButtons()
+                    HStack {
+                        VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                            buttonsTop()
+                            rectAndButtons()
+                        }
+                        
                     }
                     
                 }
                 
-            }
-            
-            VStack{
-                
                 VStack{
-                    switchModes()
-                    numberSlider()
-                }.padding(5)
-                    .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
-                    )
-                    .padding(5) // Adjust the padding around the frame
-                
-                withAnimation{
+                    
                     VStack{
-                        buttonRowMenue()
+                        switchModes()
+                        numberSlider()
                     }.padding(5)
                         .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
                         .overlay(
@@ -312,42 +306,66 @@ struct GameContentView: View {
                         )
                         .padding(5) // Adjust the padding around the frame
                     
+                    withAnimation{
+                        VStack{
+                            buttonRowMenue()
+                        }.padding(5)
+                            .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
+                            )
+                            .padding(5) // Adjust the padding around the frame
+                        
+                    }
                 }
-            }
-            Spacer()
+                Spacer()
                 
-        }
-        .navigationBarBackButtonHidden(true)
-/*
-        //.navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
-        .navigationBarItems(leading:
-                                Button(action: {
-            withAnimation(.linear(duration: 0.7)) {
-                self.presentationMode.wrappedValue.dismiss()
             }
-        }) {
-            Image(systemName: "house")
-                .foregroundColor(.black) // Change the color here
-                .font(.title)
+            .navigationBarBackButtonHidden(true)
+            /*
+             //.navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
+             .navigationBarItems(leading:
+             Button(action: {
+             withAnimation(.linear(duration: 0.7)) {
+             self.presentationMode.wrappedValue.dismiss()
+             }
+             }) {
+             Image(systemName: "house")
+             .foregroundColor(.black) // Change the color here
+             .font(.title)
+             }
+             .opacity(backButtonOpacity),
+             trailing:
+             NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
+             Button(action: {
+             // Navigate to HighScoreView
+             self.showHighScoreView = true
+             }) {
+             Image(systemName: "list.number")
+             .foregroundColor(.black)
+             .font(.title)
+             }
+             .opacity(backButtonOpacity)
+             }
+             )
+             .onAppear {
+             withAnimation(.snappy(duration: 0.7)) {
+             backButtonOpacity = 1.0 // Set opacity to 1 on view appear
+             }
+             }*/
         }
-            .opacity(backButtonOpacity),
-                            trailing:
-                                NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
-            Button(action: {
-                // Navigate to HighScoreView
-                self.showHighScoreView = true
-            }) {
-                Image(systemName: "list.number")
-                    .foregroundColor(.black)
-                    .font(.title)
-            }
-            .opacity(backButtonOpacity)
-        }
-    )
-        .onAppear {
-            withAnimation(.snappy(duration: 0.7)) {
-                backButtonOpacity = 1.0 // Set opacity to 1 on view appear
-            }
-        }*/
+        
     }
+    func colorForDifficulty(_ difficulty: String) -> Color {
+        switch difficulty {
+        case "easy":
+            return Color.green
+        case "normal":
+            return Color.blue
+        case "hard":
+            return Color.red
+        default:
+            return Color.gray
+        }}
 }

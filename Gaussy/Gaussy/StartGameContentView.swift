@@ -31,7 +31,8 @@ struct StartGameContentView: View {
                     .edgesIgnoringSafeArea(.all)
                     .onChange(of: difficultyLevel) { newValue in
                       withAnimation {
-                        topColor = colorForDifficulty(newValue)
+                          topColor = colorForDifficulty(newValue)
+                          
                       }
                     }
             
@@ -113,8 +114,9 @@ struct StartGameContentView: View {
                     .simultaneousGesture(TapGesture().onEnded {
                         
                         //self.viewModel.startTimer()
-                        self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
                         
+                        self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
+                      
                     })
                     Spacer()
                 }

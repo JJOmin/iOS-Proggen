@@ -12,6 +12,7 @@ import SwiftUI
 class ViewModel: ObservableObject {
     @Published private var model: Model
     @State private var timer: Timer?
+    //@State var backgroundColor: Color = .white
     
 
     init() {
@@ -25,9 +26,12 @@ class ViewModel: ObservableObject {
             "newKey": "newValue",
             "anotherNewKey": 123
         ]
-
+        
+        
         model.appendToJSONFile(newData: newDataToAdd)
     }
+    
+    
     
     
     
@@ -64,6 +68,10 @@ class ViewModel: ObservableObject {
     
     var difficultyLevels: [String] {
         model.difficultyLevels
+    }
+    
+    var difficulty: String {
+        model.difficulty
     }
     
     var maxCharacterCount: Int {

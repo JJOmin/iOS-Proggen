@@ -35,6 +35,7 @@ struct Model {
     
     
     
+    
     init(size: Int, difficulty: String, username: String) {
         self.size = size
         self.username = username
