@@ -29,7 +29,9 @@ struct Model {
     var username: String
     //var gameTime: Int
     var gameTime: TimeInterval = 0.0
-    var timer: Timer?
+    //var timer:
+    var startTime = Date() // Startzeit des aktuellen Spiels
+    var time: Double
     
     let jsonFilePath = "top10"
     
@@ -51,6 +53,7 @@ struct Model {
         self.numberOfMoves = 0
         self.difficultyLevels = ["easy", "normal", "hard"]
         self.gameRunning = false
+        self.time = 0.0 // Initialisierung der Spielzeit
         
         
         enum Difficulty {
@@ -224,15 +227,6 @@ struct Model {
     }
 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //function that resetts all Rows/cols -> used for Cancel Button in Scaling
     mutating func removeAllSelected() {
         selectedRows = []
@@ -329,6 +323,7 @@ struct Model {
     
     mutating func addMove(){
         numberOfMoves += 1
+        print(timeTracking())
     }
     //
     func createGameMatrix(_ size: Int, difficulty: Double) -> [[Int]] {
@@ -360,6 +355,25 @@ struct Model {
     }
     
     
+    
+    // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
+    mutating func timeTracking() -> String {
+        // Aktuelle Zeit abrufen
+        let timeNow = Date()
+        // Berechne die vergangene Spielzeit
+        self.time = timeNow.timeIntervalSince(self.startTime)
+        
+        // Formatter für die Darstellung der Spielzeit
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        
+        // Rückgabe der formatierten Spielzeit
+        print(self.time)
+        return formatter.string(from: self.time) ?? "00"
+    }
+    
     //function to Transpose a matrix to easily get the cols
     func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {
         guard !matrix.isEmpty else {
@@ -382,6 +396,10 @@ struct Model {
     
     
     
+    
+    
+    
+    //work in progress
     func readFileContent(atPath filePath: String) -> String? {
         do {
             let content = try String(contentsOfFile: filePath, encoding: .utf8)

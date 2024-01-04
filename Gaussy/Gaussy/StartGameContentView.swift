@@ -93,17 +93,6 @@ struct StartGameContentView: View {
                         .padding()
                     Spacer()
                     
-                    /*
-                     Button(action: {
-                     self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
-                     }) {
-                     Text("Start Game")
-                     .padding(15)
-                     .foregroundColor(.white)
-                     .background(Color.green)
-                     .cornerRadius(8)
-                     }
-                     .padding()*/
                     NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
                         Text("Start a New Game")
                             .padding()

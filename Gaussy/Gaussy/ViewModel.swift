@@ -35,6 +35,10 @@ class ViewModel: ObservableObject {
     
     
     
+    
+    
+    
+    
     //func createNewGame
     
     var matrix: [[Int]] {
