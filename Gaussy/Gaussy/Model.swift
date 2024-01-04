@@ -41,6 +41,7 @@ struct Model {
     var gameTime: TimeInterval = 0.0
     var startTime = Date()
     var time: Double
+    var timeFormated: String = ""
     
     let jsonFilePath = "top10"
     
@@ -355,7 +356,7 @@ struct Model {
     
     
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
-    mutating func timeTracking() -> String {
+    mutating func timeTracking(){
         // Aktuelle Zeit abrufen
         let timeNow = Date()
         // Berechne die vergangene Spielzeit
@@ -364,12 +365,40 @@ struct Model {
         // Formatter für die Darstellung der Spielzeit
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute, .second]
+        formatter.allowedUnits = [.minute, .second, .nanosecond]
         formatter.zeroFormattingBehavior = .pad
         
         // Rückgabe der formatierten Spielzeit
-        print(self.time)
-        return formatter.string(from: self.time) ?? "00"
+        //print(self.time)
+        //self.timeFormated = formatter.string(from: self.time) ?? "00"
+        
+        let totalSeconds: TimeInterval = self.time
+
+        let hours = Int(totalSeconds / 3600)
+        let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
+
+        let minutes = Int(remainingSecondsAfterHours / 60)
+        let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
+
+        let seconds = Int(remainingSecondsAfterMinutes)
+        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 1000)
+
+        // Use String(format:) to format minutes with leading zeros if needed
+        let formattedMinutes = String(format: "%02d", minutes)
+        let formatedSeconds = String(format: "%02d", seconds)
+        let formatedMilliseconds = String(format: "%02d", milliseconds)
+
+        print("Hours: \(hours), Minutes: \(formattedMinutes), Seconds: \(formatedSeconds), Milliseconds: \(formatedMilliseconds)")
+        if hours <= 0{
+            if minutes <= 0{
+                self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
+            } else {
+                self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
+            }
+        } else {
+            self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
+        }
+
     }
     
     //function to Transpose a matrix to easily get the cols

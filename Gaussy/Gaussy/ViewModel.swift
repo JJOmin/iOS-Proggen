@@ -79,13 +79,24 @@ class ViewModel: ObservableObject {
     var gameRunning: Bool{
         model.gameRunning
     }
+    
+    var time: Double {
+        model.time
+    }
+    
+    var timeFormated: String {
+        model.timeFormated
+    }
 
     
     
     
     
     
-    
+    func updateTimer(){
+        model.timeTracking()
+        //print(model.time)
+    }
     
     func setSize(newSize: Int) {
         model.setSize(newSize: newSize)

@@ -277,8 +277,17 @@ struct GameContentView: View {
                     
                     VStack{
                         //Text("Gaussy Game").font(.title)
-                        HStack{
+                        VStack{
                             Text("Moves: \(self.viewModel.numberOfMoves)")
+                            Text("Time: \(viewModel.timeFormated)")
+                                .onAppear {
+                                    
+                                    viewModel.updateTimer()
+                                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                                        viewModel.updateTimer()
+                                    }
+                                }
+                           
                             
                         }
                     }
