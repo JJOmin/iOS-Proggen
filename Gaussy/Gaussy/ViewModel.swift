@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
             "anotherNewKey": 123
         ]
         
-        model.appendToJSONFile(newData: newDataToAdd)
+        //model.appendToJSONFile(newData: newDataToAdd)
     }
     
     
