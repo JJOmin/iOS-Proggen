@@ -12,6 +12,9 @@ struct HighScoreModel {
     var highScores: [PlayerStats]? // Change to an array of PlayerStats
     var plistURL: URL = URL(fileURLWithPath: "") // Empty URL
     
+    var highScoresTimeSorted: [PlayerStats] = []
+    var highScoresMovesSorted: [PlayerStats] = []
+    
     func writeToPlist<T: Encodable>(data: T, fileName: String) throws {
         let encoder = PropertyListEncoder()
         let encodedData = try encoder.encode(data)
@@ -57,6 +60,19 @@ struct HighScoreModel {
     
     func getHighScore() -> [PlayerStats] {
             return highScores ?? [] // Return highScores if it exists, otherwise return an empty array
+        }
+    
+    func sortScores() -> (sortedByTime: [PlayerStats], sortedByMoves: [PlayerStats]) {
+            guard let highScores = highScores else { return ([], []) } // Return empty arrays if highScores is nil
+            
+            // Sort by time (ascending)
+            let sortedByTime = highScores.sorted { $0.time < $1.time }
+
+            // Sort by moves (ascending)
+            let sortedByMoves = highScores.sorted { $0.moves < $1.moves }
+
+            
+            return (sortedByTime, sortedByMoves)
         }
 
 }
