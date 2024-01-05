@@ -34,8 +34,6 @@ class ViewModel: ObservableObject {
         writeToPlist(userName: "Enis", time: 500, moves: 20)
         appendToPlist(userName: "Penis", time: 300, moves: 30)
         readHighScoresFromPlist()
-        print("")
-        print("")
         getSortedScors()
         //appendToPlist(userName: "Enis", time: 200, moves: 20)
         //readHighScoresFromPlist()
@@ -58,7 +56,6 @@ class ViewModel: ObservableObject {
         do {
             if let highScores: [PlayerStats] = try highScoreModel.readFromPlist(type: [PlayerStats].self, fileName: highScoreModel.plistFile) {
                 // Successfully read data from the plist
-                print("High Scores: \(highScores)")
                 highScoreModel.highScores = highScores
                 //highScores.append(PlayerStats)
             } else {

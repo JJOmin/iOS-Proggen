@@ -19,6 +19,7 @@ enum scaleTypeEnum {
     case divide
 }
 
+
 struct Model {
     var matrix: [[Int]]
     var correctMatrix: [[Int]]
@@ -46,12 +47,13 @@ struct Model {
     var timeFormated: String = ""
     
     let plistName = "HighScores"
-    //var highScores: [PlayerStats]
     
     
     //Refactoring
     var gameDifficulty: Difficulty
     var gameBackgroundColor: Color = Color.green
+    
+    var gameSolved: Bool = false
     
     
 
@@ -89,7 +91,6 @@ struct Model {
         
         // Adjust the matrix entries based on difficulty
         var maxIterations = 0
-        print(difficulty)
         switch difficulty {
         case .easy:
             maxIterations = Int(Double(size * size) * 0.25)
@@ -109,11 +110,7 @@ struct Model {
         while iterations < maxIterations{
             let row = Int.random(in: 0..<size)
             let col = Int.random(in: 0..<size)
-            //matrix[row][col] = Int.random(in: 1...9)
-            //print([Int.random(in: 0..<size)])
             //add
-           
-            
             let matrixFirst: [Int] = matrix[row]
             let matrixSecond: [Int] = matrix[col]
             if matrixFirst.count == matrixSecond.count {
@@ -122,11 +119,8 @@ struct Model {
                     matrix[col] = resultArray
                 }
             }
-            print(matrix)
-            
             
             //Swap
-
             let rand3 = Int.random(in: 0..<size)
             let rand4 = Int.random(in: 0..<size)
             var matrixT = transposeMatrix(matrix) //transposeMatrix(
@@ -136,13 +130,8 @@ struct Model {
             matrixT[rand3] = matrixSecondAdd
             
             matrix = transposeMatrix(matrixT) //Zurücktransposed
-    
-
-            
             
             //multiply
-            
-           
             let rand1 = Int.random(in: 0..<size)
             let rand2 = Int.random(in: 1..<size)
             let matrixFirstMulty: [Int] = matrix[rand1]
@@ -360,31 +349,9 @@ struct Model {
     
     mutating func addMove(){
         numberOfMoves += 1
-        print(timeTracking())
+        //print(timeTracking())
+        isGaussSolved()
     }
-    /*
-    func createGameMatrix(_ size: Int, difficulty: Double) -> [[Int]] {
-        var matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
-
-        // Diagonale der Matrix mit Einsen füllen
-        for i in 0..<size {
-            matrix[i][i] = 1
-        }
-
-        // Zufällige Anpassung der Einträge für die Schwierigkeit
-        let maxIterations = Int(Double(size * size) * difficulty)
-        var iterations = 0
-
-        while iterations < maxIterations {
-            let row = Int.random(in: 0..<size)
-            let col = Int.random(in: 0..<size)
-            matrix[row][col] = Int.random(in: 1...9) // Verwendung von Integer-Werten zwischen 1 und 9
-            iterations += 1
-        }
-
-        return matrix
-    }*/
-    
     
 
     mutating func setSize(newSize: Int) {
@@ -457,6 +424,12 @@ struct Model {
         return transposedMatrix
     }
     
+    
+    mutating func isGaussSolved(){
+        if matrix == correctMatrix{
+            gameSolved = true
+        }
+    }
     
     
 

@@ -330,37 +330,6 @@ struct GameContentView: View {
                 
             }
             .navigationBarBackButtonHidden(true)
-            /*
-             //.navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
-             .navigationBarItems(leading:
-             Button(action: {
-             withAnimation(.linear(duration: 0.7)) {
-             self.presentationMode.wrappedValue.dismiss()
-             }
-             }) {
-             Image(systemName: "house")
-             .foregroundColor(.black) // Change the color here
-             .font(.title)
-             }
-             .opacity(backButtonOpacity),
-             trailing:
-             NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
-             Button(action: {
-             // Navigate to HighScoreView
-             self.showHighScoreView = true
-             }) {
-             Image(systemName: "list.number")
-             .foregroundColor(.black)
-             .font(.title)
-             }
-             .opacity(backButtonOpacity)
-             }
-             )
-             .onAppear {
-             withAnimation(.snappy(duration: 0.7)) {
-             backButtonOpacity = 1.0 // Set opacity to 1 on view appear
-             }
-             }*/
         }
         
     }
