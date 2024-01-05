@@ -24,13 +24,14 @@ class ViewModel: ObservableObject {
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         
-        readHighScoresFromPlist()
-        appendToPlist(userName: "Enis", time: 200, moves: 20)
-        readHighScoresFromPlist()
+        writeToPlist(userName: "Enis", time: 200, moves: 20)
+        //readHighScoresFromPlist()
+        //appendToPlist(userName: "Enis", time: 200, moves: 20)
+        //readHighScoresFromPlist()
     }
     
-    func appendToPlist(userName: String , time: Double, moves: Int ){
-        let newScore = PlayerStats(username: userName, time: time, moves: moves)
+    func appendToPlist(userName: String , time: Double, moves: Int){
+        let newScore = PlayerStats(id: UUID(), username: userName, time: time, moves: moves)
         
         do {
             try highScoreModel.appendToPlist(data: newScore, fileName: highScoreModel.plistFile)
@@ -53,6 +54,19 @@ class ViewModel: ObservableObject {
             }
         } catch {
             print("Error reading from plist: \(error)")
+            // Handle the error here, such as showing an alert to the user or performing another action
+        }
+    }
+    
+    func writeToPlist(userName: String , time: Double, moves: Int){
+        let newScore = PlayerStats(id: UUID(), username: userName, time: time, moves: moves)
+        
+        do {
+            try highScoreModel.writeToPlist(data: newScore, fileName: highScoreModel.plistFile)
+            
+            // Successfully wrote data to the plist
+        } catch {
+            print("Error writing to plist: \(error)")
             // Handle the error here, such as showing an alert to the user or performing another action
         }
     }
@@ -90,6 +104,9 @@ class ViewModel: ObservableObject {
     
     var difficultyLevels: [Difficulty] {
         model.difficultyLevels
+    }
+    var highScores: [PlayerStats]{
+        highScoreModel.getHighScore()
     }
     
     

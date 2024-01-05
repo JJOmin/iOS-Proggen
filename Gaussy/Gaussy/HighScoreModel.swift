@@ -54,6 +54,10 @@ struct HighScoreModel {
             return URL(fileURLWithPath: "") // Empty URL
         }
     }
+    
+    func getHighScore() -> [PlayerStats] {
+            return highScores ?? [] // Return highScores if it exists, otherwise return an empty array
+        }
 
 }
 

@@ -123,7 +123,7 @@ struct StartGameContentView: View {
         }
             .opacity(backButtonOpacity),
                             trailing:
-                                NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
+                                NavigationLink(destination: HighScoreView(playerStatsArray: viewModel.highScores), isActive: $showHighScoreView) {
             Button(action: {
                 // Navigate to HighScoreView
                 //self.viewModel.stopTimer()

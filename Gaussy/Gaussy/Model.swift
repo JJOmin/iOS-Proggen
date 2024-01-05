@@ -17,7 +17,8 @@ enum scaleTypeEnum {
     case multiply
     case divide
 }
-struct PlayerStats: Codable {
+struct PlayerStats: Codable, Identifiable{
+    var id: UUID
     let username: String
     let time: Double
     let moves: Int
