@@ -99,7 +99,7 @@ struct StartGameContentView: View {
                     .simultaneousGesture(TapGesture().onEnded {
                         
                         //self.viewModel.startTimer()
-                        print(difficultyLevel)
+                        self.viewModel.setGameRunning(true)
                         self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
                         
                       

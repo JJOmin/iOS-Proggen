@@ -171,7 +171,15 @@ class ViewModel: ObservableObject {
     
     func updateTimer(){
         model.timeTracking()
-        //print(model.time)
+    }
+    
+    func timerCode(){
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
+            updateTimer()
+        }
+        if gameRunning || gameSolved {
+            timer?.invalidate()
+        }
     }
     
     func setSize(newSize: Int) {
@@ -180,6 +188,7 @@ class ViewModel: ObservableObject {
     
     func setGameRunning(_ value: Bool){
         model.gameRunning = value
+        print(value)
     }
     
     func addRemoveFromSelected(col: Int, row: Int, orientation: String) {

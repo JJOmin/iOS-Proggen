@@ -362,8 +362,6 @@ struct Model {
     
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
     mutating func timeTracking(){
-        if gameRunning == true {
-            
             // Aktuelle Zeit abrufen
             let timeNow = Date()
             // Berechne die vergangene Spielzeit
@@ -394,7 +392,8 @@ struct Model {
             let formattedMinutes = String(format: "%02d", minutes)
             let formatedSeconds = String(format: "%02d", seconds)
             let formatedMilliseconds = String(format: "%02d", milliseconds)
-            
+        
+        
             if hours <= 0{
                 if minutes <= 0{
                     self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
@@ -404,9 +403,13 @@ struct Model {
             } else {
                 self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
             }
-        }
+        
+        
+        
+        
 
     }
+
     
     //function to Transpose a matrix to easily get the cols
     func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {

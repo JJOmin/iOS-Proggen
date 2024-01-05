@@ -297,10 +297,11 @@ struct GameContentView: View {
                             Text("Time: \(viewModel.timeFormated)")
                                 .onAppear {
                                     
-                                    viewModel.updateTimer()
-                                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                                        viewModel.updateTimer()
-                                    }
+                                    //viewModel.updateTimer()
+                                    
+                                    viewModel.timerCode()
+                                    
+                                    
                                 }
                         }
                     }
