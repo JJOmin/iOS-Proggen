@@ -20,6 +20,7 @@ enum scaleTypeEnum {
 
 struct Model {
     var matrix: [[Int]]
+    var correctMatrix: [[Int]]
     var selectedRows: [Int]
     var selectedCols: [Int]
     var size: Int
@@ -73,93 +74,48 @@ struct Model {
         self.time = 0.0
         
         self.matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
+        self.correctMatrix = []
         fillMatrix(with: gameDifficulty)
     }
     
-    
-    func writeToPlist<T: Encodable>(data: T, filename: String) throws {
-            let encoder = PropertyListEncoder()
-            let plistURL = try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: false
-            ).appendingPathComponent(filename).appendingPathExtension("plist")
-            
-            let encodedData = try encoder.encode(data)
-            try encodedData.write(to: plistURL)
-        }
-    
-    func readFromPlist<T: Decodable>(filename: String, type: T.Type) throws -> T? {
-            let decoder = PropertyListDecoder()
-            let plistURL = try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: false
-            ).appendingPathComponent(filename).appendingPathExtension("plist")
-            
-            let data = try Data(contentsOf: plistURL)
-            let decodedData = try decoder.decode(type, from: data)
-            return decodedData
-        }
-    
-    func appendToPlist<T: Codable>(data: T, filename: String) throws {
-        var existingData = try readFromPlist(filename: filename, type: [T].self) ?? []
-        
-        // Convert single element `data` into an array and append it to `existingData`
-        let newData = [data]
-        existingData.append(contentsOf: newData)
-        
-        try writeToPlist(data: existingData, filename: filename)
-    }
 
-
-    
-    
     mutating func fillMatrix(with difficulty: Difficulty) {
         // Fill the diagonal with ones
         for i in 0..<size {
             matrix[i][i] = 1
         }
+        correctMatrix = matrix // sets the solution matrix to the origin matrix
         
         // Adjust the matrix entries based on difficulty
         var maxIterations = 0
         switch difficulty {
         case .easy:
             maxIterations = Int(Double(size * size) * 0.25)
-            
         case .normal:
             maxIterations = Int(Double(size * size) * 0.5)
         case .hard:
             maxIterations = Int(Double(size * size) * 0.99)
         }
-        
+        print(maxIterations)
         var iterations = 0
+        
+        
         while iterations < maxIterations {
             let row = Int.random(in: 0..<size)
             let col = Int.random(in: 0..<size)
             matrix[row][col] = Int.random(in: 1...9)
-            iterations += 1
-        }
-    }
-    
-    
-    mutating func createNewMatrix(){
-        var identity: [[Int]] = []
-        for i in 0..<size {
-            var row: [Int] = []
-            for j in 0..<size {
-                if i == j {
-                    row.append(1)
-                } else {
-                    row.append(0)
-                }
+            //matrix[row] = matrix[row] + matrix[row]
+            let matrixFirst: [Int] = matrix[Int.random(in: 0...size-1)]
+            let matrixSecond: [Int] = matrix[Int.random(in: 0...size-1)]
+            if matrixFirst.count == matrixSecond.count {
+                let resultArray = zip(matrixFirst, matrixSecond).map { $0 + $1 }
+                matrix[row] = resultArray
             }
-            identity.append(row)
+            iterations += 1
+            
         }
-        self.matrix = identity
     }
+    
     
     // generating a einheitsmatrix in jeder größe
     func identityMatrix(size: Int) -> [[Int]] {
@@ -456,7 +412,10 @@ struct Model {
                 transposedMatrix[j][i] = matrix[i][j]
             }
         }
-
         return transposedMatrix
     }
+    
+    
+    
+
 }
