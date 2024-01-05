@@ -12,6 +12,7 @@ enum Difficulty: String {
     case easy = "easy"
     case normal = "normal"
     case hard = "hard"
+    case unset = "unset"
 }
 enum scaleTypeEnum {
     case multiply
@@ -59,12 +60,12 @@ struct Model {
         self.size = size
         self.username = username
         
-        self.gameDifficulty = .easy
+        self.gameDifficulty = difficulty
         
         
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
-        self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9]
+        self.multiplyByArray = [2, 3, 4, 5, 6, 7, 8, 9, 10]
         self.scalFactor = 1
         self.scaleType = "multiply"
         self.selectedCols = []
@@ -88,32 +89,73 @@ struct Model {
         
         // Adjust the matrix entries based on difficulty
         var maxIterations = 0
+        print(difficulty)
         switch difficulty {
         case .easy:
             maxIterations = Int(Double(size * size) * 0.25)
+            
         case .normal:
             maxIterations = Int(Double(size * size) * 0.5)
+            
         case .hard:
-            maxIterations = Int(Double(size * size) * 0.99)
+            maxIterations = Int(Double(size * size) * 0.9)
+        case .unset:
+            maxIterations = 0
         }
-        print(maxIterations)
+        //print(Int(Double(size * size) * 0.99))
+        
         var iterations = 0
         
-        
-        while iterations < maxIterations {
+        while iterations < maxIterations{
             let row = Int.random(in: 0..<size)
             let col = Int.random(in: 0..<size)
-            matrix[row][col] = Int.random(in: 1...9)
-            //matrix[row] = matrix[row] + matrix[row]
-            let matrixFirst: [Int] = matrix[Int.random(in: 0...size-1)]
-            let matrixSecond: [Int] = matrix[Int.random(in: 0...size-1)]
+            //matrix[row][col] = Int.random(in: 1...9)
+            //print([Int.random(in: 0..<size)])
+            //add
+           
+            
+            let matrixFirst: [Int] = matrix[row]
+            let matrixSecond: [Int] = matrix[col]
             if matrixFirst.count == matrixSecond.count {
                 let resultArray = zip(matrixFirst, matrixSecond).map { $0 + $1 }
-                matrix[row] = resultArray
+                if resultArray.max()! < 100{
+                    matrix[col] = resultArray
+                }
             }
+            print(matrix)
+            
+            
+            //Swap
+
+            let rand3 = Int.random(in: 0..<size)
+            let rand4 = Int.random(in: 0..<size)
+            var matrixT = transposeMatrix(matrix) //transposeMatrix(
+            let matrixFirstAdd: [Int] = matrixT[rand3]
+            let matrixSecondAdd: [Int] = matrixT[rand4]
+            matrixT[rand4] = matrixFirstAdd
+            matrixT[rand3] = matrixSecondAdd
+            
+            matrix = transposeMatrix(matrixT) //Zurücktransposed
+    
+
+            
+            
+            //multiply
+            
+           
+            let rand1 = Int.random(in: 0..<size)
+            let rand2 = Int.random(in: 1..<size)
+            let matrixFirstMulty: [Int] = matrix[rand1]
+            let multipliedRowMulty = matrixFirstMulty.map { $0 * rand2 }
+            if multipliedRowMulty.max()! < 100{
+                matrix[rand1] = multipliedRowMulty
+            }
+            
+            //print(matrix)
             iterations += 1
             
         }
+        
     }
     
     
@@ -320,7 +362,7 @@ struct Model {
         numberOfMoves += 1
         print(timeTracking())
     }
-    //
+    /*
     func createGameMatrix(_ size: Int, difficulty: Double) -> [[Int]] {
         var matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
 
@@ -341,7 +383,7 @@ struct Model {
         }
 
         return matrix
-    }
+    }*/
     
     
 

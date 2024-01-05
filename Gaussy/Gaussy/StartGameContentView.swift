@@ -54,9 +54,7 @@ struct StartGameContentView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
-                    .onChange(of: difficultyLevel) { newDifficulty, _ in
-                        self.viewModel.setDifficulty(newDifficulty: newDifficulty) // Update the external variable
-                    }
+                    
                     Spacer()
                     Text("Select Matrix Size")
                         .font(.title)
@@ -70,7 +68,7 @@ struct StartGameContentView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
                     .onChange(of: size) { newSize, _ in
-                        self.viewModel.setSize(newSize: newSize) // Update the external variable
+                        size = newSize // Update the external variable
                     }
                     Spacer()
                     
@@ -83,7 +81,7 @@ struct StartGameContentView: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding()
                             .onChange(of: playerName) { newValue, _ in
-                                playerName = newValue.filter { $0.isLetter }
+                                playerName = (newValue.filter { $0.isLetter })
                             }
                     }
                     Text("You entered: \(playerName)")
@@ -101,8 +99,9 @@ struct StartGameContentView: View {
                     .simultaneousGesture(TapGesture().onEnded {
                         
                         //self.viewModel.startTimer()
-                        
+                        print(difficultyLevel)
                         self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
+                        
                       
                     })
                     Spacer()

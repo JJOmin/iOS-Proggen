@@ -24,7 +24,7 @@ class ViewModel: ObservableObject {
     
 
     init() {
-        self.model = Model(size: 6, difficulty: .easy, username: "Peter")
+        self.model = Model(size: 6, difficulty: .unset, username: "Peter")
         self.highScoreModel = HighScoreModel()
     }
     
@@ -151,6 +151,17 @@ class ViewModel: ObservableObject {
     var timeFormated: String {
         model.timeFormated
     }
+    
+    var difficulty: Difficulty{
+        model.gameDifficulty
+    }
+    
+    var size: Int{
+        model.size
+    }
+    var userName: String{
+        model.username
+    }
 
     
     
@@ -204,5 +215,11 @@ class ViewModel: ObservableObject {
     func setDifficulty(newDifficulty: Difficulty){
         model.gameDifficulty = newDifficulty
     }
+    
+    func setUserName(_ userName: String) {
+        model.username = userName
+    }
+    
+    
 
 }
