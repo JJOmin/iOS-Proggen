@@ -19,7 +19,7 @@ struct PlayerStats: Codable, Identifiable{
 class ViewModel: ObservableObject {
     @Published private var model: Model
     @Published private var highScoreModel: HighScoreModel
-    @State private var timer: Timer?
+    var timer: Timer?
     //@State var backgroundColor: Color = .white
     
 
@@ -35,8 +35,6 @@ class ViewModel: ObservableObject {
         appendToPlist(userName: "Penis", time: 300, moves: 30)
         readHighScoresFromPlist()
         getSortedScors()
-        //appendToPlist(userName: "Enis", time: 200, moves: 20)
-        //readHighScoresFromPlist()
     }
     
     func appendToPlist(userName: String , time: Double, moves: Int){
@@ -175,9 +173,14 @@ class ViewModel: ObservableObject {
     
     func timerCode(){
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
-            updateTimer()
+                updateTimer()
         }
+    }
+    
+    func stopTimer(){
+        print("Timer")
         if gameRunning || gameSolved {
+            print("Timer Deactivated")
             timer?.invalidate()
         }
     }

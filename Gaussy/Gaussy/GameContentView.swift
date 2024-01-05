@@ -78,6 +78,7 @@ struct GameContentView: View {
 
     func squareView(value: Int, col: Int, row: Int) -> some View {
         let isSolved = value == 1 && viewModel.gameSolved // Check if the square is solved
+        viewModel.stopTimer()
         
         return Text("\(value)")
             .frame(width: 50, height: 50)
