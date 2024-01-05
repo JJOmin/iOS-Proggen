@@ -8,8 +8,9 @@
 import Foundation
 
 struct HighScoreModel {
-    let plistFile: String = "HighScores.plist"
+    let plistFile: String = "HighScores"
     var highScores: [PlayerStats]? // Change to an array of PlayerStats
+    var plistURL: URL = URL(fileURLWithPath: "") // Empty URL
     
     func writeToPlist<T: Encodable>(data: T, fileName: String) throws {
         let encoder = PropertyListEncoder()
@@ -50,6 +51,7 @@ struct HighScoreModel {
             return plistURL
         } catch {
             print("Error getting URL for file: \(error.localizedDescription)")
+            return URL(fileURLWithPath: "") // Empty URL
         }
     }
 

@@ -23,13 +23,17 @@ class ViewModel: ObservableObject {
     
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
+        
+        readHighScoresFromPlist()
+        appendToPlist(userName: "Enis", time: 200, moves: 20)
+        readHighScoresFromPlist()
     }
     
-    func appendToPlist(data: PlayerStats, user: String , time: Double, moves: Int ){
-        let newDataToAdd2 = PlayerStats(username: user, time: time, moves: moves)
+    func appendToPlist(userName: String , time: Double, moves: Int ){
+        let newScore = PlayerStats(username: userName, time: time, moves: moves)
         
         do {
-            try highScoreModel.appendToPlist(data: newDataToAdd2, fileName: highScoreModel.plistFile)
+            try highScoreModel.appendToPlist(data: newScore, fileName: highScoreModel.plistFile)
             
             // Successfully wrote data to the plist
         } catch {
