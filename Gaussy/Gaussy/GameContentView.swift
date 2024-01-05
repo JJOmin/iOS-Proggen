@@ -55,21 +55,36 @@ struct GameContentView: View {
                     if col == 0 {
                         self.selectableCircle(col: col, row: row, orientation:"left").padding(10)
                     }
-                    Text("\(viewModel.matrix[row][col])")
+                    let value = viewModel.matrix[row][col]
+                    squareView(value: value, col: col, row: row)
                         .font(.system(size: fontSize(for: viewModel.matrix)))
                         .frame(width: squareSize(for: viewModel.matrix), height: squareSize(for: viewModel.matrix))
+                        .rotationEffect(viewModel.gameSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
                         .border(Color.black) // Optional: Add border around the square
-                        .background((viewModel.selectedCols.contains(col) || viewModel.selectedRows.contains(row)) ? Color.yellow : Color.white)
+                        .background(
+                            ((viewModel.selectedCols.contains(col) || viewModel.selectedRows.contains(row)) ||
+                             (viewModel.gameSolved && (viewModel.matrix[row][col] == 1)))
+                                ? Color.yellow : Color.white
+                        )
                         .padding(interSquareSpacing(for: viewModel.matrix)) // Optional: Padding inside the square */
+                        
                     if col == viewModel.matrix.count - 1 {
                         self.selectableCircle(col: col, row: row, orientation:"right").padding(10)
-                        
                     }
-                    
                 }
             }
         }
     }
+
+    func squareView(value: Int, col: Int, row: Int) -> some View {
+        let isSolved = value == 1 && viewModel.gameSolved // Check if the square is solved
+        
+        return Text("\(value)")
+            .frame(width: 50, height: 50)
+            .rotationEffect(isSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
+            .animation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default)
+    }
+
     
     func saveScaling() -> some View {
         return HStack {
@@ -330,6 +345,37 @@ struct GameContentView: View {
                 
             }
             .navigationBarBackButtonHidden(true)
+            /*
+             //.navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
+             .navigationBarItems(leading:
+             Button(action: {
+             withAnimation(.linear(duration: 0.7)) {
+             self.presentationMode.wrappedValue.dismiss()
+             }
+             }) {
+             Image(systemName: "house")
+             .foregroundColor(.black) // Change the color here
+             .font(.title)
+             }
+             .opacity(backButtonOpacity),
+             trailing:
+             NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
+             Button(action: {
+             // Navigate to HighScoreView
+             self.showHighScoreView = true
+             }) {
+             Image(systemName: "list.number")
+             .foregroundColor(.black)
+             .font(.title)
+             }
+             .opacity(backButtonOpacity)
+             }
+             )
+             .onAppear {
+             withAnimation(.snappy(duration: 0.7)) {
+             backButtonOpacity = 1.0 // Set opacity to 1 on view appear
+             }
+             }*/
         }
         
     }

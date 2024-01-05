@@ -127,6 +127,10 @@ class ViewModel: ObservableObject {
         highScoreModel.getHighScore()
     }
     
+    var gameSolved: Bool{
+        model.gameSolved
+    }
+    
     
     
     var maxCharacterCount: Int {

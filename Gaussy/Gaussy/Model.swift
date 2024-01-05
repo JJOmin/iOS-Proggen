@@ -362,45 +362,48 @@ struct Model {
     
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
     mutating func timeTracking(){
-        // Aktuelle Zeit abrufen
-        let timeNow = Date()
-        // Berechne die vergangene Spielzeit
-        self.time = timeNow.timeIntervalSince(self.startTime)
-        
-        // Formatter für die Darstellung der Spielzeit
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute, .second, .nanosecond]
-        formatter.zeroFormattingBehavior = .pad
-        
-        // Rückgabe der formatierten Spielzeit
-        //print(self.time)
-        //self.timeFormated = formatter.string(from: self.time) ?? "00"
-        
-        let totalSeconds: TimeInterval = self.time
-
-        let hours = Int(totalSeconds / 3600)
-        let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
-
-        let minutes = Int(remainingSecondsAfterHours / 60)
-        let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
-
-        let seconds = Int(remainingSecondsAfterMinutes)
-        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
-
-        // Use String(format:) to format minutes with leading zeros if needed
-        let formattedMinutes = String(format: "%02d", minutes)
-        let formatedSeconds = String(format: "%02d", seconds)
-        let formatedMilliseconds = String(format: "%02d", milliseconds)
-
-        if hours <= 0{
-            if minutes <= 0{
-                self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
+        if gameRunning == true {
+            
+            // Aktuelle Zeit abrufen
+            let timeNow = Date()
+            // Berechne die vergangene Spielzeit
+            self.time = timeNow.timeIntervalSince(self.startTime)
+            
+            // Formatter für die Darstellung der Spielzeit
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .positional
+            formatter.allowedUnits = [.minute, .second, .nanosecond]
+            formatter.zeroFormattingBehavior = .pad
+            
+            // Rückgabe der formatierten Spielzeit
+            //print(self.time)
+            //self.timeFormated = formatter.string(from: self.time) ?? "00"
+            
+            let totalSeconds: TimeInterval = self.time
+            
+            let hours = Int(totalSeconds / 3600)
+            let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
+            
+            let minutes = Int(remainingSecondsAfterHours / 60)
+            let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
+            
+            let seconds = Int(remainingSecondsAfterMinutes)
+            let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
+            
+            // Use String(format:) to format minutes with leading zeros if needed
+            let formattedMinutes = String(format: "%02d", minutes)
+            let formatedSeconds = String(format: "%02d", seconds)
+            let formatedMilliseconds = String(format: "%02d", milliseconds)
+            
+            if hours <= 0{
+                if minutes <= 0{
+                    self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
+                } else {
+                    self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
+                }
             } else {
-                self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
+                self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
             }
-        } else {
-            self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
         }
 
     }
@@ -427,7 +430,11 @@ struct Model {
     
     mutating func isGaussSolved(){
         if matrix == correctMatrix{
+            matrix = correctMatrix
+            gameRunning = false
             gameSolved = true
+            removeAllSelected()
+            print("Game Solved")
         }
     }
     
