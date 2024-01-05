@@ -8,37 +8,53 @@
 import Foundation
 
 struct HighScoreModel {
-    static func writeToPlist<T: Encodable>(data: T, filename: String) throws {
+    let plistFile: String = "HighScores.plist"
+    var highScores: [PlayerStats]? // Change to an array of PlayerStats
+    
+    func writeToPlist<T: Encodable>(data: T, fileName: String) throws {
         let encoder = PropertyListEncoder()
-        let plistURL = try FileManager.default.url(
-            for: .documentDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: false
-        ).appendingPathComponent(filename).appendingPathExtension("plist")
-        
         let encodedData = try encoder.encode(data)
-        try encodedData.write(to: plistURL)
+        try encodedData.write(to: stringToUrl(fileName))
     }
     
-    static func readFromPlist<T: Decodable>(filename: String, type: T.Type) throws -> T? {
+    func readFromPlist<T: Decodable>(type: T.Type, fileName: String) throws -> T? {
         let decoder = PropertyListDecoder()
-        let plistURL = try FileManager.default.url(
-            for: .documentDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: false
-        ).appendingPathComponent(filename).appendingPathExtension("plist")
-        
-        let data = try Data(contentsOf: plistURL)
+        let data = try Data(contentsOf: stringToUrl(fileName))
         let decodedData = try decoder.decode(type, from: data)
         return decodedData
     }
     
-    // You may need to modify this method based on how you structure your data
-    static func appendToPlist<T: Codable>(data: T, filename: String) throws {
-        var existingData = try readFromPlist(filename: filename, type: [T].self) ?? []
-        existingData.append(data)
-        try writeToPlist(data: existingData, filename: filename)
+    func appendToPlist<T: Codable>(data: T, fileName: String) throws {
+        var existingData = try readFromPlist(type: [PlayerStats].self, fileName: fileName) ?? []
+        
+        if let newData = data as? [PlayerStats] {
+            existingData.append(contentsOf: newData)
+        } else if let singleData = data as? PlayerStats {
+            existingData.append(singleData)
+        } else {
+            throw NSError(domain: "InvalidDataType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid data type"])
+        }
+        
+        try writeToPlist(data: existingData, fileName: fileName)
     }
+    
+    //function to convert a string into a url
+    func stringToUrl(_ filename: String) -> URL {
+        do {
+            let plistURL = try FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            ).appendingPathComponent(filename).appendingPathExtension("plist")
+            return plistURL
+        } catch {
+            print("Error getting URL for file: \(error.localizedDescription)")
+        }
+    }
+
 }
+
+
+
+

@@ -11,27 +11,25 @@ import SwiftUI
 
 class ViewModel: ObservableObject {
     @Published private var model: Model
+    @Published private var highScoreModel: HighScoreModel
     @State private var timer: Timer?
     //@State var backgroundColor: Color = .white
     
 
     init() {
         self.model = Model(size: 6, difficulty: .easy, username: "Peter")
+        self.highScoreModel = HighScoreModel()
     }
     
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
-        //setGameRunning(true)
-
-        
-        
     }
     
     func appendToPlist(data: PlayerStats, user: String , time: Double, moves: Int ){
         let newDataToAdd2 = PlayerStats(username: user, time: time, moves: moves)
         
         do {
-            try model.appendToPlist(data: newDataToAdd2, filename: model.plistName)
+            try highScoreModel.appendToPlist(data: newDataToAdd2, fileName: highScoreModel.plistFile)
             
             // Successfully wrote data to the plist
         } catch {
@@ -40,9 +38,9 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func readHighScoresFromPlist() -> {
+    func readHighScoresFromPlist(){
         do {
-            if let highScores: [PlayerStats] = try model.readFromPlist(filename: "HighScores", type: [PlayerStats].self) {
+            if let highScores: [PlayerStats] = try highScoreModel.readFromPlist(type: [PlayerStats].self, fileName: highScoreModel.plistFile) {
                 // Successfully read data from the plist
                 print("High Scores: \(highScores)")
                 //highScores.append(PlayerStats)
