@@ -18,14 +18,14 @@ struct HighScoreModel {
         try encodedData.write(to: stringToUrl(fileName))
     }
     
-    func readFromPlist<T: Decodable>(type: T.Type, fileName: String) throws -> T? {
+    mutating func readFromPlist<T: Decodable>(type: T.Type, fileName: String) throws -> T? {
         let decoder = PropertyListDecoder()
         let data = try Data(contentsOf: stringToUrl(fileName))
         let decodedData = try decoder.decode(type, from: data)
         return decodedData
     }
     
-    func appendToPlist<T: Codable>(data: T, fileName: String) throws {
+    mutating func appendToPlist<T: Codable>(data: T, fileName: String) throws {
         var existingData = try readFromPlist(type: [PlayerStats].self, fileName: fileName) ?? []
         
         if let newData = data as? [PlayerStats] {

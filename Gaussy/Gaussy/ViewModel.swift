@@ -9,6 +9,13 @@
 import Foundation
 import SwiftUI
 
+struct PlayerStats: Codable, Identifiable{
+    var id: UUID
+    let username: String
+    let time: Double
+    let moves: Int
+}
+
 class ViewModel: ObservableObject {
     @Published private var model: Model
     @Published private var highScoreModel: HighScoreModel
@@ -25,7 +32,7 @@ class ViewModel: ObservableObject {
         self.model = Model(size: size, difficulty: difficulty, username: username)
         
         writeToPlist(userName: "Enis", time: 200, moves: 20)
-        //readHighScoresFromPlist()
+        readHighScoresFromPlist()
         //appendToPlist(userName: "Enis", time: 200, moves: 20)
         //readHighScoresFromPlist()
     }
@@ -59,7 +66,7 @@ class ViewModel: ObservableObject {
     }
     
     func writeToPlist(userName: String , time: Double, moves: Int){
-        let newScore = PlayerStats(id: UUID(), username: userName, time: time, moves: moves)
+        let newScore = [PlayerStats(id: UUID(), username: userName, time: time, moves: moves)]
         
         do {
             try highScoreModel.writeToPlist(data: newScore, fileName: highScoreModel.plistFile)
