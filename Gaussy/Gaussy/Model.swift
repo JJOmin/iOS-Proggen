@@ -17,6 +17,11 @@ enum scaleTypeEnum {
     case multiply
     case divide
 }
+struct PlayerStats: Codable {
+    let username: String
+    let time: Double
+    let moves: Int
+}
 
 struct Model {
     var matrix: [[Int]]
@@ -44,6 +49,7 @@ struct Model {
     var timeFormated: String = ""
     
     let jsonFilePath = "top10"
+    //var highScores: [PlayerStats]
     
     
     //Refactoring
@@ -75,6 +81,42 @@ struct Model {
         fillMatrix(with: gameDifficulty)
     }
     
+    
+    func writeToPlist<T: Encodable>(data: T, filename: String) throws {
+            let encoder = PropertyListEncoder()
+            let plistURL = try FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            ).appendingPathComponent(filename).appendingPathExtension("plist")
+            
+            let encodedData = try encoder.encode(data)
+            try encodedData.write(to: plistURL)
+        }
+    
+    func readFromPlist<T: Decodable>(filename: String, type: T.Type) throws -> T? {
+            let decoder = PropertyListDecoder()
+            let plistURL = try FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            ).appendingPathComponent(filename).appendingPathExtension("plist")
+            
+            let data = try Data(contentsOf: plistURL)
+            let decodedData = try decoder.decode(type, from: data)
+            return decodedData
+        }
+    
+    func appendToPlist<T: Codable>(data: T, filename: String) throws {
+        let existingData = try readFromPlist(filename: filename, type: [T].self) ?? []
+        let newData = existingData + [data]
+        try writeToPlist(data: newData, filename: filename)
+    }
+
+    
+    
     mutating func fillMatrix(with difficulty: Difficulty) {
         // Fill the diagonal with ones
         for i in 0..<size {
@@ -91,8 +133,6 @@ struct Model {
             maxIterations = Int(Double(size * size) * 0.5)
         case .hard:
             maxIterations = Int(Double(size * size) * 0.99)
-        default:
-            break
         }
         
         var iterations = 0
@@ -388,7 +428,6 @@ struct Model {
         let formatedSeconds = String(format: "%02d", seconds)
         let formatedMilliseconds = String(format: "%02d", milliseconds)
 
-        print("Hours: \(hours), Minutes: \(formattedMinutes), Seconds: \(formatedSeconds), Milliseconds: \(formatedMilliseconds)")
         if hours <= 0{
             if minutes <= 0{
                 self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"

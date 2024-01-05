@@ -22,12 +22,34 @@ class ViewModel: ObservableObject {
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         //setGameRunning(true)
-        let newDataToAdd: [String: Any] = [
-            "newKey": "newValue",
-            "anotherNewKey": 123
-        ]
         
-        //model.appendToJSONFile(newData: newDataToAdd)
+        let newDataToAdd = [PlayerStats(username: "Peter", time: 10, moves: 10)]
+        //let newDataToAdd2 = [PlayerStats(username: "User", time: 50, moves: 50)]
+
+        do {
+            try model.writeToPlist(data: newDataToAdd, filename: "HighScores")
+            try model.appendToPlist(data: newDataToAdd, filename: "HighScores")
+            
+            // Successfully wrote data to the plist
+        } catch {
+            print("Error writing to plist: \(error)")
+            // Handle the error here, such as showing an alert to the user or performing another action
+        }
+
+        
+        do {
+            if let highScores: [PlayerStats] = try model.readFromPlist(filename: "HighScores", type: [PlayerStats].self) {
+                // Successfully read data from the plist
+                print("High Scores: \(highScores)")
+                //highScores.append(PlayerStats)
+            } else {
+                print("No data found or unable to decode")
+            }
+        } catch {
+            print("Error reading from plist: \(error)")
+            // Handle the error here, such as showing an alert to the user or performing another action
+        }
+        
     }
     
     
