@@ -48,7 +48,7 @@ struct Model {
     var time: Double
     var timeFormated: String = ""
     
-    let jsonFilePath = "top10"
+    let plistName = "HighScores"
     //var highScores: [PlayerStats]
     
     
@@ -110,10 +110,15 @@ struct Model {
         }
     
     func appendToPlist<T: Codable>(data: T, filename: String) throws {
-        let existingData = try readFromPlist(filename: filename, type: [T].self) ?? []
-        let newData = existingData + [data]
-        try writeToPlist(data: newData, filename: filename)
+        var existingData = try readFromPlist(filename: filename, type: [T].self) ?? []
+        
+        // Convert single element `data` into an array and append it to `existingData`
+        let newData = [data]
+        existingData.append(contentsOf: newData)
+        
+        try writeToPlist(data: existingData, filename: filename)
     }
+
 
     
     
@@ -459,12 +464,4 @@ struct Model {
 
         return transposedMatrix
     }
-    
-    
-    
-    
-    
-    
-    //work in progress
-
 }

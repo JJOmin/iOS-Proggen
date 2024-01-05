@@ -283,12 +283,10 @@ struct GameContentView: View {
                                 .onAppear {
                                     
                                     viewModel.updateTimer()
-                                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
                                         viewModel.updateTimer()
                                     }
                                 }
-                           
-                            
                         }
                     }
                     

@@ -22,21 +22,25 @@ class ViewModel: ObservableObject {
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         //setGameRunning(true)
-        
-        let newDataToAdd = [PlayerStats(username: "Peter", time: 10, moves: 10)]
-        //let newDataToAdd2 = [PlayerStats(username: "User", time: 50, moves: 50)]
 
+        
+        
+    }
+    
+    func appendToPlist(data: PlayerStats, user: String , time: Double, moves: Int ){
+        let newDataToAdd2 = PlayerStats(username: user, time: time, moves: moves)
+        
         do {
-            try model.writeToPlist(data: newDataToAdd, filename: "HighScores")
-            try model.appendToPlist(data: newDataToAdd, filename: "HighScores")
+            try model.appendToPlist(data: newDataToAdd2, filename: model.plistName)
             
             // Successfully wrote data to the plist
         } catch {
             print("Error writing to plist: \(error)")
             // Handle the error here, such as showing an alert to the user or performing another action
         }
-
-        
+    }
+    
+    func readHighScoresFromPlist() -> {
         do {
             if let highScores: [PlayerStats] = try model.readFromPlist(filename: "HighScores", type: [PlayerStats].self) {
                 // Successfully read data from the plist
@@ -49,7 +53,6 @@ class ViewModel: ObservableObject {
             print("Error reading from plist: \(error)")
             // Handle the error here, such as showing an alert to the user or performing another action
         }
-        
     }
     
     
@@ -57,7 +60,6 @@ class ViewModel: ObservableObject {
     
     var matrix: [[Int]] {
         model.matrix
-        
     }
     
     var selectedRows: [Int] {
