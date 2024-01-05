@@ -11,34 +11,38 @@ struct HighScoreView: View {
             VStack {
                 Text("High Score Lists")
                     .font(.title)
+                    .bold()
                     .padding(.top, 20)
                 
                 HStack(spacing: 30) {
-                    NavigationView {
-                        List(sordedScores[0]) { playerStat in
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("\(playerStat.username)")
-                                    .font(.headline)
-                                Text("Moves: \(playerStat.moves)")
+                    VStack{
+                        Text("Moves").font(.title)
+                        NavigationView {
+                            List(sordedScores[0]) { playerStat in
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text("\(playerStat.username)")
+                                        .font(.headline)
+                                    Text("Moves: \(playerStat.moves)")
+                                }
                             }
                         }
-                        .navigationBarTitle("Moves")
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .listStyle(PlainListStyle())
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    .listStyle(PlainListStyle())
-                    
-                    NavigationView {
-                        List(sordedScores[1]) { playerStat in
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("\(playerStat.username)")
-                                    .font(.headline)
-                                Text("Time: \(playerStat.time)")
+                    VStack{
+                        Text("Time").font(.title)
+                        NavigationView {
+                            List(sordedScores[1]) { playerStat in
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text("\(playerStat.username)")
+                                        .font(.headline)
+                                    Text("Time: \(playerStat.time)")
+                                }
                             }
                         }
-                        .navigationBarTitle("Time")
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .listStyle(PlainListStyle())
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    .listStyle(PlainListStyle())
                 }
                 .padding()
                 .navigationBarHidden(true)
