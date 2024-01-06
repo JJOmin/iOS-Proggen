@@ -33,9 +33,7 @@ class ViewModel: ObservableObject {
     
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
-        
-        writeToPlist(userName: "Enis", time: 500, moves: 20)
-        //appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
+        gameSaved = false
         readHighScoresFromPlist()
         getSortedScors()
     }

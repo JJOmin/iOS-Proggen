@@ -38,7 +38,7 @@ struct HomeScreenView: View {
                         }*/
                     })
                     .padding()
-                    
+                    /*
                         NavigationLink(destination: StartGameContentView(viewModel: self.viewModel)) {
                             Text("Continue Game comming Soon")
                                 .padding()
@@ -60,7 +60,7 @@ struct HomeScreenView: View {
                             .cornerRadius(10)
                     }
                     .padding()
-                    
+                     */
                     Button(action: {
                         // Action for quitting the app
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

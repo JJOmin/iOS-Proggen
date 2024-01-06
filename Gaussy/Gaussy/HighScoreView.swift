@@ -66,6 +66,7 @@ struct HighScoreView: View {
                 .padding()
                 .navigationBarHidden(true)
             }
+            
         }
     }
 }

@@ -339,7 +339,9 @@ struct Model {
             
             for divisor in 1...(nonZeroValues.max() ?? 1) where foundDivisors < 5 {
                 if nonZeroValues.allSatisfy({ $0.isMultiple(of: divisor) }) {
-                    devideByArray.append(divisor)
+                    if divisor > 1{
+                        devideByArray.append(divisor)
+                    }
                     foundDivisors += 1 // Increment the counter
                     
                 }
@@ -372,10 +374,6 @@ struct Model {
             formatter.unitsStyle = .positional
             formatter.allowedUnits = [.minute, .second, .nanosecond]
             formatter.zeroFormattingBehavior = .pad
-            
-            // Rückgabe der formatierten Spielzeit
-            //print(self.time)
-            //self.timeFormated = formatter.string(from: self.time) ?? "00"
             
             let totalSeconds: TimeInterval = self.time
             
