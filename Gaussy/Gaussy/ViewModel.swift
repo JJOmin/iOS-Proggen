@@ -9,18 +9,17 @@
 import Foundation
 import SwiftUI
 
-struct PlayerStats: Codable, Identifiable{
-    var id: UUID
-    let username: String
-    let time: Double
-    let moves: Int
-}
+
 
 class ViewModel: ObservableObject {
     @Published private var model: Model
     @Published private var highScoreModel: HighScoreModel
     var timer: Timer?
+    
+    @State var backButtonOpacity: Double = 0.0 // Initial opacity for animation
+    @State var showHighScoreView = false // State variable to control HighScoreView presentation
     //@State var backgroundColor: Color = .white
+    var backbuttonList: Bool = true
     
 
     init() {
@@ -34,13 +33,13 @@ class ViewModel: ObservableObject {
         self.model = Model(size: size, difficulty: difficulty, username: username)
         
         writeToPlist(userName: "Enis", time: 500, moves: 20)
-        appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
+        //appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
         readHighScoresFromPlist()
         getSortedScors()
     }
     
-    func appendToPlist(userName: String , time: Double, moves: Int){
-        let newScore = PlayerStats(id: UUID(), username: userName, time: time, moves: moves)
+    func appendToPlist(){
+        let newScore = PlayerStats(id: UUID(), username: model.username, time: model.time, moves: model.numberOfMoves)
         
         do {
             try highScoreModel.appendToPlist(data: newScore, fileName: highScoreModel.plistFile)
@@ -164,6 +163,15 @@ class ViewModel: ObservableObject {
         model.username
     }
     
+    
+    
+    func getBackButton() -> Bool{
+        if model.gameSolved{
+            return false
+        } else {
+            return true
+        }
+    }
     
     func addCounterMoves() -> Int{
         highScoreModel.counterMoves += 1

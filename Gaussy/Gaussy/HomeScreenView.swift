@@ -39,6 +39,7 @@ struct HomeScreenView: View {
                     })
                     .padding()
                     
+                    /*
                         NavigationLink(destination: StartGameContentView(viewModel: self.viewModel)) {
                             Text("Continue Game comming Soon")
                                 .padding()
@@ -51,8 +52,8 @@ struct HomeScreenView: View {
                         .padding()
                     
                     
-                    
-                    NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
+                    */
+                    NavigationLink(destination: HighScoreView(viewModel: self.viewModel, sordedScores: viewModel.sortedScores)) {
                         Text("See High Score List")
                             .foregroundColor(.white)
                             .padding()

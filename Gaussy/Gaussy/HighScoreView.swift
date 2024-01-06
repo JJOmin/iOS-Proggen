@@ -52,6 +52,8 @@ struct HighScoreView: View {
                 }
                 .padding()
                 .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(viewModel.getBackButton())
+                
             }
         }
     }

@@ -125,7 +125,8 @@ struct StartGameContentView: View {
                                 NavigationLink(destination: HighScoreView(viewModel: viewModel, sordedScores: viewModel.sortedScores), isActive: $showHighScoreView) {
             Button(action: {
                 // Navigate to HighScoreView
-                //self.viewModel.stopTimer()
+                //self.viewModel.setGameRunning(false)
+                self.viewModel.stopTimer()
                 self.showHighScoreView = true
             }) {
                 Image(systemName: "list.number")

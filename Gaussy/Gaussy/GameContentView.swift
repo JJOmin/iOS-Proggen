@@ -53,7 +53,7 @@ struct GameContentView: View {
             HStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                 ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
                     if col == 0 {
-                        self.selectableCircle(col: col, row: row, orientation:"left").padding(10)
+                        self.selectableCircle(col: col, row: row, orientation:"left").padding(5)
                     }
                     let value = viewModel.matrix[row][col]
                     squareView(value: value, col: col, row: row)
@@ -134,7 +134,7 @@ struct GameContentView: View {
     func makeScalingView(title: String, array: [Int]) -> some View {
         VStack {
             Text(title)
-                .padding(2)
+                .padding(1)
             Picker("Scale", selection: $selectedNumber) {
                 ForEach(array, id: \.self) { value in
                     Text("\(value)").tag(value)
@@ -154,7 +154,7 @@ struct GameContentView: View {
     @ViewBuilder
     func makeInfoView(message: String) -> some View {
         HStack {
-            Spacer()
+            //Spacer()
             Text(message)
                 .padding(5)
             Spacer()
@@ -301,12 +301,14 @@ struct GameContentView: View {
                                         viewModel.stopTimer()
                                     }
                             } else {
-                                Text("Moves: \(self.viewModel.numberOfMoves)")
-                                Text("Time: \(viewModel.timeFormated)")
-                                    .onAppear {
-                                        viewModel.timerCode()
-                                        
-                                    }
+                                HStack{
+                                    Text("Moves: \(self.viewModel.numberOfMoves)").bold()
+                                    Text("Time: \(viewModel.timeFormated)").bold()
+                                        .onAppear {
+                                            viewModel.timerCode()
+                                            
+                                        }
+                                }
                             }
                         }
                     }
@@ -326,28 +328,45 @@ struct GameContentView: View {
                         VStack{
                             switchModes()
                             numberSlider()
-                        }.padding(4)
+                        }.padding(5)
                             .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                             )
-                            .padding(4) // Adjust the padding around the frame
+                            .padding(5) // Adjust the padding around the frame
                         
                         withAnimation{
                             VStack{
                                 buttonRowMenue()
-                            }.padding(4)
+                            }.padding(5)
                                 .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                                 )
-                                .padding(4) // Adjust the padding around the frame
+                                .padding(5) // Adjust the padding around the frame
                             
                         }
                     }
+                } else {
+                    Spacer()
+                    VStack{
+                        NavigationLink(destination: HighScoreView(viewModel: viewModel, sordedScores: viewModel.sortedScores), isActive: $showHighScoreView) {
+                            Text("Show HighScores")
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.green)
+                                .cornerRadius(10)
+                        } .onAppear {
+                            self.viewModel.appendToPlist()
+                            self.viewModel.readHighScoresFromPlist()
+                            self.viewModel.getSortedScors()
+                        }
+                        
+                    }
                 }
+                
                 Spacer()
                 
             }
