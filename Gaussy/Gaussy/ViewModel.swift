@@ -20,6 +20,7 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
     @Published private var highScoreModel: HighScoreModel
     var timer: Timer?
+    var gameSaved: Bool = false
     //@State var backgroundColor: Color = .white
     
 
