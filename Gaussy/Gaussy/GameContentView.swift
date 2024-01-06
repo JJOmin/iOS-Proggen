@@ -12,6 +12,8 @@ struct GameContentView: View {
     @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
     @State private var topColor: Color = .green // Default color
+    @State private var offset: CGSize = .zero
+    @State private var message: String = ""
     
     func selectableCircle(col: Int, row: Int, orientation: String) -> some View {
         let isColSelected: Bool = viewModel.selectedCols.contains(col)
@@ -34,6 +36,69 @@ struct GameContentView: View {
                 }
                 self.viewModel.getDivider()
             }
+            .gesture(DragGesture()
+                        .onChanged { value in
+                            // Handle the drag gesture for individual circles here
+                            // For example, you can print the position of the dragged circle
+                            print("Dragging circle at row: \(row), col: \(col)")
+                        }
+                        .onEnded { value in
+                            self.offset = .zero
+                            
+                            // Calculate the direction of the swipe
+                            let horizontalDistance = value.translation.width
+                            let verticalDistance = value.translation.height
+                            
+                            if horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance) {
+                                // Swiped from left to right
+                                if col + 1 <= self.viewModel.size - 1 {
+                                    print("Jap geht")
+                                    self.viewModel.swapMatrixCols(m1Col: col, m2Col: col+1)
+                                    
+                                    print()
+                                } else {
+                                    print("geht nicht 1")
+                                }
+                                
+                            } else if horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance) {
+                                // Swiped from right to left
+                                //print("right to left")
+                                if col - 1 >= 0 {
+                                    print("Noice")
+                                    self.viewModel.swapMatrixCols(m1Col: col, m2Col: col-1)
+                                } else {
+                                    print("geht nicht 2")
+                                }
+                            } else {
+                                print("other")
+                            }
+                            // Handle the end of the drag gesture if needed
+                        }
+            )
+    }
+    
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                self.offset = value.translation
+            }
+            .onEnded { value in
+                self.offset = .zero
+                
+                // Calculate the direction of the swipe
+                let horizontalDistance = value.translation.width
+                let verticalDistance = value.translation.height
+                
+                if horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance) {
+                    // Swiped from left to right
+                    print("left to right")
+                } else if horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance) {
+                    // Swiped from right to left
+                    print("right to left")
+                } else {
+                    print("other")
+                }
+            }
     }
     
     func buttonsTop() -> some View {
@@ -41,7 +106,7 @@ struct GameContentView: View {
             HStack(spacing: (squareSize(for: viewModel.matrix) - 20 + interSquareSpacing(for: viewModel.matrix) * 3)) {
                 ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
                     if row == 0 {
-                        self.selectableCircle(col: col, row: row, orientation:"top")
+                        self.selectableCircle(col: col, row: row, orientation: "top")
                     }
                 }
             }

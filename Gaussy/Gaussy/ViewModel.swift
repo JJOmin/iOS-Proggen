@@ -222,6 +222,18 @@ class ViewModel: ObservableObject {
         model.swapSelected()
     }
     
+    func swapMatrixCols(m1Col: Int, m2Col: Int){
+        var matrixT = model.transposeMatrix(model.matrix)
+        print(matrixT)
+        let newCols = model.swapMatrix(m1: matrixT[m1Col], m2: matrixT[m2Col])
+        print("TEst")
+        print(newCols)
+        matrixT[m1Col] = newCols[1]
+        matrixT[m2Col] = newCols[0]
+        print(matrixT)
+        model.matrix = model.transposeMatrix(matrixT)
+    }
+    
     func addRows() {
         model.addRows()
     }

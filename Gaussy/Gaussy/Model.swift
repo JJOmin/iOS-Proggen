@@ -283,23 +283,29 @@ struct Model {
     // Func that swaps the rows
     mutating func swapSelected() {
             if selectedRows.count == 2 {
-                let matrixFirst: [Int] = matrix[selectedRows[0]]
-                let matrixSecond: [Int] = matrix[selectedRows[1]]
-                matrix[selectedRows[0]] = matrixSecond
-                matrix[selectedRows[1]] = matrixFirst
+                let swapedNewRows = swapMatrix(m1: matrix[selectedRows[0]], m2: matrix[selectedRows[1]])
+                
+                matrix[selectedRows[0]] = swapedNewRows[1]
+                matrix[selectedRows[1]] = swapedNewRows[0]
                 addMove()
                 
             } else if selectedCols.count == 2 {
-                var matrixT = transposeMatrix(matrix)
+                var matrixT = transposeMatrix(matrix) // cols -> Rows swap
                 
-                let matrixFirst: [Int] = matrixT[selectedCols[0]]
-                let matrixSecond: [Int] = matrixT[selectedCols[1]]
-                matrixT[selectedCols[0]] = matrixSecond
-                matrixT[selectedCols[1]] = matrixFirst
-                matrix = transposeMatrix(matrixT) //Zurücktransposed
+                let swapedNewCols = swapMatrix(m1: matrixT[selectedCols[0]], m2: matrixT[selectedCols[1]])
+
+                matrixT[selectedCols[0]] = swapedNewCols[1]
+                matrixT[selectedCols[1]] = swapedNewCols[0]
+                matrix = transposeMatrix(matrixT) //Zurücktransposed Rows -> Cols
                 addMove()
             }
     }
+    
+    //just swapping the Input
+    mutating func swapMatrix(m1: [Int], m2: [Int]) -> [[Int]]{
+        return [m1, m2]
+    }
+    
     
     // addieren von reihen
     mutating func addRows() {

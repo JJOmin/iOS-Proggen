@@ -8,6 +8,7 @@ struct ContentView: View {
     var body: some View {
             HomeScreenView(viewModel: self.viewModel)
         //GameContentView(viewModel: self.viewModel)
+        //dragging()
 
     }
 }
