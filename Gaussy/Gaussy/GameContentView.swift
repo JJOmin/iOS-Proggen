@@ -294,16 +294,20 @@ struct GameContentView: View {
                     VStack{
                         //Text("Gaussy Game").font(.title)
                         VStack{
-                            Text("Moves: \(self.viewModel.numberOfMoves)")
-                            Text("Time: \(viewModel.timeFormated)")
-                                .onAppear {
-                                    
-                                    //viewModel.updateTimer()
-                                    
-                                    viewModel.timerCode()
-                                    
-                                    
-                                }
+                            if viewModel.gameSolved{
+                                Text("You Finished the Game!").bold().font(.title)
+                                Text("\(self.viewModel.numberOfMoves) moves and in \(viewModel.timeFormated)").bold().font(.title)
+                                    .onAppear {
+                                        viewModel.stopTimer()
+                                    }
+                            } else {
+                                Text("Moves: \(self.viewModel.numberOfMoves)")
+                                Text("Time: \(viewModel.timeFormated)")
+                                    .onAppear {
+                                        viewModel.timerCode()
+                                        
+                                    }
+                            }
                         }
                     }
                     
@@ -347,37 +351,6 @@ struct GameContentView: View {
                 
             }
             .navigationBarBackButtonHidden(true)
-            /*
-             //.navigationBarTitleDisplayMode(.inline) // Titel-Display-Modus auf .inline setzen
-             .navigationBarItems(leading:
-             Button(action: {
-             withAnimation(.linear(duration: 0.7)) {
-             self.presentationMode.wrappedValue.dismiss()
-             }
-             }) {
-             Image(systemName: "house")
-             .foregroundColor(.black) // Change the color here
-             .font(.title)
-             }
-             .opacity(backButtonOpacity),
-             trailing:
-             NavigationLink(destination: HighScoreView(viewModel: self.viewModel), isActive: $showHighScoreView) {
-             Button(action: {
-             // Navigate to HighScoreView
-             self.showHighScoreView = true
-             }) {
-             Image(systemName: "list.number")
-             .foregroundColor(.black)
-             .font(.title)
-             }
-             .opacity(backButtonOpacity)
-             }
-             )
-             .onAppear {
-             withAnimation(.snappy(duration: 0.7)) {
-             backButtonOpacity = 1.0 // Set opacity to 1 on view appear
-             }
-             }*/
         }
         
     }

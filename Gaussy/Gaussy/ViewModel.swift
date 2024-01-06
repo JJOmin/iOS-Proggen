@@ -26,13 +26,15 @@ class ViewModel: ObservableObject {
     init() {
         self.model = Model(size: 6, difficulty: .unset, username: "Peter")
         self.highScoreModel = HighScoreModel()
+        readHighScoresFromPlist()
+        getSortedScors()
     }
     
     func createNewGame(size: Int, difficulty: Difficulty, username: String){
         self.model = Model(size: size, difficulty: difficulty, username: username)
         
         writeToPlist(userName: "Enis", time: 500, moves: 20)
-        appendToPlist(userName: "Penis", time: 300, moves: 30)
+        appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
         readHighScoresFromPlist()
         getSortedScors()
     }
@@ -161,11 +163,23 @@ class ViewModel: ObservableObject {
     var userName: String{
         model.username
     }
+    
+    
+    func addCounterMoves() -> Int{
+        highScoreModel.counterMoves += 1
+        return highScoreModel.counterMoves
+    }
+    func addCounterTime() -> Int{
+        highScoreModel.counterTime += 1
+        return highScoreModel.counterTime
+    }
 
     
     
     
-    
+    func formatSecondsToString(timeToFormat: Double) -> String{
+        model.formatSecondsToString(timeToFormat: timeToFormat)
+    }
     
     func updateTimer(){
         model.timeTracking()
@@ -178,9 +192,7 @@ class ViewModel: ObservableObject {
     }
     
     func stopTimer(){
-        print("Timer")
         if gameRunning || gameSolved {
-            print("Timer Deactivated")
             timer?.invalidate()
         }
     }

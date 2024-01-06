@@ -15,6 +15,10 @@ struct HighScoreModel {
     var highScoresTimeSorted: [PlayerStats] = []
     var highScoresMovesSorted: [PlayerStats] = []
     
+    var counterMoves: Int = 0 //var for the number displayed for the Rank in top list
+    var counterTime: Int = 0 //var for the number displayed for the Rank in top list
+    
+    
     func writeToPlist<T: Encodable>(data: T, fileName: String) throws {
         let encoder = PropertyListEncoder()
         let encodedData = try encoder.encode(data)
@@ -67,11 +71,13 @@ struct HighScoreModel {
             
             // Sort by time (ascending)
             let sortedByTime = highScores.sorted { $0.time < $1.time }
+            for stat in sortedByTime{
+                print(stat.time)
+            }
 
             // Sort by moves (ascending)
             let sortedByMoves = highScores.sorted { $0.moves < $1.moves }
 
-            
             return (sortedByTime, sortedByMoves)
         }
 

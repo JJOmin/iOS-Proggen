@@ -2,8 +2,9 @@ import SwiftUI
 
 struct HighScoreView: View {
     //let playerStatsArray: [PlayerStats] // Pass your array of PlayerStats here
-    
+    @ObservedObject var viewModel: ViewModel
     let sordedScores: [[PlayerStats]]
+
     
         
     var body: some View {
@@ -18,30 +19,35 @@ struct HighScoreView: View {
                     VStack{
                         Text("Moves").font(.title)
                         NavigationView {
-                            List(sordedScores[0]) { playerStat in
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text("\(playerStat.username)")
-                                        .font(.headline)
-                                    Text("Moves: \(playerStat.moves)")
+                            List {
+                                ForEach(0..<sordedScores[0].count, id: \.self) { index in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text("\(index + 1). \(sordedScores[0][index].username)")
+                                            .font(.headline)
+                                        Text("\(sordedScores[0][index].moves) moves")
+                                    }
                                 }
                             }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .listStyle(PlainListStyle())
                         }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        .listStyle(PlainListStyle())
                     }
                     VStack{
                         Text("Time").font(.title)
                         NavigationView {
-                            List(sordedScores[1]) { playerStat in
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text("\(playerStat.username)")
-                                        .font(.headline)
-                                    Text("Time: \(playerStat.time)")
+                            List {
+                                ForEach(0..<sordedScores[1].count, id: \.self) { index in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text("\(index + 1). \(sordedScores[1][index].username)")
+                                            .font(.headline)
+                                        Text("\(viewModel.formatSecondsToString(timeToFormat: sordedScores[1][index].time))")
+                                    }
                                 }
                             }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .listStyle(PlainListStyle())
+                            
                         }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        .listStyle(PlainListStyle())
                     }
                 }
                 .padding()

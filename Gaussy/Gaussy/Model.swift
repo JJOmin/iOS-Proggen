@@ -403,12 +403,40 @@ struct Model {
             } else {
                 self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
             }
-        
-        
-        
-        
-
     }
+    
+    
+    func formatSecondsToString(timeToFormat: Double) -> String{
+        let totalSeconds: TimeInterval = timeToFormat
+        
+        let hours = Int(totalSeconds / 3600)
+        let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
+        
+        let minutes = Int(remainingSecondsAfterHours / 60)
+        let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
+        
+        let seconds = Int(remainingSecondsAfterMinutes)
+        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
+        
+        // Use String(format:) to format minutes with leading zeros if needed
+        let formattedMinutes = String(format: "%02d", minutes)
+        let formatedSeconds = String(format: "%02d", seconds)
+        let formatedMilliseconds = String(format: "%02d", milliseconds)
+        let formatedHours = String(format: "%02d", hours)
+        
+        if hours <= 0{
+            if minutes <= 0{
+                return("\(formatedSeconds) sec. \(formatedMilliseconds) msec.")
+            } else {
+                return("\(formattedMinutes) min. \(formatedSeconds) sec.")
+            }
+        } else {
+            return("\(hours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
+        }
+        //return("\(formatedHours):\(formattedMinutes):\(formatedSeconds):\(formatedMilliseconds)")
+    }
+    
+
 
     
     //function to Transpose a matrix to easily get the cols
