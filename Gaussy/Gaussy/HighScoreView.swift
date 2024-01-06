@@ -22,9 +22,17 @@ struct HighScoreView: View {
                             List {
                                 ForEach(0..<sordedScores[0].count, id: \.self) { index in
                                     VStack(alignment: .leading, spacing: 5) {
-                                        Text("\(index + 1). \(sordedScores[0][index].username)")
-                                            .font(.headline)
-                                        Text("\(sordedScores[0][index].moves) moves")
+                                        if sordedScores[0][index].username == viewModel.userName{
+                                            Text("\(index + 1). \(sordedScores[0][index].username) (You)")
+                                                .font(.headline).foregroundColor(Color.yellow)
+                                            Text("\(sordedScores[0][index].moves) moves")
+                                                .foregroundColor(Color.yellow)
+                                        } else {
+                                            Text("\(index + 1). \(sordedScores[0][index].username)")
+                                                .font(.headline)
+                                            Text("\(sordedScores[0][index].moves) moves")
+                                        }
+                                        
                                     }
                                 }
                             }
@@ -38,9 +46,14 @@ struct HighScoreView: View {
                             List {
                                 ForEach(0..<sordedScores[1].count, id: \.self) { index in
                                     VStack(alignment: .leading, spacing: 5) {
-                                        Text("\(index + 1). \(sordedScores[1][index].username)")
-                                            .font(.headline)
-                                        Text("\(viewModel.formatSecondsToString(timeToFormat: sordedScores[1][index].time))")
+                                        if sordedScores[0][index].username == viewModel.userName{
+                                            Text("\(index + 1). \(sordedScores[1][index].username) (You)")
+                                                .font(.headline).foregroundColor(Color.yellow)
+                                            Text("\(viewModel.formatSecondsToString(timeToFormat: sordedScores[1][index].time))").foregroundColor(Color.yellow)
+                                        } else {
+                                            Text("\(index + 1). \(sordedScores[1][index].username)")
+                                                .font(.headline)
+                                            Text("\(viewModel.formatSecondsToString(timeToFormat: sordedScores[1][index].time))")}
                                     }
                                 }
                             }
