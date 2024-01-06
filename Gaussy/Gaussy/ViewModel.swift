@@ -35,7 +35,7 @@ class ViewModel: ObservableObject {
         self.model = Model(size: size, difficulty: difficulty, username: username)
         
         writeToPlist(userName: "Enis", time: 500, moves: 20)
-        appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
+        //appendToPlist(userName: "JohnDoe", time: 305, moves: 30)
         readHighScoresFromPlist()
         getSortedScors()
     }
@@ -85,6 +85,15 @@ class ViewModel: ObservableObject {
         let (sortedByTime, sortedByMoves) = highScoreModel.sortScores()
         highScoreModel.highScoresTimeSorted = sortedByTime
         highScoreModel.highScoresMovesSorted = sortedByMoves
+    }
+    
+    
+    //func to append the new saved Score to plist and rereading the plist again for display
+    func saveGame(){
+        appendToPlist(userName: model.username, time: model.time, moves: model.numberOfMoves)
+        readHighScoresFromPlist()
+        getSortedScors()
+        
     }
     
     var sortedScores: [[PlayerStats]]{

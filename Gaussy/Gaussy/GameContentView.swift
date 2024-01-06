@@ -349,29 +349,20 @@ struct GameContentView: View {
                     }
                 } else {
                     
-                        Button(action: {
-                            if self.viewModel.gameSaved == false{
-                                self.viewModel.gameSaved = true
-                            } else if self.viewModel.gameSaved == true{
-                                print("Not Again plz")
-                            }
-                            
-                            
-                        }) {
-                            if !self.viewModel.gameSaved{
-                                Text("Save Score")
-                                    .padding(7)
-                                    .foregroundColor(.white)
-                                    .background(Color.blue)
-                                    .cornerRadius(8)
-                            } else{
-                                Text("Already Saved Score")
-                                    .padding(7)
-                                    .foregroundColor(.white)
-                                    .background(Color.blue)
-                                    .cornerRadius(8)}
-                                
+                    Button(action: {
+                        if !self.viewModel.gameSaved {
+                            self.viewModel.saveGame() //saves the game
+                            self.viewModel.gameSaved.toggle() // Toggles between true and false
+                        } else {
+                            print("Already Saved, cannot save again")
                         }
+                    }) {
+                        Text(self.viewModel.gameSaved ? "Already Saved Score" : "Save Score")
+                            .padding(7)
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
                 }
                 Spacer()
                 
