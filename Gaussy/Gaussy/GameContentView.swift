@@ -320,31 +320,32 @@ struct GameContentView: View {
                     }
                     
                 }
-                
-                VStack{
-                    
+                if !viewModel.gameSolved{
                     VStack{
-                        switchModes()
-                        numberSlider()
-                    }.padding(5)
-                        .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
-                        )
-                        .padding(5) // Adjust the padding around the frame
-                    
-                    withAnimation{
+                        
                         VStack{
-                            buttonRowMenue()
-                        }.padding(5)
+                            switchModes()
+                            numberSlider()
+                        }.padding(4)
                             .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
                             )
-                            .padding(5) // Adjust the padding around the frame
+                            .padding(4) // Adjust the padding around the frame
                         
+                        withAnimation{
+                            VStack{
+                                buttonRowMenue()
+                            }.padding(4)
+                                .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
+                                )
+                                .padding(4) // Adjust the padding around the frame
+                            
+                        }
                     }
                 }
                 Spacer()
