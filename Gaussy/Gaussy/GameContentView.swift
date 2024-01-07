@@ -36,11 +36,13 @@ struct GameContentView: View {
                 }
                 self.viewModel.getDivider() // calculates the possible deviders for the devider function
             }
-            .gesture(DragGesture()
+            .gesture(
+                DragGesture()
                 .onEnded { value in
                     // Calculate the direction of the swipe
                     let horizontalDistance = value.translation.width
                     let verticalDistance = value.translation.height
+                    let ori = orientation
                     
                     if (horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
                         // Swiped from left to right
@@ -53,12 +55,12 @@ struct GameContentView: View {
                             self.viewModel.swapMatrixCols(m1Col: col, m2Col: col - 1)
                         } else {
                         }
-                    } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right") {
+                    } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (ori == "left" || ori == "right") {
                         // for top to bottom swap
                         if row + 1 <= self.viewModel.size - 1 { // if row+1 exists
                             self.viewModel.swapMatrixRows(m1Row: row, m2Row: row + 1) // swap row and row beneath
                         }
-                    } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right") {
+                    } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (ori == "left" || ori == "right") {
                         // from bottom to top swap
                         if row - 1 >= 0 { // if row-1 greater than 0 (if a row above exists)
                             self.viewModel.swapMatrixRows(m1Row: row, m2Row: row - 1) // swap row and row above
@@ -115,7 +117,11 @@ struct GameContentView: View {
         return Text("\(value)")
             .frame(width: 50, height: 50)
             .rotationEffect(isSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
-            .animation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default)
+            .onAppear {
+                withAnimation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default) {
+                    // Use withAnimation for conditional animation
+                }
+            }
     }
     
     func saveScaling() -> some View {
@@ -173,7 +179,7 @@ struct GameContentView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
-            .onChange(of: selectedNumber) { newNumber in
+            .onChange(of: selectedNumber) { newNumber, _ in
                 selectedNumber = newNumber
             }
             
@@ -202,7 +208,7 @@ struct GameContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-                .onChange(of: selectedOption) { _ in
+                .onChange(of: selectedOption) { _, _ in
                     if selectedOption == 0 {
                         selectedNumber = self.viewModel.multiplyByArray.isEmpty ? 0 : self.viewModel.multiplyByArray[0]
                         self.viewModel.setScaleType(currentType: "multiply")

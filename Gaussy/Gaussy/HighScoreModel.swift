@@ -48,12 +48,10 @@ struct HighScoreModel {
     // function to convert a string into a url
     func stringToUrl(_ filename: String) -> URL {
         do {
-            let plistURL = try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: false
-            ).appendingPathComponent(filename).appendingPathExtension("plist")
+            let plistURL = try FileManager.default
+                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent(filename)
+                .appendingPathExtension("plist")
             return plistURL
         } catch {
             print("Error getting URL for file: \(error.localizedDescription)")

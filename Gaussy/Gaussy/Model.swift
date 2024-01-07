@@ -233,6 +233,111 @@ struct Model {
         selectedLastCol = -1
     }
     
+    mutating func addMove() {
+        numberOfMoves += 1
+        isGaussSolved()
+    }
+
+    mutating func setSize(newSize: Int) {
+        self.size = newSize
+    }
+    // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
+    mutating func timeTracking() {
+            // Aktuelle Zeit abrufen
+            let timeNow = Date()
+            // Berechne die vergangene Spielzeit
+            self.time = timeNow.timeIntervalSince(self.startTime)
+            
+            // Formatter für die Darstellung der Spielzeit
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .positional
+            formatter.allowedUnits = [.minute, .second, .nanosecond]
+            formatter.zeroFormattingBehavior = .pad
+            
+            let totalSeconds: TimeInterval = self.time
+            
+            let hours = Int(totalSeconds / 3600)
+            let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
+            let minutes = Int(remainingSecondsAfterHours / 60)
+            let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
+            let seconds = Int(remainingSecondsAfterMinutes)
+            let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
+            // Formating to Strings
+            let formattedMinutes = String(format: "%02d", minutes)
+            let formatedSeconds = String(format: "%02d", seconds)
+            let formatedMilliseconds = String(format: "%02d", milliseconds)
+        
+            if hours <= 0 {
+                if minutes <= 0 {
+                    self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
+                } else {
+                    self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
+                }
+            } else {
+                self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
+            }
+    }
+    
+    func formatSecondsToString(timeToFormat: Double) -> String {
+        let totalSeconds: TimeInterval = timeToFormat
+        
+        let hours = Int(totalSeconds / 3600)
+        let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
+        
+        let minutes = Int(remainingSecondsAfterHours / 60)
+        let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
+        
+        let seconds = Int(remainingSecondsAfterMinutes)
+        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
+        
+        // Use String(format:) to format minutes with leading zeros if needed
+        let formattedMinutes = String(format: "%02d", minutes)
+        let formatedSeconds = String(format: "%02d", seconds)
+        let formatedMilliseconds = String(format: "%02d", milliseconds)
+        let formatedHours = String(format: "%02d", hours)
+        
+        if hours <= 0 {
+            if minutes <= 0 {
+                return("\(formatedSeconds) sec. \(formatedMilliseconds) msec.")
+            } else {
+                return("\(formattedMinutes) min. \(formatedSeconds) sec.")
+            }
+        } else {
+            return("\(formatedHours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
+        }
+    }
+    
+    mutating func isGaussSolved() {
+        if matrix == correctMatrix {
+            matrix = correctMatrix
+            gameRunning = false
+            gameSolved = true
+            removeAllSelected()
+        }
+    }
+    
+}
+
+extension Model {
+    // Matrix change operations
+    
+    // function to Transpose a matrix to easily get the cols
+    func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {
+        guard !matrix.isEmpty else {
+            return []
+        }
+        let rowCount = matrix.count
+        let colCount = matrix[0].count
+        var transposedMatrix = Array(repeating: Array(repeating: 0, count: rowCount), count: colCount)
+
+        for i in 0..<rowCount {
+            for j in 0..<colCount {
+                transposedMatrix[j][i] = matrix[i][j]
+            }
+        }
+        return transposedMatrix
+    }
+    
     mutating func scaleRow(value: Int) {
         if scaleType == "divide" {
             if  value != 0 {
@@ -322,106 +427,6 @@ struct Model {
                     
                 }
             }
-        }
-    }
-    
-    mutating func addMove() {
-        numberOfMoves += 1
-        isGaussSolved()
-    }
-
-    mutating func setSize(newSize: Int) {
-        self.size = newSize
-    }
-    // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
-    mutating func timeTracking() {
-            // Aktuelle Zeit abrufen
-            let timeNow = Date()
-            // Berechne die vergangene Spielzeit
-            self.time = timeNow.timeIntervalSince(self.startTime)
-            
-            // Formatter für die Darstellung der Spielzeit
-            let formatter = DateComponentsFormatter()
-            formatter.unitsStyle = .positional
-            formatter.allowedUnits = [.minute, .second, .nanosecond]
-            formatter.zeroFormattingBehavior = .pad
-            
-            let totalSeconds: TimeInterval = self.time
-            
-            let hours = Int(totalSeconds / 3600)
-            let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
-            let minutes = Int(remainingSecondsAfterHours / 60)
-            let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
-            let seconds = Int(remainingSecondsAfterMinutes)
-            let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
-            // Formating to Strings
-            let formattedMinutes = String(format: "%02d", minutes)
-            let formatedSeconds = String(format: "%02d", seconds)
-            let formatedMilliseconds = String(format: "%02d", milliseconds)
-        
-            if hours <= 0 {
-                if minutes <= 0 {
-                    self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
-                } else {
-                    self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
-                }
-            } else {
-                self.timeFormated = "\(hours):\(formattedMinutes):\(formatedSeconds)"
-            }
-    }
-    
-    func formatSecondsToString(timeToFormat: Double) -> String {
-        let totalSeconds: TimeInterval = timeToFormat
-        
-        let hours = Int(totalSeconds / 3600)
-        let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
-        
-        let minutes = Int(remainingSecondsAfterHours / 60)
-        let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
-        
-        let seconds = Int(remainingSecondsAfterMinutes)
-        let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
-        
-        // Use String(format:) to format minutes with leading zeros if needed
-        let formattedMinutes = String(format: "%02d", minutes)
-        let formatedSeconds = String(format: "%02d", seconds)
-        let formatedMilliseconds = String(format: "%02d", milliseconds)
-        let formatedHours = String(format: "%02d", hours)
-        
-        if hours <= 0 {
-            if minutes <= 0 {
-                return("\(formatedSeconds) sec. \(formatedMilliseconds) msec.")
-            } else {
-                return("\(formattedMinutes) min. \(formatedSeconds) sec.")
-            }
-        } else {
-            return("\(formatedHours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
-        }
-    }
-    
-    // function to Transpose a matrix to easily get the cols
-    func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {
-        guard !matrix.isEmpty else {
-            return []
-        }
-        let rowCount = matrix.count
-        let colCount = matrix[0].count
-        var transposedMatrix = Array(repeating: Array(repeating: 0, count: rowCount), count: colCount)
-
-        for i in 0..<rowCount {
-            for j in 0..<colCount {
-                transposedMatrix[j][i] = matrix[i][j]
-            }
-        }
-        return transposedMatrix
-    }
-    
-    mutating func isGaussSolved() {
-        if matrix == correctMatrix {
-            matrix = correctMatrix
-            gameRunning = false
-            gameSolved = true
-            removeAllSelected()
         }
     }
     
