@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HighScoreView: View {
     @ObservedObject var viewModel: ViewModel
-    let sortedScores: [[PlayerStats]]
+    let sScore: [[PlayerStats]] // sortedScores
 
     var body: some View {
         NavigationView {
@@ -15,8 +15,8 @@ struct HighScoreView: View {
 
                 // Scores Lists
                 HStack(spacing: 30) {
-                    ScoreListView(title: "Moves", scores: sortedScores[0], viewModel: viewModel)
-                    ScoreListView(title: "Time", scores: sortedScores[1], viewModel: viewModel)
+                    ScoreListView(title: "Moves", scores: sScore[0], viewModel: viewModel)
+                    ScoreListView(title: "Time", scores: sScore[1], viewModel: viewModel)
                 }
                 .padding()
                 .navigationBarHidden(true)

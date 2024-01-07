@@ -7,7 +7,8 @@ struct GameContentView: View {
     @State private var selectedNumber = 1
     @State private var selectedOption = 0
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) 
+    var presentationMode: Binding<PresentationMode>
     @State private var backButtonOpacity: Double = 0.0 // Initial opacity for animation
     @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
@@ -200,6 +201,136 @@ struct GameContentView: View {
         }
     }
     
+    func navigationButtons() -> some View {
+        return Button {
+        } label: {
+            VStack {
+                Image(systemName: "house.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+            }
+            
+        }
+    }
+    // Game Screen
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                VStack {
+                    scoreAndMoves()
+                    matrixAndButtons()
+                }
+                buttonAndRectInteraction()
+                Spacer()
+                
+            }
+            .navigationBarBackButtonHidden(true)
+        }
+        
+    }
+    
+    func buttonAndRectInteraction() -> some View {
+        Group {
+            if !viewModel.gameSolved {
+                anyViewForGameInProgress()
+            } else {
+                anyViewForGameSolved()
+            }
+        }
+    }
+
+    // Return view for when the game is in progress
+    func anyViewForGameInProgress() -> some View {
+        VStack {
+            VStack {
+                switchModes()
+                numberSlider()
+            }.padding(4)
+            .background(Color.gray.opacity(0.2))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.black, lineWidth: 2)
+            )
+            .padding(4)
+            withAnimation {
+                buttonRowMenuView()
+            }
+        }
+    }
+
+    // Return view for when the game is solved
+    func anyViewForGameSolved() -> some View {
+        VStack {
+            Button {
+                if !self.viewModel.gameSaved {
+                    self.viewModel.saveGame()
+                    self.viewModel.gameSaved.toggle()
+                }
+            } label: {
+                Text(self.viewModel.gameSaved ? "Already Saved Score" : "Save Score")
+                    .padding(7)
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+        }
+    }
+
+    // Create buttonRowMenuView separately
+    func buttonRowMenuView() -> some View {
+        VStack {
+            buttonRowMenue()
+        }.padding(4)
+        .background(Color.gray.opacity(0.2))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.black, lineWidth: 2)
+        )
+        .padding(4)
+    }
+    func matrixAndButtons() -> some View {
+        return HStack {
+            VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
+                buttonsTop()
+                rectAndButtons()
+            }
+        }
+    }
+    
+    func scoreAndMoves() -> some View {
+        return VStack {
+            if viewModel.gameSolved {
+                Text("You Finished the Game!").bold().font(.title)
+                Text("\(self.viewModel.numberOfMoves) moves and in \(viewModel.timeFormated)")
+                    .bold()
+                    .font(.title)
+                    .onAppear {
+                        viewModel.stopTimer()
+                    }
+            } else {
+                Text("Moves: \(self.viewModel.numberOfMoves)")
+                Text("Time: \(viewModel.timeFormated)")
+                    .onAppear {
+                        viewModel.timerCode()
+                    }
+            }
+        }
+    }
+    func colorForDifficulty(_ difficulty: String) -> Color {
+        switch difficulty {
+        case "easy":
+            return Color.green
+        case "normal":
+            return Color.blue
+        case "hard":
+            return Color.red
+        default:
+            return Color.gray
+        }}
+}
+extension GameContentView {
     // function that enables switching between multiply and divide mode
     func switchModes() -> some View {
         return VStack {
@@ -310,189 +441,4 @@ struct GameContentView: View {
             }
         }
     }
-    /*
-    func buttonRowMenue() -> some View {
-        return HStack {
-            
-            Spacer()
-            if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
-                VStack {
-                    Text("Multi Row Aktions").padding(2).fontWeight(.bold)
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            withAnimation {
-                                viewModel.swapSelected()
-                            }
-                        }) {
-                            VStack {
-                                if viewModel.selectedCols.count == 2 {
-                                    Image(systemName: "rectangle.2.swap")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.blue)
-                                    Text("Swap Cols")
-                                        .foregroundColor(.blue)
-                                } else if viewModel.selectedRows.count == 2 {
-                                    Image(systemName: "rectangle.2.swap")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.blue)
-                                    Text("Swap")
-                                        .foregroundColor(.blue)
-                                } else if viewModel.selectedRows.count != 2 {
-                                    Image(systemName: "rectangle.2.swap")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.gray)
-                                    Text("Swap")
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                        
-                        if viewModel.selectedRows.count == 2 {
-                            Spacer()
-                            Button(action: {
-                                viewModel.addRows()
-                            }) {
-                                VStack {
-                                    
-                                    Image(systemName: "plus.app")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.blue)
-                                    Text("Add")
-                                        .foregroundColor(.blue)
-                                }
-                                
-                            }
-                            Spacer()
-                            Button(action: {
-                                viewModel.subRows()
-                            }) {
-                                VStack {
-                                    
-                                    Image(systemName: "minus.square")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.blue)
-                                    Text("Sub")
-                                        .foregroundColor(.blue)
-                                    
-                                }
-                                
-                            }
-                        }
-                        Spacer()
-                    }
-                }
-                Spacer()
-            } else {
-                makeInfoView(message: "Select more for Muli Row Aktions")
-            }
-        }
-    }
-     */
-    
-    func navigationButtons() -> some View {
-        return Button {
-        } label: {
-            VStack {
-                Image(systemName: "house.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(.black)
-            }
-            
-        }
-    }
-    // Game Screen
-    var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                VStack {
-                    VStack {
-                        VStack {
-                            if viewModel.gameSolved {
-                                Text("You Finished the Game!").bold().font(.title)
-                                Text("\(self.viewModel.numberOfMoves) moves and in \(viewModel.timeFormated)").bold().font(.title)
-                                    .onAppear {
-                                        viewModel.stopTimer()
-                                    }
-                            } else {
-                                Text("Moves: \(self.viewModel.numberOfMoves)")
-                                Text("Time: \(viewModel.timeFormated)")
-                                    .onAppear {
-                                        viewModel.timerCode()
-                                    }
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        VStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
-                            buttonsTop()
-                            rectAndButtons()
-                        }
-                        
-                    }
-                    
-                }
-                if !viewModel.gameSolved {
-                    VStack {
-                        
-                        VStack {
-                            switchModes()
-                            numberSlider()
-                        }.padding(4)
-                            .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
-                            )
-                            .padding(4) // Adjust the padding around the frame
-                        
-                        withAnimation {
-                            VStack {
-                                buttonRowMenue()
-                            }.padding(4)
-                                .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.black, lineWidth: 2) // Set the frame around the VStack
-                                )
-                                .padding(4) // Adjust the padding around the frame
-                            
-                        }
-                    }
-                } else {
-                    
-                    Button {
-                        if !self.viewModel.gameSaved {
-                            self.viewModel.saveGame() // saves the game
-                            self.viewModel.gameSaved.toggle() // Toggles between true and false
-                        }
-                    } label: {
-                        Text(self.viewModel.gameSaved ? "Already Saved Score" : "Save Score")
-                            .padding(7)
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .cornerRadius(8)
-                    }
-                }
-                Spacer()
-                
-            }
-            .navigationBarBackButtonHidden(true)
-        }
-        
-    }
-    func colorForDifficulty(_ difficulty: String) -> Color {
-        switch difficulty {
-        case "easy":
-            return Color.green
-        case "normal":
-            return Color.blue
-        case "hard":
-            return Color.red
-        default:
-            return Color.gray
-        }}
 }
