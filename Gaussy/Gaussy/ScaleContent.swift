@@ -24,20 +24,21 @@ func squareSize(for matrix: [[Int]]) -> CGFloat {
 }
 
 func fontSize(for matrix: [[Int]]) -> CGFloat {
-    let squareSizeValue = squareSize(for: matrix)
-    
-    if let mostDigitsValue = getValueWithMostDigits(from: matrix) {
-        let digitsCount = getDigits(of: mostDigitsValue).count
-        let fontSize = squareSizeValue * 0.4 - CGFloat(digitsCount)
-        return fontSize
+    let squareSizeValue: CGFloat
+    if matrix.count == 2 {
+        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 3) //function to calculate font size for very big Rectangles
     } else {
-        // Handle the case when no value with digits is found in the matrix
-        // Return a default font size or handle it based on your requirements
-        return 0.0 // Default font size or appropriate value
+        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 12) //function to calculate font size the other size options
     }
+    
+    guard let mostDigitsValue = getValueWithMostDigits(from: matrix) else {
+        return 5.0 // Default font size or appropriate value
+    }
+    
+    let digitsCount = getDigits(of: mostDigitsValue).count
+    let fontSize = squareSizeValue * 0.4 - CGFloat(digitsCount)
+    return fontSize
 }
-
-// The rest of your functions remain the same
 
 // function to get the value with most digits from matrix
 func getValueWithMostDigits(from matrix: [[Int]]) -> Int? {
@@ -55,14 +56,12 @@ func getValueWithMostDigits(from matrix: [[Int]]) -> Int? {
             }
         }
     }
-
     return maxValue
 }
 
 func getDigits(of number: Int) -> [Int] {
     let numberString = String(abs(number)) // Convert the absolute value of the number to a string
     let digits = numberString.compactMap { Int(String($0)) } // Extract digits as an array of Int
-
     return digits
 }
 
