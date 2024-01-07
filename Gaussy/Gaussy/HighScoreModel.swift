@@ -10,14 +10,13 @@ import Foundation
 struct HighScoreModel {
     let plistFile: String = "HighScores"
     var highScores: [PlayerStats]? // Change to an array of PlayerStats
-    var plistURL: URL = URL(fileURLWithPath: "") // Empty URL
+    var plistURL = URL(fileURLWithPath: "") // Empty URL
     
     var highScoresTimeSorted: [PlayerStats] = []
     var highScoresMovesSorted: [PlayerStats] = []
     
-    var counterMoves: Int = 0 //var for the number displayed for the Rank in top list
-    var counterTime: Int = 0 //var for the number displayed for the Rank in top list
-    
+    var counterMoves: Int = 0 // var for the number displayed for the Rank in top list
+    var counterTime: Int = 0 // var for the number displayed for the Rank in top list
     
     func writeToPlist<T: Encodable>(data: T, fileName: String) throws {
         let encoder = PropertyListEncoder()
@@ -46,7 +45,7 @@ struct HighScoreModel {
         try writeToPlist(data: existingData, fileName: fileName)
     }
     
-    //function to convert a string into a url
+    // function to convert a string into a url
     func stringToUrl(_ filename: String) -> URL {
         do {
             let plistURL = try FileManager.default.url(
@@ -76,7 +75,3 @@ struct HighScoreModel {
         }
 
 }
-
-
-
-

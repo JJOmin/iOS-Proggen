@@ -1,11 +1,9 @@
 import SwiftUI
 
 struct HighScoreView: View {
-    //let playerStatsArray: [PlayerStats] // Pass your array of PlayerStats here
+    // let playerStatsArray: [PlayerStats] // Pass your array of PlayerStats here
     @ObservedObject var viewModel: ViewModel
     let sordedScores: [[PlayerStats]]
-
-    
         
     var body: some View {
         NavigationView {
@@ -16,13 +14,13 @@ struct HighScoreView: View {
                     .padding(.top, 20)
                 
                 HStack(spacing: 30) {
-                    VStack{
+                    VStack {
                         Text("Moves").font(.title)
                         NavigationView {
                             List {
                                 ForEach(0..<sordedScores[0].count, id: \.self) { index in
                                     VStack(alignment: .leading, spacing: 5) {
-                                        if sordedScores[0][index].username == viewModel.userName{
+                                        if sordedScores[0][index].username == viewModel.userName {
                                             Text("\(index + 1). \(sordedScores[0][index].username) (You)")
                                                 .font(.headline).foregroundColor(Color.yellow)
                                             Text("\(sordedScores[0][index].moves) moves")
@@ -40,13 +38,13 @@ struct HighScoreView: View {
                             .listStyle(PlainListStyle())
                         }
                     }
-                    VStack{
+                    VStack {
                         Text("Time").font(.title)
                         NavigationView {
                             List {
                                 ForEach(0..<sordedScores[1].count, id: \.self) { index in
                                     VStack(alignment: .leading, spacing: 5) {
-                                        if sordedScores[0][index].username == viewModel.userName{
+                                        if sordedScores[0][index].username == viewModel.userName {
                                             Text("\(index + 1). \(sordedScores[1][index].username) (You)")
                                                 .font(.headline).foregroundColor(Color.yellow)
                                             Text("\(viewModel.formatSecondsToString(timeToFormat: sordedScores[1][index].time))").foregroundColor(Color.yellow)
@@ -70,4 +68,3 @@ struct HighScoreView: View {
         }
     }
 }
-

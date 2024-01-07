@@ -9,16 +9,15 @@ import Foundation
 import SwiftUI
 
 enum Difficulty: String {
-    case easy = "easy"
-    case normal = "normal"
-    case hard = "hard"
-    case unset = "unset"
+    case easy
+    case normal
+    case hard
+    case unset
 }
-enum scaleTypeEnum {
+enum ScaleTypeEnum {
     case multiply
     case divide
 }
-
 
 struct Model {
     var matrix: [[Int]]
@@ -34,10 +33,10 @@ struct Model {
     var scalFactor: Int
     
     var maxCharacterCount: Int = 21
-    let possibleSizes: [Int] = [2,3,4,5,6]
+    let possibleSizes: [Int] = [2, 3, 4, 5, 6]
     
     var scaleType: String
-    public var numberOfMoves: Int
+    var numberOfMoves: Int
     let difficultyLevels: [Difficulty] = [.easy, .normal, .hard]
     var gameRunning: Bool
     var username: String
@@ -48,22 +47,17 @@ struct Model {
     
     let plistName = "HighScores"
     
-    
-    //Refactoring
+    // Refactoring
     var gameDifficulty: Difficulty
-    var gameBackgroundColor: Color = Color.green
+    var gameBackgroundColor = Color.green
     
-    var gameSolved: Bool = false
-    
-    
-
+    var gameSolved = false
     
     init(size: Int, difficulty: Difficulty, username: String) {
         self.size = size
         self.username = username
         
         self.gameDifficulty = difficulty
-        
         
         self.selectedRows = []
         self.devideByArray = [0, 1, 2, 3, 5, 4, 7, 91]
@@ -80,7 +74,6 @@ struct Model {
         self.correctMatrix = []
         fillMatrix(with: gameDifficulty)
     }
-    
 
     mutating func fillMatrix(with difficulty: Difficulty) {
         // Fill the diagonal with ones
@@ -106,36 +99,36 @@ struct Model {
         
         var iterations = 0
         
-        while iterations < maxIterations{
+        while iterations < maxIterations {
             let row = Int.random(in: 0..<size)
             let col = Int.random(in: 0..<size)
-            //add
+            // add
             let matrixFirst: [Int] = matrix[row]
             let matrixSecond: [Int] = matrix[col]
             if matrixFirst.count == matrixSecond.count {
                 let resultArray = zip(matrixFirst, matrixSecond).map { $0 + $1 }
-                if resultArray.max()! < 100{
+                if resultArray.max()! < 100 {
                     matrix[col] = resultArray
                 }
             }
             
-            //Swap
+            // Swap
             let rand3 = Int.random(in: 0..<size)
             let rand4 = Int.random(in: 0..<size)
-            var matrixT = transposeMatrix(matrix) //transposeMatrix(
+            var matrixT = transposeMatrix(matrix) // transposeMatrix(
             let matrixFirstAdd: [Int] = matrixT[rand3]
             let matrixSecondAdd: [Int] = matrixT[rand4]
             matrixT[rand4] = matrixFirstAdd
             matrixT[rand3] = matrixSecondAdd
             
-            matrix = transposeMatrix(matrixT) //Zurücktransposed
+            matrix = transposeMatrix(matrixT) // Zurücktransposed
             
-            //multiply
+            // multiply
             let rand1 = Int.random(in: 0..<size)
             let rand2 = Int.random(in: 1..<size)
             let matrixFirstMulty: [Int] = matrix[rand1]
             let multipliedRowMulty = matrixFirstMulty.map { $0 * rand2 }
-            if multipliedRowMulty.max()! < 100{
+            if multipliedRowMulty.max()! < 100 {
                 matrix[rand1] = multipliedRowMulty
             }
             
@@ -144,7 +137,6 @@ struct Model {
         }
         
     }
-    
     
     // generating a einheitsmatrix in jeder größe
     func identityMatrix(size: Int) -> [[Int]] {
@@ -167,10 +159,7 @@ struct Model {
         matrix.reduce(0) { $0 + $1.count }
     }
     
-    
-    
-    //REFACTORED
-    
+    // REFACTORED
     
     // adding and Removing cols and Rows based on input
     mutating func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
@@ -249,9 +238,8 @@ struct Model {
             selectedRows.remove(at: index)
         }
     }
-
     
-    //function that resetts all Rows/cols -> used for Cancel Button in Scaling
+    // function that resetts all Rows/cols -> used for Cancel Button in Scaling
     mutating func removeAllSelected() {
         selectedRows = []
         selectedCols = []
@@ -259,7 +247,7 @@ struct Model {
         selectedLastCol = -1
     }
     
-    mutating func scaleRow(value: Int){
+    mutating func scaleRow(value: Int) {
         if scaleType == "divide" {
             if  value != 0 {
                 let matrixFirst: [Int] = matrix[selectedRows[0]]
@@ -274,7 +262,7 @@ struct Model {
             matrix[selectedRows[0]] = multipliedRow
             addMove()
         }
-        removeAllSelected() //necessary to ensure that new matrix is used everywhere and not the old one
+        removeAllSelected() // necessary to ensure that new matrix is used everywhere and not the old one
     }
     
     // Func that swaps the rows
@@ -284,7 +272,6 @@ struct Model {
                 
                 matrix[selectedRows[0]] = swapedNewRows[1]
                 matrix[selectedRows[1]] = swapedNewRows[0]
-
                 
             } else if selectedCols.count == 2 {
                 var matrixT = transposeMatrix(matrix) // cols -> Rows swap
@@ -293,17 +280,16 @@ struct Model {
 
                 matrixT[selectedCols[0]] = swapedNewCols[1]
                 matrixT[selectedCols[1]] = swapedNewCols[0]
-                matrix = transposeMatrix(matrixT) //Zurücktransposed Rows -> Cols
+                matrix = transposeMatrix(matrixT) // Zurücktransposed Rows -> Cols
 
             }
     }
     
-    //just swapping the Input
-    mutating func swapMatrix(m1: [Int], m2: [Int]) -> [[Int]]{
-        addMove() //adds a move
+    // just swapping the Input
+    mutating func swapMatrix(m1: [Int], m2: [Int]) -> [[Int]] {
+        addMove() // adds a move
         return [m1, m2]
     }
-    
     
     // addieren von reihen
     mutating func addRows() {
@@ -343,7 +329,7 @@ struct Model {
             
             for divisor in 1...(nonZeroValues.max() ?? 1) where foundDivisors < 5 {
                 if nonZeroValues.allSatisfy({ $0.isMultiple(of: divisor) }) {
-                    if divisor > 1{
+                    if divisor > 1 {
                         devideByArray.append(divisor)
                     }
                     foundDivisors += 1 // Increment the counter
@@ -353,17 +339,16 @@ struct Model {
         }
     }
     
-    mutating func addMove(){
+    mutating func addMove() {
         numberOfMoves += 1
         isGaussSolved()
     }
-    
 
     mutating func setSize(newSize: Int) {
         self.size = newSize
     }
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
-    mutating func timeTracking(){
+    mutating func timeTracking() {
             // Aktuelle Zeit abrufen
             let timeNow = Date()
             // Berechne die vergangene Spielzeit
@@ -391,9 +376,8 @@ struct Model {
             let formatedSeconds = String(format: "%02d", seconds)
             let formatedMilliseconds = String(format: "%02d", milliseconds)
         
-        
-            if hours <= 0{
-                if minutes <= 0{
+            if hours <= 0 {
+                if minutes <= 0 {
                     self.timeFormated = "\(formatedSeconds):\(formatedMilliseconds)"
                 } else {
                     self.timeFormated = "\(formattedMinutes):\(formatedSeconds)"
@@ -403,8 +387,7 @@ struct Model {
             }
     }
     
-    
-    func formatSecondsToString(timeToFormat: Double) -> String{
+    func formatSecondsToString(timeToFormat: Double) -> String {
         let totalSeconds: TimeInterval = timeToFormat
         
         let hours = Int(totalSeconds / 3600)
@@ -422,8 +405,8 @@ struct Model {
         let formatedMilliseconds = String(format: "%02d", milliseconds)
         let formatedHours = String(format: "%02d", hours)
         
-        if hours <= 0{
-            if minutes <= 0{
+        if hours <= 0 {
+            if minutes <= 0 {
                 return("\(formatedSeconds) sec. \(formatedMilliseconds) msec.")
             } else {
                 return("\(formattedMinutes) min. \(formatedSeconds) sec.")
@@ -431,13 +414,10 @@ struct Model {
         } else {
             return("\(hours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
         }
-        //return("\(formatedHours):\(formattedMinutes):\(formatedSeconds):\(formatedMilliseconds)")
+        // return("\(formatedHours):\(formattedMinutes):\(formatedSeconds):\(formatedMilliseconds)")
     }
     
-
-
-    
-    //function to Transpose a matrix to easily get the cols
+    // function to Transpose a matrix to easily get the cols
     func transposeMatrix(_ matrix: [[Int]]) -> [[Int]] {
         guard !matrix.isEmpty else {
             return []
@@ -456,9 +436,8 @@ struct Model {
         return transposedMatrix
     }
     
-    
-    mutating func isGaussSolved(){
-        if matrix == correctMatrix{
+    mutating func isGaussSolved() {
+        if matrix == correctMatrix {
             matrix = correctMatrix
             gameRunning = false
             gameSolved = true

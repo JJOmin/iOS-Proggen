@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct PlayerStats: Codable, Identifiable{
+struct PlayerStats: Codable, Identifiable {
     var id: UUID
     let username: String
     let time: Double
@@ -20,9 +20,8 @@ class ViewModel: ObservableObject {
     @Published private var model: Model
     @Published private var highScoreModel: HighScoreModel
     var timer: Timer?
-    var gameSaved: Bool = false
-    //@State var backgroundColor: Color = .white
-    
+    var gameSaved = false
+    // @State var backgroundColor: Color = .white
 
     init() {
         self.model = Model(size: 6, difficulty: .unset, username: "Peter")
@@ -31,14 +30,14 @@ class ViewModel: ObservableObject {
         getSortedScors()
     }
     
-    func createNewGame(size: Int, difficulty: Difficulty, username: String){
+    func createNewGame(size: Int, difficulty: Difficulty, username: String) {
         self.model = Model(size: size, difficulty: difficulty, username: username)
         gameSaved = false
         readHighScoresFromPlist()
         getSortedScors()
     }
     
-    func appendToPlist(userName: String , time: Double, moves: Int){
+    func appendToPlist(userName: String, time: Double, moves: Int) {
         let newScore = PlayerStats(id: UUID(), username: userName, time: time, moves: moves)
         
         do {
@@ -51,12 +50,12 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func readHighScoresFromPlist(){
+    func readHighScoresFromPlist() {
         do {
             if let highScores: [PlayerStats] = try highScoreModel.readFromPlist(type: [PlayerStats].self, fileName: highScoreModel.plistFile) {
                 // Successfully read data from the plist
                 highScoreModel.highScores = highScores
-                //highScores.append(PlayerStats)
+                // highScores.append(PlayerStats)
             } else {
                 print("No data found or unable to decode")
             }
@@ -66,7 +65,7 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func writeToPlist(userName: String , time: Double, moves: Int){
+    func writeToPlist(userName: String, time: Double, moves: Int) {
         let newScore = [PlayerStats(id: UUID(), username: userName, time: time, moves: moves)]
         
         do {
@@ -79,26 +78,25 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func getSortedScors(){
+    func getSortedScors() {
         let (sortedByTime, sortedByMoves) = highScoreModel.sortScores()
         highScoreModel.highScoresTimeSorted = sortedByTime
         highScoreModel.highScoresMovesSorted = sortedByMoves
     }
     
-    
-    //func to append the new saved Score to plist and rereading the plist again for display
-    func saveGame(){
+    // func to append the new saved Score to plist and rereading the plist again for display
+    func saveGame() {
         appendToPlist(userName: model.username, time: model.time, moves: model.numberOfMoves)
         readHighScoresFromPlist()
         getSortedScors()
         
     }
     
-    var sortedScores: [[PlayerStats]]{
-        //getSortedScors()
+    var sortedScores: [[PlayerStats]] {
+        // getSortedScors()
         return [highScoreModel.highScoresTimeSorted, highScoreModel.highScoresMovesSorted]
     }
-    //func createNewGame
+    // func createNewGame
     
     var matrix: [[Int]] {
         model.matrix
@@ -124,18 +122,18 @@ class ViewModel: ObservableObject {
         model.scaleType
     }
     
-    var numberOfMoves: Int{
+    var numberOfMoves: Int {
         model.numberOfMoves
     }
     
     var difficultyLevels: [Difficulty] {
         model.difficultyLevels
     }
-    var highScores: [PlayerStats]{
+    var highScores: [PlayerStats] {
         highScoreModel.getHighScore()
     }
     
-    var gameSolved: Bool{
+    var gameSolved: Bool {
         model.gameSolved
     }
     
@@ -143,11 +141,11 @@ class ViewModel: ObservableObject {
         model.maxCharacterCount
     }
     
-    var getPossibleSizes: [Int]{
+    var getPossibleSizes: [Int] {
         model.possibleSizes
     }
     
-    var gameRunning: Bool{
+    var gameRunning: Bool {
         model.gameRunning
     }
     
@@ -159,45 +157,41 @@ class ViewModel: ObservableObject {
         model.timeFormated
     }
     
-    var difficulty: Difficulty{
+    var difficulty: Difficulty {
         model.gameDifficulty
     }
     
-    var size: Int{
+    var size: Int {
         model.size
     }
-    var userName: String{
+    var userName: String {
         model.username
     }
     
-    
-    func addCounterMoves() -> Int{
+    func addCounterMoves() -> Int {
         highScoreModel.counterMoves += 1
         return highScoreModel.counterMoves
     }
-    func addCounterTime() -> Int{
+    func addCounterTime() -> Int {
         highScoreModel.counterTime += 1
         return highScoreModel.counterTime
     }
-
     
-    
-    
-    func formatSecondsToString(timeToFormat: Double) -> String{
+    func formatSecondsToString(timeToFormat: Double) -> String {
         model.formatSecondsToString(timeToFormat: timeToFormat)
     }
     
-    func updateTimer(){
+    func updateTimer() {
         model.timeTracking()
     }
     
-    func timerCode(){
+    func timerCode() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
                 updateTimer()
         }
     }
     
-    func stopTimer(){
+    func stopTimer() {
         if gameRunning || gameSolved {
             timer?.invalidate()
         }
@@ -207,7 +201,7 @@ class ViewModel: ObservableObject {
         model.setSize(newSize: newSize)
     }
     
-    func setGameRunning(_ value: Bool){
+    func setGameRunning(_ value: Bool) {
         model.gameRunning = value
     }
     
@@ -219,7 +213,7 @@ class ViewModel: ObservableObject {
         model.swapSelected()
     }
     
-    func swapMatrixCols(m1Col: Int, m2Col: Int){
+    func swapMatrixCols(m1Col: Int, m2Col: Int) {
         var matrixT = model.transposeMatrix(model.matrix)
         let newCols = model.swapMatrix(m1: matrixT[m1Col], m2: matrixT[m2Col])
         matrixT[m1Col] = newCols[1]
@@ -228,7 +222,7 @@ class ViewModel: ObservableObject {
         model.isGaussSolved()
     }
     
-    func swapMatrixRows(m1Row: Int, m2Row: Int){
+    func swapMatrixRows(m1Row: Int, m2Row: Int) {
         let newRows = model.swapMatrix(m1: matrix[m1Row], m2: matrix[m2Row])
         model.matrix[m1Row] = newRows[1]
         model.matrix[m2Row] = newRows[0]
@@ -251,22 +245,20 @@ class ViewModel: ObservableObject {
         model.scaleType = currentType
     }
     
-    func removeAllSelected(){
+    func removeAllSelected() {
         model.removeAllSelected()
     }
     
-    func scaleRow(value: Int){
+    func scaleRow(value: Int) {
         model.scaleRow(value: value)
     }
     
-    func setDifficulty(newDifficulty: Difficulty){
+    func setDifficulty(newDifficulty: Difficulty) {
         model.gameDifficulty = newDifficulty
     }
     
     func setUserName(_ userName: String) {
         model.username = userName
     }
-    
-    
 
 }

@@ -21,8 +21,6 @@ struct StartGameContentView: View {
     
     @State private var topColor: Color = .green // Default color
     
-    
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -75,7 +73,7 @@ struct StartGameContentView: View {
                     Text("Set your Username")
                         .font(.title)
                         .foregroundColor(.black)
-                    HStack{
+                    HStack {
                         Spacer()
                         TextField("Enter your name", text: $playerName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -98,10 +96,9 @@ struct StartGameContentView: View {
                     }
                     .simultaneousGesture(TapGesture().onEnded {
                         
-                        //self.viewModel.startTimer()
+                        // self.viewModel.startTimer()
                         self.viewModel.setGameRunning(true)
                         self.viewModel.createNewGame(size: size, difficulty: difficultyLevel, username: playerName)
-                        
                       
                     })
                     Spacer()
@@ -112,20 +109,20 @@ struct StartGameContentView: View {
         .navigationBarItems(leading:
                                 Button(action: {
             withAnimation(.linear(duration: 0.7)) {
-                //self.viewModel.stopTimer()
+                // self.viewModel.stopTimer()
                 self.presentationMode.wrappedValue.dismiss()
             }
         }) {
             Image(systemName: "house")
                 .foregroundColor(.black) // Change the color here
                 .font(.title)
-        }
+                                }
             .opacity(backButtonOpacity),
                             trailing:
                                 NavigationLink(destination: HighScoreView(viewModel: viewModel, sordedScores: viewModel.sortedScores), isActive: $showHighScoreView) {
             Button(action: {
                 // Navigate to HighScoreView
-                //self.viewModel.stopTimer()
+                // self.viewModel.stopTimer()
                 self.showHighScoreView = true
             }) {
                 Image(systemName: "list.number")
@@ -133,7 +130,7 @@ struct StartGameContentView: View {
                     .font(.title)
             }
             .opacity(backButtonOpacity)
-        }
+                                }
         )
         .onAppear {
             withAnimation(.snappy(duration: 0.7)) {

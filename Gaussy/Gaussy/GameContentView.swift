@@ -31,10 +31,10 @@ struct GameContentView: View {
             )
             .onTapGesture {
                 withAnimation {
-                    //Toggles Selection of Row or Col
+                    // Toggles Selection of Row or Col
                     viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
                 }
-                self.viewModel.getDivider() //calculates the possible deviders for the devider function
+                self.viewModel.getDivider() // calculates the possible deviders for the devider function
             }
             .gesture(DragGesture()
                 .onEnded { value in
@@ -44,30 +44,29 @@ struct GameContentView: View {
                     
                     if (horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
                         // Swiped from left to right
-                        if col + 1 <= self.viewModel.size - 1 { //if row+1 exists
-                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col+1)
+                        if col + 1 <= self.viewModel.size - 1 { // if row+1 exists
+                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col + 1)
                         }
                     } else if (horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
                         
-                        if col - 1 >= 0 { //if row+1 exists
-                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col-1)
+                        if col - 1 >= 0 { // if row+1 exists
+                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col - 1)
                         } else {
                         }
-                    } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
-                        //for top to bottom swap
-                        if row + 1 <= self.viewModel.size - 1 { //if row+1 exists
-                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row+1) //swap row and row beneath
+                    } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right") {
+                        // for top to bottom swap
+                        if row + 1 <= self.viewModel.size - 1 { // if row+1 exists
+                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row + 1) // swap row and row beneath
                         }
-                    } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
-                        //from bottom to top swap
-                        if row - 1 >= 0 { //if row-1 greater than 0 (if a row above exists)
-                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row-1) //swap row and row above
+                    } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right") {
+                        // from bottom to top swap
+                        if row - 1 >= 0 { // if row-1 greater than 0 (if a row above exists)
+                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row - 1) // swap row and row above
                         }
                     }
                 }
             )
     }
-    
     
     func buttonsTop() -> some View {
         return ForEach(0..<viewModel.matrix.count, id: \.self) { row in
@@ -118,7 +117,6 @@ struct GameContentView: View {
             .rotationEffect(isSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
             .animation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default)
     }
-
     
     func saveScaling() -> some View {
         return HStack {
@@ -206,11 +204,10 @@ struct GameContentView: View {
                 .padding()
                 .onChange(of: selectedOption) { _ in
                     if selectedOption == 0 {
-                        selectedNumber = self.viewModel.multiplyByArray[0]
+                        selectedNumber = self.viewModel.multiplyByArray.isEmpty ? 0 : self.viewModel.multiplyByArray[0]
                         self.viewModel.setScaleType(currentType: "multiply")
-                        
                     } else if selectedOption == 1 {
-                        if self.viewModel.devideByArray.count > 0 { selectedNumber = self.viewModel.devideByArray[0]}
+                        if !self.viewModel.devideByArray.isEmpty { selectedNumber = self.viewModel.devideByArray[0] }
                         self.viewModel.setScaleType(currentType: "divide")
                     }
                 }
@@ -225,7 +222,7 @@ struct GameContentView: View {
             if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
                 VStack {
                     Text("Multi Row Aktions").padding(2).fontWeight(.bold)
-                    HStack{
+                    HStack {
                         Spacer()
                         Button(action: {
                             withAnimation {
@@ -255,7 +252,7 @@ struct GameContentView: View {
                             }
                         }
                         
-                        if viewModel.selectedRows.count == 2{
+                        if viewModel.selectedRows.count == 2 {
                             Spacer()
                             Button(action: {
                                 viewModel.addRows()
@@ -275,7 +272,6 @@ struct GameContentView: View {
                                 viewModel.subRows()
                             }) {
                                 VStack {
-                                    
                                     
                                     Image(systemName: "minus.square")
                                         .font(.largeTitle)
@@ -297,9 +293,6 @@ struct GameContentView: View {
         }
     }
     
-    
-    
-    
     func navigationButtons() -> some View {
         return Button(action: {
         }) {
@@ -318,9 +311,9 @@ struct GameContentView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 VStack {
-                    VStack{
-                        VStack{
-                            if viewModel.gameSolved{
+                    VStack {
+                        VStack {
+                            if viewModel.gameSolved {
                                 Text("You Finished the Game!").bold().font(.title)
                                 Text("\(self.viewModel.numberOfMoves) moves and in \(viewModel.timeFormated)").bold().font(.title)
                                     .onAppear {
@@ -346,10 +339,10 @@ struct GameContentView: View {
                     }
                     
                 }
-                if !viewModel.gameSolved{
-                    VStack{
+                if !viewModel.gameSolved {
+                    VStack {
                         
-                        VStack{
+                        VStack {
                             switchModes()
                             numberSlider()
                         }.padding(4)
@@ -360,8 +353,8 @@ struct GameContentView: View {
                             )
                             .padding(4) // Adjust the padding around the frame
                         
-                        withAnimation{
-                            VStack{
+                        withAnimation {
+                            VStack {
                                 buttonRowMenue()
                             }.padding(4)
                                 .background(Color.gray.opacity(0.2)) // Set the background color for the VStack
@@ -377,7 +370,7 @@ struct GameContentView: View {
                     
                     Button(action: {
                         if !self.viewModel.gameSaved {
-                            self.viewModel.saveGame() //saves the game
+                            self.viewModel.saveGame() // saves the game
                             self.viewModel.gameSaved.toggle() // Toggles between true and false
                         }
                     }) {
