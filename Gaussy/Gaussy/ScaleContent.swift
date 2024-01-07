@@ -26,9 +26,9 @@ func squareSize(for matrix: [[Int]]) -> CGFloat {
 func fontSize(for matrix: [[Int]]) -> CGFloat {
     let squareSizeValue: CGFloat
     if matrix.count == 2 {
-        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 3) //function to calculate font size for very big Rectangles
+        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 3) // function to calculate font size for very big Rectangles
     } else {
-        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 12) //function to calculate font size the other size options
+        squareSizeValue = squareSize(for: matrix) - (squareSize(for: matrix) / 12) // function to calculate font size the other size options
     }
     
     guard let mostDigitsValue = getValueWithMostDigits(from: matrix) else {

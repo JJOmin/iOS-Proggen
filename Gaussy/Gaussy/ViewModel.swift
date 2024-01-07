@@ -177,7 +177,7 @@ class ViewModel: ObservableObject {
         return highScoreModel.counterTime
     }
     
-    func formatSecondsToString(timeToFormat: Double) -> String {
+    func formatSecondsToString(timeToFormat: Double) -> String? {
         model.formatSecondsToString(timeToFormat: timeToFormat)
     }
     
