@@ -287,7 +287,7 @@ struct Model {
                 
                 matrix[selectedRows[0]] = swapedNewRows[1]
                 matrix[selectedRows[1]] = swapedNewRows[0]
-                addMove()
+
                 
             } else if selectedCols.count == 2 {
                 var matrixT = transposeMatrix(matrix) // cols -> Rows swap
@@ -297,12 +297,13 @@ struct Model {
                 matrixT[selectedCols[0]] = swapedNewCols[1]
                 matrixT[selectedCols[1]] = swapedNewCols[0]
                 matrix = transposeMatrix(matrixT) //Zurücktransposed Rows -> Cols
-                addMove()
+
             }
     }
     
     //just swapping the Input
     mutating func swapMatrix(m1: [Int], m2: [Int]) -> [[Int]]{
+        addMove() //adds a move
         return [m1, m2]
     }
     
@@ -364,10 +365,7 @@ struct Model {
 
     mutating func setSize(newSize: Int) {
         self.size = newSize
-    }
-    
-    
-    
+    }	
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
     mutating func timeTracking(){
             // Aktuelle Zeit abrufen

@@ -40,7 +40,8 @@ struct GameContentView: View {
                         .onChanged { value in
                             // Handle the drag gesture for individual circles here
                             // For example, you can print the position of the dragged circle
-                            print("Dragging circle at row: \(row), col: \(col)")
+                            print(orientation)
+                            //print("Dragging circle at row: \(row), col: \(col)")
                         }
                         .onEnded { value in
                             self.offset = .zero
@@ -49,28 +50,34 @@ struct GameContentView: View {
                             let horizontalDistance = value.translation.width
                             let verticalDistance = value.translation.height
                             
-                            if horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance) {
+                            if (horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
                                 // Swiped from left to right
                                 if col + 1 <= self.viewModel.size - 1 {
-                                    print("Jap geht")
+                                    //print("Jap geht")
                                     self.viewModel.swapMatrixCols(m1Col: col, m2Col: col+1)
                                     
-                                    print()
-                                } else {
-                                    print("geht nicht 1")
+                                    //print()
                                 }
                                 
-                            } else if horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance) {
-                                // Swiped from right to left
-                                //print("right to left")
+                            } else if (horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
                                 if col - 1 >= 0 {
-                                    print("Noice")
+                                    //print("Noice")
                                     self.viewModel.swapMatrixCols(m1Col: col, m2Col: col-1)
                                 } else {
-                                    print("geht nicht 2")
+                                    //print("geht nicht 2")
+                                }
+                            } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
+                                //for top to bottom swap
+                                if row + 1 <= self.viewModel.size - 1 { //if row+1 exists
+                                    self.viewModel.swapMatrixRows(m1Row: row, m2Row: row+1) //swap row and row beneath
+                                }
+                            } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
+                                //print("Swiped from bottom to top")
+                                if row - 1 >= 0 { //if row-1 greater than 0 (if a row above exists)
+                                    self.viewModel.swapMatrixRows(m1Row: row, m2Row: row-1) //swap row and row above
                                 }
                             } else {
-                                print("other")
+                                print("FAIL")
                             }
                             // Handle the end of the drag gesture if needed
                         }
@@ -95,6 +102,10 @@ struct GameContentView: View {
                 } else if horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance) {
                     // Swiped from right to left
                     print("right to left")
+                }  else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) {
+                    print("Swiped from top to bottom")
+                } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) {
+                    print("Swiped from bottom to top")
                 } else {
                     print("other")
                 }
