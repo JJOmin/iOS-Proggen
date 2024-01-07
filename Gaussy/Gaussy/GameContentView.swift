@@ -111,12 +111,14 @@ struct GameContentView: View {
     }
 
     func squareView(value: Int, col: Int, row: Int) -> some View {
-        let isSolved = value == 1 && viewModel.gameSolved // Check if the square is solved
+        let isSolved = viewModel.gameSolved // Check if the square is solved
         viewModel.stopTimer()
+        // print("\(value)")
         
         return Text("\(value)")
             .frame(width: 50, height: 50)
-            .rotationEffect(isSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
+            .foregroundColor(.black) // Apply text color
+            .rotationEffect(.degrees(360)) // Rotate if solved
             .onAppear {
                 withAnimation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default) {
                     // Use withAnimation for conditional animation
@@ -126,9 +128,9 @@ struct GameContentView: View {
     
     func saveScaling() -> some View {
         return HStack {
-            Button(action: {
+            Button {
                 self.viewModel.scaleRow(value: selectedNumber)
-            }) {
+            } label: {
                 Text("Apply")
                     .padding(7)
                     .foregroundColor(.white)
@@ -136,9 +138,9 @@ struct GameContentView: View {
                     .cornerRadius(8)
             }
             
-            Button(action: {
+            Button {
                 self.viewModel.removeAllSelected()
-            }) {
+            } label: {
                 Text("Close")
                     .padding(7)
                     .foregroundColor(.white)
@@ -389,8 +391,8 @@ struct GameContentView: View {
      */
     
     func navigationButtons() -> some View {
-        return Button(action: {
-        }) {
+        return Button {
+        } label: {
             VStack {
                 Image(systemName: "house.fill")
                     .font(.largeTitle)
@@ -419,7 +421,6 @@ struct GameContentView: View {
                                 Text("Time: \(viewModel.timeFormated)")
                                     .onAppear {
                                         viewModel.timerCode()
-                                        
                                     }
                             }
                         }
@@ -463,12 +464,12 @@ struct GameContentView: View {
                     }
                 } else {
                     
-                    Button(action: {
+                    Button {
                         if !self.viewModel.gameSaved {
                             self.viewModel.saveGame() // saves the game
                             self.viewModel.gameSaved.toggle() // Toggles between true and false
                         }
-                    }) {
+                    } label: {
                         Text(self.viewModel.gameSaved ? "Already Saved Score" : "Save Score")
                             .padding(7)
                             .foregroundColor(.white)

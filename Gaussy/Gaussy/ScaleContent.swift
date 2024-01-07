@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import CoreGraphics
 
 func squareSize(for matrix: [[Int]]) -> CGFloat {
     let sizeMatrix = matrix.count
-    let maxSize: CGFloat = 120 // Maximalgröße der Quadrate
+    let maxSize: CGFloat = 110 // Maximalgröße der Quadrate
 
     let maxWidth = UIScreen.main.bounds.width - 140 // Breite des Bildschirms abzüglich Randabstand
     let maxHeight = UIScreen.main.bounds.height - 140 // Höhe des Bildschirms abzüglich Randabstand
@@ -24,8 +25,45 @@ func squareSize(for matrix: [[Int]]) -> CGFloat {
 
 func fontSize(for matrix: [[Int]]) -> CGFloat {
     let squareSizeValue = squareSize(for: matrix)
-    let fontSize = squareSizeValue * 0.5 // Adjust the multiplier to set the desired font size
-    return fontSize
+    
+    if let mostDigitsValue = getValueWithMostDigits(from: matrix) {
+        let digitsCount = getDigits(of: mostDigitsValue).count
+        let fontSize = squareSizeValue * 0.4 - CGFloat(digitsCount)
+        return fontSize
+    } else {
+        // Handle the case when no value with digits is found in the matrix
+        // Return a default font size or handle it based on your requirements
+        return 0.0 // Default font size or appropriate value
+    }
+}
+
+// The rest of your functions remain the same
+
+// function to get the value with most digits from matrix
+func getValueWithMostDigits(from matrix: [[Int]]) -> Int? {
+    var maxValue: Int?
+    var maxDigitCount = 0
+
+    for row in matrix {
+        for value in row {
+            let absoluteValue = abs(value)
+            let digitCount = "\(absoluteValue)".count
+
+            if digitCount > maxDigitCount {
+                maxValue = value
+                maxDigitCount = digitCount
+            }
+        }
+    }
+
+    return maxValue
+}
+
+func getDigits(of number: Int) -> [Int] {
+    let numberString = String(abs(number)) // Convert the absolute value of the number to a string
+    let digits = numberString.compactMap { Int(String($0)) } // Extract digits as an array of Int
+
+    return digits
 }
 
 func interSquareSpacing(for matrix: [[Int]]) -> CGFloat {
