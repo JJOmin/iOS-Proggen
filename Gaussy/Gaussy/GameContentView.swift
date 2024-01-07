@@ -258,11 +258,11 @@ struct GameContentView: View {
     }
 
     func swapColumnsButton() -> some View {
-        Button(action: {
+        Button {
             withAnimation {
                 viewModel.swapSelected()
             }
-        }) {
+        } label: {
             VStack {
                 if viewModel.selectedCols.count == 2 {
                     Image(systemName: "rectangle.2.swap")
@@ -282,9 +282,9 @@ struct GameContentView: View {
     }
 
     func addRowsButton() -> some View {
-        return Button(action: {
+        return Button {
             viewModel.addRows()
-        }) {
+        } label: {
             VStack {
                 Image(systemName: "plus.app")
                     .font(.largeTitle)
