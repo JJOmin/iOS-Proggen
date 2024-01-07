@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		193247012B4760CD00C4A985 /* HighScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193247002B4760CD00C4A985 /* HighScoreModel.swift */; };
+		19662E1F2B4ADE7C004DA317 /* sources.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19662E1E2B4ADE7C004DA317 /* sources.txt */; };
 		19686FE82B30DD6A00D7417C /* GaussyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19686FE72B30DD6A00D7417C /* GaussyApp.swift */; };
 		19686FEA2B30DD6A00D7417C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19686FE92B30DD6A00D7417C /* ContentView.swift */; };
 		19686FEC2B30DD6A00D7417C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19686FEB2B30DD6A00D7417C /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		193247002B4760CD00C4A985 /* HighScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreModel.swift; sourceTree = "<group>"; };
+		19662E1E2B4ADE7C004DA317 /* sources.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sources.txt; sourceTree = "<group>"; };
 		19686FE42B30DD6A00D7417C /* Gaussy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaussy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19686FE72B30DD6A00D7417C /* GaussyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussyApp.swift; sourceTree = "<group>"; };
 		19686FE92B30DD6A00D7417C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				19686FE72B30DD6A00D7417C /* GaussyApp.swift */,
 				19686FE92B30DD6A00D7417C /* ContentView.swift */,
 				19D5AAE92B4068260062F18F /* GameContentView.swift */,
+				19662E1E2B4ADE7C004DA317 /* sources.txt */,
 				19B8E6A62B30E57600BDD0EA /* ScaleContent.swift */,
 				19686FF82B30DEC700D7417C /* Model.swift */,
 				196EAB7C2B30E14700B64E03 /* ViewModel.swift */,
@@ -154,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19686FF72B30DDA700D7417C /* .swiftlint.yml in Resources */,
+				19662E1F2B4ADE7C004DA317 /* sources.txt in Resources */,
 				19686FEF2B30DD6A00D7417C /* Preview Assets.xcassets in Resources */,
 				19686FEC2B30DD6A00D7417C /* Assets.xcassets in Resources */,
 			);

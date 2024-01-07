@@ -223,6 +223,94 @@ struct GameContentView: View {
     
     func buttonRowMenue() -> some View {
         return HStack {
+            Spacer()
+            if shouldShowMultiRowActions() {
+                multiRowActionsView()
+            } else {
+                makeInfoView(message: "Select more for Multi Row Actions")
+            }
+            Spacer()
+        }
+    }
+
+    func shouldShowMultiRowActions() -> Bool {
+        return viewModel.selectedCols.count == 2 || viewModel.selectedRows.count == 2
+    }
+
+    func multiRowActionsView() -> some View {
+        VStack {
+            Text("Multi Row Actions")
+                .padding(2)
+                .fontWeight(.bold)
+            HStack {
+                Spacer()
+                swapColumnsButton()
+                if viewModel.selectedRows.count == 2 {
+                    Spacer()
+                    addRowsButton()
+                    Spacer()
+                    subtractRowsButton()
+                }
+                Spacer()
+            }
+        }
+        .padding(2)
+    }
+
+    func swapColumnsButton() -> some View {
+        Button(action: {
+            withAnimation {
+                viewModel.swapSelected()
+            }
+        }) {
+            VStack {
+                if viewModel.selectedCols.count == 2 {
+                    Image(systemName: "rectangle.2.swap")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
+                    Text("Swap Cols")
+                        .foregroundColor(.blue)
+                } else {
+                    Image(systemName: "rectangle.2.swap")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
+                    Text("Swap")
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+    }
+
+    func addRowsButton() -> some View {
+        Button(action: {
+            viewModel.addRows()
+        }) {
+            VStack {
+                Image(systemName: "plus.app")
+                    .font(.largeTitle)
+                    .foregroundColor(.blue)
+                Text("Add")
+                    .foregroundColor(.blue)
+            }
+        }
+    }
+
+    func subtractRowsButton() -> some View {
+        return Button(action: {
+            viewModel.subRows()
+        }) {
+            VStack {
+                Image(systemName: "minus.square")
+                    .font(.largeTitle)
+                    .foregroundColor(.blue)
+                Text("Sub")
+                    .foregroundColor(.blue)
+            }
+        }
+    }
+    /*
+    func buttonRowMenue() -> some View {
+        return HStack {
             
             Spacer()
             if self.viewModel.selectedCols.count == 2 || self.viewModel.selectedRows.count == 2 {
@@ -298,6 +386,7 @@ struct GameContentView: View {
             }
         }
     }
+     */
     
     func navigationButtons() -> some View {
         return Button(action: {

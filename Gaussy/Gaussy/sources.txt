@@ -1,0 +1,7 @@
+R1 2024.01.07: https://www.optimistic-closures.com/how-to-fix-onchange-of-perform-deprecated-in-ios-17-0-warnings/
+
+".onChange(of: someState) { oldState, newState in
+    model.yourDidChangeMethod(from: oldState, to: newState)
+}"
+
+
