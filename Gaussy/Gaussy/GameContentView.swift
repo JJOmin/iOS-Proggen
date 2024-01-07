@@ -282,7 +282,7 @@ struct GameContentView: View {
     }
 
     func addRowsButton() -> some View {
-        Button(action: {
+        return Button(action: {
             viewModel.addRows()
         }) {
             VStack {
@@ -296,9 +296,9 @@ struct GameContentView: View {
     }
 
     func subtractRowsButton() -> some View {
-        return Button(action: {
+        return Button {
             viewModel.subRows()
-        }) {
+        } label: {
             VStack {
                 Image(systemName: "minus.square")
                     .font(.largeTitle)
