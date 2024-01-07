@@ -139,8 +139,6 @@ class ViewModel: ObservableObject {
         model.gameSolved
     }
     
-    
-    
     var maxCharacterCount: Int {
         model.maxCharacterCount
     }
