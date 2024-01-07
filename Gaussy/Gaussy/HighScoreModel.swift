@@ -68,16 +68,10 @@ struct HighScoreModel {
     
     func sortScores() -> (sortedByTime: [PlayerStats], sortedByMoves: [PlayerStats]) {
             guard let highScores = highScores else { return ([], []) } // Return empty arrays if highScores is nil
-            
             // Sort by time (ascending)
             let sortedByTime = highScores.sorted { $0.time < $1.time }
-            for stat in sortedByTime{
-                print(stat.time)
-            }
-
             // Sort by moves (ascending)
             let sortedByMoves = highScores.sorted { $0.moves < $1.moves }
-
             return (sortedByTime, sortedByMoves)
         }
 

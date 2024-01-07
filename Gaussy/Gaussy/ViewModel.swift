@@ -211,7 +211,6 @@ class ViewModel: ObservableObject {
     
     func setGameRunning(_ value: Bool){
         model.gameRunning = value
-        print(value)
     }
     
     func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
@@ -224,20 +223,18 @@ class ViewModel: ObservableObject {
     
     func swapMatrixCols(m1Col: Int, m2Col: Int){
         var matrixT = model.transposeMatrix(model.matrix)
-        print(matrixT)
         let newCols = model.swapMatrix(m1: matrixT[m1Col], m2: matrixT[m2Col])
-        print("TEst")
-        print(newCols)
         matrixT[m1Col] = newCols[1]
         matrixT[m2Col] = newCols[0]
-        print(matrixT)
         model.matrix = model.transposeMatrix(matrixT)
+        model.isGaussSolved()
     }
     
     func swapMatrixRows(m1Row: Int, m2Row: Int){
         let newRows = model.swapMatrix(m1: matrix[m1Row], m2: matrix[m2Row])
         model.matrix[m1Row] = newRows[1]
         model.matrix[m2Row] = newRows[0]
+        model.isGaussSolved()
         
     }
     

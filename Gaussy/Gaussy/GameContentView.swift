@@ -12,7 +12,6 @@ struct GameContentView: View {
     @State private var showHighScoreView = false // State variable to control HighScoreView presentation
     
     @State private var topColor: Color = .green // Default color
-    @State private var offset: CGSize = .zero
     @State private var message: String = ""
     
     func selectableCircle(col: Int, row: Int, orientation: String) -> some View {
@@ -32,85 +31,43 @@ struct GameContentView: View {
             )
             .onTapGesture {
                 withAnimation {
+                    //Toggles Selection of Row or Col
                     viewModel.addRemoveFromSelected(col: col, row: row, orientation: orientation)
                 }
-                self.viewModel.getDivider()
+                self.viewModel.getDivider() //calculates the possible deviders for the devider function
             }
             .gesture(DragGesture()
-                        .onChanged { value in
-                            // Handle the drag gesture for individual circles here
-                            // For example, you can print the position of the dragged circle
-                            print(orientation)
-                            //print("Dragging circle at row: \(row), col: \(col)")
+                .onEnded { value in
+                    // Calculate the direction of the swipe
+                    let horizontalDistance = value.translation.width
+                    let verticalDistance = value.translation.height
+                    
+                    if (horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
+                        // Swiped from left to right
+                        if col + 1 <= self.viewModel.size - 1 { //if row+1 exists
+                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col+1)
                         }
-                        .onEnded { value in
-                            self.offset = .zero
-                            
-                            // Calculate the direction of the swipe
-                            let horizontalDistance = value.translation.width
-                            let verticalDistance = value.translation.height
-                            
-                            if (horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
-                                // Swiped from left to right
-                                if col + 1 <= self.viewModel.size - 1 {
-                                    //print("Jap geht")
-                                    self.viewModel.swapMatrixCols(m1Col: col, m2Col: col+1)
-                                    
-                                    //print()
-                                }
-                                
-                            } else if (horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
-                                if col - 1 >= 0 {
-                                    //print("Noice")
-                                    self.viewModel.swapMatrixCols(m1Col: col, m2Col: col-1)
-                                } else {
-                                    //print("geht nicht 2")
-                                }
-                            } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
-                                //for top to bottom swap
-                                if row + 1 <= self.viewModel.size - 1 { //if row+1 exists
-                                    self.viewModel.swapMatrixRows(m1Row: row, m2Row: row+1) //swap row and row beneath
-                                }
-                            } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
-                                //print("Swiped from bottom to top")
-                                if row - 1 >= 0 { //if row-1 greater than 0 (if a row above exists)
-                                    self.viewModel.swapMatrixRows(m1Row: row, m2Row: row-1) //swap row and row above
-                                }
-                            } else {
-                                print("FAIL")
-                            }
-                            // Handle the end of the drag gesture if needed
+                    } else if (horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance)) && orientation == "top" {
+                        
+                        if col - 1 >= 0 { //if row+1 exists
+                            self.viewModel.swapMatrixCols(m1Col: col, m2Col: col-1)
+                        } else {
                         }
+                    } else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
+                        //for top to bottom swap
+                        if row + 1 <= self.viewModel.size - 1 { //if row+1 exists
+                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row+1) //swap row and row beneath
+                        }
+                    } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) && (orientation == "left" || orientation == "right"){
+                        //from bottom to top swap
+                        if row - 1 >= 0 { //if row-1 greater than 0 (if a row above exists)
+                            self.viewModel.swapMatrixRows(m1Row: row, m2Row: row-1) //swap row and row above
+                        }
+                    }
+                }
             )
     }
     
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                self.offset = value.translation
-            }
-            .onEnded { value in
-                self.offset = .zero
-                
-                // Calculate the direction of the swipe
-                let horizontalDistance = value.translation.width
-                let verticalDistance = value.translation.height
-                
-                if horizontalDistance > 0 && abs(horizontalDistance) > abs(verticalDistance) {
-                    // Swiped from left to right
-                    print("left to right")
-                } else if horizontalDistance < 0 && abs(horizontalDistance) > abs(verticalDistance) {
-                    // Swiped from right to left
-                    print("right to left")
-                }  else if verticalDistance > 0 && abs(verticalDistance) > abs(horizontalDistance) {
-                    print("Swiped from top to bottom")
-                } else if verticalDistance < 0 && abs(verticalDistance) > abs(horizontalDistance) {
-                    print("Swiped from bottom to top")
-                } else {
-                    print("other")
-                }
-            }
-    }
     
     func buttonsTop() -> some View {
         return ForEach(0..<viewModel.matrix.count, id: \.self) { row in
@@ -256,7 +213,6 @@ struct GameContentView: View {
                         if self.viewModel.devideByArray.count > 0 { selectedNumber = self.viewModel.devideByArray[0]}
                         self.viewModel.setScaleType(currentType: "divide")
                     }
-                    //print(self.viewModel.scaleType)
                 }
             }
         }
@@ -346,7 +302,6 @@ struct GameContentView: View {
     
     func navigationButtons() -> some View {
         return Button(action: {
-            print("Home")
         }) {
             VStack {
                 Image(systemName: "house.fill")
@@ -358,17 +313,12 @@ struct GameContentView: View {
     }
     // Game Screen
     var body: some View {
-        //HomeScreenView()
         ZStack {
-            
             LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 VStack {
-                    
-                    
                     VStack{
-                        //Text("Gaussy Game").font(.title)
                         VStack{
                             if viewModel.gameSolved{
                                 Text("You Finished the Game!").bold().font(.title)
@@ -429,8 +379,6 @@ struct GameContentView: View {
                         if !self.viewModel.gameSaved {
                             self.viewModel.saveGame() //saves the game
                             self.viewModel.gameSaved.toggle() // Toggles between true and false
-                        } else {
-                            print("Already Saved, cannot save again")
                         }
                     }) {
                         Text(self.viewModel.gameSaved ? "Already Saved Score" : "Save Score")

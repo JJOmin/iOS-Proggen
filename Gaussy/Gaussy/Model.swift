@@ -103,7 +103,6 @@ struct Model {
         case .unset:
             maxIterations = 0
         }
-        //print(Int(Double(size * size) * 0.99))
         
         var iterations = 0
         
@@ -140,7 +139,6 @@ struct Model {
                 matrix[rand1] = multipliedRowMulty
             }
             
-            //print(matrix)
             iterations += 1
             
         }
@@ -263,7 +261,6 @@ struct Model {
     
     mutating func scaleRow(value: Int){
         if scaleType == "divide" {
-            //print("DEVIDE NOW")
             if  value != 0 {
                 let matrixFirst: [Int] = matrix[selectedRows[0]]
                 let dividedRow = matrixFirst.map { $0 / value }
@@ -358,14 +355,13 @@ struct Model {
     
     mutating func addMove(){
         numberOfMoves += 1
-        //print(timeTracking())
         isGaussSolved()
     }
     
 
     mutating func setSize(newSize: Int) {
         self.size = newSize
-    }	
+    }
     // Funktion zur Verfolgung der vergangenen Spielzeit als formatierten String
     mutating func timeTracking(){
             // Aktuelle Zeit abrufen
@@ -467,10 +463,7 @@ struct Model {
             gameRunning = false
             gameSolved = true
             removeAllSelected()
-            print("Game Solved")
         }
     }
     
-    
-
 }

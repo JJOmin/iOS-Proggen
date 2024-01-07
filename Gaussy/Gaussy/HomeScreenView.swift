@@ -33,34 +33,8 @@ struct HomeScreenView: View {
                             .cornerRadius(10)
                     }.simultaneousGesture(TapGesture().onEnded {
                         self.viewModel.setGameRunning(false)
-                        /*let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                            print("Timer fired!")
-                        }*/
                     })
                     .padding()
-                    /*
-                        NavigationLink(destination: StartGameContentView(viewModel: self.viewModel)) {
-                            Text("Continue Game comming Soon")
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.yellow)
-                                .cornerRadius(10)
-                        }.simultaneousGesture(TapGesture().onEnded {
-                            print(self.viewModel.gameRunning)
-                        })
-                        .padding()
-                    
-                    
-                    
-                    NavigationLink(destination: GameContentView(viewModel: self.viewModel)) {
-                        Text("See High Score List")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.green)
-                            .cornerRadius(10)
-                    }
-                    .padding()
-                     */
                     Button(action: {
                         // Action for quitting the app
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -77,7 +51,6 @@ struct HomeScreenView: View {
                     Spacer()
                 }
             }
-            //.navigationBarTitle(displayMode: .inline)
         }
     }
 }
