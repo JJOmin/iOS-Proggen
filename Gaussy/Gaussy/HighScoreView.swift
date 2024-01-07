@@ -70,7 +70,7 @@ struct ScoreRowView: View {
                 if let formattedTime = viewModel.formatSecondsToString(timeToFormat: score.time) {
                     Text("\(formattedTime)")
                 } else {
-                    Text("\(score.moves) moves")
+                    Text("\(score.time)")
                 }
             }
         }

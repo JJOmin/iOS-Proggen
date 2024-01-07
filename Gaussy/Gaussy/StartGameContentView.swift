@@ -29,10 +29,9 @@ struct StartGameContentView: View {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [topColor, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
-                    .onChange(of: difficultyLevel) { newValue, _ in
+                    .onChange(of: difficultyLevel) { _, oldValue in
                       withAnimation {
-                          topColor = colorForDifficulty(newValue)
-                          
+                          topColor = colorForDifficulty(oldValue)
                       }
                     }
                 VStack {
@@ -73,23 +72,12 @@ struct StartGameContentView: View {
             
             trailing:
                 HStack {
-                    NavigationLink(
-                        destination: HighScoreView(viewModel: viewModel, sScore: viewModel.sortedScores),
-                        isActive: $navigationActive
-                    ) {
-                        EmptyView()
-                    }
-                    .hidden() // Hide the label
-
-                    Button {
-                        // Navigate to HighScoreView
-                        self.navigationActive = true
-                    } label: {
+                    NavigationLink(destination:  HighScoreView(viewModel: viewModel, sScore: viewModel.sortedScores)) {
                         Image(systemName: "list.number")
                             .foregroundColor(.black)
                             .font(.title)
                     }
-                    .opacity(backButtonOpacity)
+                    .padding()
                 }
         )
 
@@ -97,10 +85,9 @@ struct StartGameContentView: View {
             withAnimation(.snappy(duration: 0.7)) {
                 backButtonOpacity = 1.0 // Set opacity to 1 on view appear
             }
-            
         }
-        
     }
+    
     func colorForDifficulty(_ difficulty: Difficulty) -> Color {
         switch difficulty {
         case .easy:

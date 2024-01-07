@@ -265,6 +265,7 @@ struct GameContentView: View {
         VStack {
             Button {
                 if !self.viewModel.gameSaved {
+                    viewModel.stopTimer()
                     self.viewModel.saveGame()
                     self.viewModel.gameSaved.toggle()
                 }

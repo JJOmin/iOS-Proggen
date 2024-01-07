@@ -26,6 +26,8 @@ class ViewModel: ObservableObject {
     init() {
         self.model = Model(size: 6, difficulty: .unset, username: "Peter")
         self.highScoreModel = HighScoreModel()
+        
+        writeToPlist(userName: "John Doe", time: 1000, moves: 44)
         readHighScoresFromPlist()
         getSortedScors()
     }
