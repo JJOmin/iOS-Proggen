@@ -31,7 +31,6 @@ struct Model {
     var devideByArray: [Int]
     var multiplyByArray: [Int]
     var scalFactor: Int
-    
     var maxCharacterCount: Int = 21
     let possibleSizes: [Int] = [2, 3, 4, 5, 6]
     
@@ -81,22 +80,18 @@ struct Model {
             matrix[i][i] = 1
         }
         correctMatrix = matrix // sets the solution matrix to the origin matrix
-        
         // Adjust the matrix entries based on difficulty
         var maxIterations = 0
         switch difficulty {
         case .easy:
             maxIterations = Int(Double(size * size) * 0.25)
-            
         case .normal:
             maxIterations = Int(Double(size * size) * 0.5)
-            
         case .hard:
             maxIterations = Int(Double(size * size) * 0.9)
         case .unset:
             maxIterations = 0
         }
-        
         var iterations = 0
         
         while iterations < maxIterations {
@@ -111,7 +106,6 @@ struct Model {
                     matrix[col] = resultArray
                 }
             }
-            
             // Swap
             let rand3 = Int.random(in: 0..<size)
             let rand4 = Int.random(in: 0..<size)
@@ -120,9 +114,7 @@ struct Model {
             let matrixSecondAdd: [Int] = matrixT[rand4]
             matrixT[rand4] = matrixFirstAdd
             matrixT[rand3] = matrixSecondAdd
-            
             matrix = transposeMatrix(matrixT) // Zurücktransposed
-            
             // multiply
             let rand1 = Int.random(in: 0..<size)
             let rand2 = Int.random(in: 1..<size)
@@ -131,11 +123,8 @@ struct Model {
             if multipliedRowMulty.max()! < 100 {
                 matrix[rand1] = multipliedRowMulty
             }
-            
             iterations += 1
-            
         }
-        
     }
     
     // generating a einheitsmatrix in jeder größe
@@ -158,9 +147,7 @@ struct Model {
     func getNumberOfNumbers() -> Int {
         matrix.reduce(0) { $0 + $1.count }
     }
-    
-    // REFACTORED
-    
+
     // adding and Removing cols and Rows based on input
     mutating func addRemoveFromSelected(col: Int, row: Int, orientation: String) {
         switch orientation {
@@ -189,7 +176,6 @@ struct Model {
             } else {
                 handleMoreThanTwoSelectedRows(row)
             }
-            
         default:
             break
         }
@@ -364,14 +350,11 @@ struct Model {
             
             let hours = Int(totalSeconds / 3600)
             let remainingSecondsAfterHours = totalSeconds - TimeInterval(hours * 3600)
-            
             let minutes = Int(remainingSecondsAfterHours / 60)
             let remainingSecondsAfterMinutes = remainingSecondsAfterHours - TimeInterval(minutes * 60)
-            
             let seconds = Int(remainingSecondsAfterMinutes)
             let milliseconds = Int((remainingSecondsAfterMinutes - Double(seconds)) * 100)
-            
-            // Use String(format:) to format minutes with leading zeros if needed
+            // Formating to Strings
             let formattedMinutes = String(format: "%02d", minutes)
             let formatedSeconds = String(format: "%02d", seconds)
             let formatedMilliseconds = String(format: "%02d", milliseconds)
@@ -412,9 +395,8 @@ struct Model {
                 return("\(formattedMinutes) min. \(formatedSeconds) sec.")
             }
         } else {
-            return("\(hours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
+            return("\(formatedHours) hrs. \(formattedMinutes) min. \(formatedSeconds) sec.")
         }
-        // return("\(formatedHours):\(formattedMinutes):\(formatedSeconds):\(formatedMilliseconds)")
     }
     
     // function to Transpose a matrix to easily get the cols
@@ -422,10 +404,8 @@ struct Model {
         guard !matrix.isEmpty else {
             return []
         }
-
         let rowCount = matrix.count
         let colCount = matrix[0].count
-
         var transposedMatrix = Array(repeating: Array(repeating: 0, count: rowCount), count: colCount)
 
         for i in 0..<rowCount {
