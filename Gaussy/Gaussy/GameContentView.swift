@@ -88,38 +88,35 @@ struct GameContentView: View {
             HStack(spacing: interSquareSpacing(for: viewModel.matrix)) {
                 ForEach(0..<viewModel.matrix[row].count, id: \.self) { col in
                     if col == 0 {
-                        self.selectableCircle(col: col, row: row, orientation:"left").padding(10)
+                        self.selectableCircle(col: col, row: row, orientation: "left").padding(10)
                     }
                     let value = viewModel.matrix[row][col]
-                    squareView(value: value, col: col, row: row)
+                    squareView(value: value, col: col, row: row, isSolved: viewModel.gameSolved)
                         .font(.system(size: fontSize(for: viewModel.matrix)))
                         .frame(width: squareSize(for: viewModel.matrix), height: squareSize(for: viewModel.matrix))
-                        .rotationEffect(viewModel.gameSolved ? .degrees(360) : .degrees(0)) // Rotate if solved
                         .border(Color.black) // Optional: Add border around the square
                         .background(
                             ((viewModel.selectedCols.contains(col) || viewModel.selectedRows.contains(row)) ||
-                             (viewModel.gameSolved && (viewModel.matrix[row][col] == 1)))
-                                ? Color.yellow : Color.white
+                                (viewModel.gameSolved && (viewModel.matrix[row][col] == 1)))
+                            ? Color.yellow : Color.white
                         )
                         .padding(interSquareSpacing(for: viewModel.matrix)) // Optional: Padding inside the square */
                         
                     if col == viewModel.matrix.count - 1 {
-                        self.selectableCircle(col: col, row: row, orientation:"right").padding(10)
+                        self.selectableCircle(col: col, row: row, orientation: "right").padding(10)
                     }
                 }
             }
         }
     }
 
-    func squareView(value: Int, col: Int, row: Int) -> some View {
-        let isSolved = viewModel.gameSolved // Check if the square is solved
-        viewModel.stopTimer()
-        // print("\(value)")
+    func squareView(value: Int, col: Int, row: Int, isSolved: Bool) -> some View {
+        // viewModel.stopTimer()
         
         return Text("\(value)")
             .frame(width: 50, height: 50)
             .foregroundColor(.black) // Apply text color
-            .rotationEffect(.degrees(360)) // Rotate if solved
+            .rotationEffect(isSolved ? .degrees(360) : .degrees(0))
             .onAppear {
                 withAnimation(isSolved ? .easeInOut(duration: 2).repeatForever() : .default) {
                     // Use withAnimation for conditional animation
@@ -265,7 +262,7 @@ struct GameContentView: View {
         VStack {
             Button {
                 if !self.viewModel.gameSaved {
-                    viewModel.stopTimer()
+                    // viewModel.stopTimer()
                     self.viewModel.saveGame()
                     self.viewModel.gameSaved.toggle()
                 }
@@ -308,7 +305,7 @@ struct GameContentView: View {
                     .bold()
                     .font(.title)
                     .onAppear {
-                        viewModel.stopTimer()
+                        // viewModel.stopTimer()
                     }
             } else {
                 Text("Moves: \(self.viewModel.numberOfMoves)")

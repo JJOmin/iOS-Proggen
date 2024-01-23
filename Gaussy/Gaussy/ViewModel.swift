@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
         self.model = Model(size: 6, difficulty: .unset, username: "Peter")
         self.highScoreModel = HighScoreModel()
         
-        writeToPlist(userName: "John Doe", time: 1000, moves: 44)
+        // writeToPlist(userName: "John Doe", time: 1000, moves: 44)
         readHighScoresFromPlist()
         getSortedScors()
     }
@@ -37,6 +37,7 @@ class ViewModel: ObservableObject {
         gameSaved = false
         readHighScoresFromPlist()
         getSortedScors()
+        model.gameRunning = true
     }
     
     func appendToPlist(userName: String, time: Double, moves: Int) {
@@ -184,13 +185,19 @@ class ViewModel: ObservableObject {
     }
     
     func updateTimer() {
-        model.timeTracking()
+        if gameRunning {
+            model.timeTracking()
+        }
     }
     
     func timerCode() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
-                updateTimer()
-        }
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
+                if !gameSolved {
+                    updateTimer()
+                } else {
+                    return
+                }
+            }
     }
     
     func stopTimer() {
