@@ -3,4 +3,54 @@
    uuid = "B25A9CDE-BCD3-47C8-A382-3F6A8A260B43"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7FE0BBC1-B8D8-428C-827E-C640BB866508"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Gaussy/HighScoreModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "HighScoreModel"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "7FE0BBC1-B8D8-428C-827E-C640BB866508 - e199c50fa4d65cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gaussy.HighScoreModel.init() -&gt; Gaussy.HighScoreModel"
+                  moduleName = "Gaussy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leonhard/Documents/GitHub/iOS-Proggen/Gaussy/Gaussy/HighScoreModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "7FE0BBC1-B8D8-428C-827E-C640BB866508 - 9c4891cd653cfcce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gaussy.HighScoreModel.init(highScores: Swift.Optional&lt;Swift.Array&lt;Gaussy.PlayerStats&gt;&gt;, plistURL: Foundation.URL, highScoresTimeSorted: Swift.Array&lt;Gaussy.PlayerStats&gt;, highScoresMovesSorted: Swift.Array&lt;Gaussy.PlayerStats&gt;, counterMoves: Swift.Int, counterTime: Swift.Int) -&gt; Gaussy.HighScoreModel"
+                  moduleName = "Gaussy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leonhard/Documents/GitHub/iOS-Proggen/Gaussy/Gaussy/HighScoreModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

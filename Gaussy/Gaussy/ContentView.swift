@@ -7,6 +7,7 @@ struct ContentView: View {
 
     var body: some View {
             HomeScreenView(viewModel: self.viewModel)
+            // HighScoreView(viewModel: self.viewModel, sScore: [[userName: "John Doe", time: 1000, moves: 44]])
     }
 }
 
