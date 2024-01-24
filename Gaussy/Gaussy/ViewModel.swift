@@ -199,7 +199,7 @@ class ViewModel: ObservableObject {
                 }
             }
     }
-    //verbesserung nach Abgabe
+    // verbesserung nach Abgabe
     /*
     func stopTimer() {
         if gameRunning || gameSolved {
