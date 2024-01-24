@@ -199,13 +199,14 @@ class ViewModel: ObservableObject {
                 }
             }
     }
-    
+    //verbesserung nach Abgabe
+    /*
     func stopTimer() {
         if gameRunning || gameSolved {
             timer?.invalidate()
         }
     }
-    
+    */
     func setSize(newSize: Int) {
         model.setSize(newSize: newSize)
     }
